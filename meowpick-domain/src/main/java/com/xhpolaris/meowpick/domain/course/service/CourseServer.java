@@ -15,22 +15,22 @@ public class CourseServer {
     private final ICourseRepository courseRepository;
 
     public CourseVO exec(CourseCmd.CreateCmd cmd) {
-        return null;
+        return courseRepository.createCourse(cmd);
     }
 
     public CourseVO remove(String id) {
-        return null;
+        return courseRepository.remove(id);
     }
 
     public CourseVO exec(CourseCmd.UpdateCmd cmd) {
-        return null;
+        return courseRepository.updateCourse(cmd);
     }
 
     public PageEntity<CourseVO> query(CourseCmd.Query query) {
-        return null;
+        return courseRepository.page(query);
     }
 
     public CourseVO findById(String id) {
-        return null;
+        return courseRepository.getById(id);
     }
 }

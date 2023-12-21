@@ -29,8 +29,6 @@ spring:
       password: ${redis.password}
       database: 0
     mongodb:
-      username: ${mongo.username:root}
-      password: ${mongo.password:root}
       uri: ${mongo.uri:uri}
   cache:
     type: redis

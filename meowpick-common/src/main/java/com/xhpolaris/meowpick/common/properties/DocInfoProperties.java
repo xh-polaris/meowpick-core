@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.config;
+package com.xhpolaris.meowpick.common.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

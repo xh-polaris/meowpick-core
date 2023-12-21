@@ -1,5 +1,6 @@
 package com.xhpolaris.meowpick.config;
 
+import com.xhpolaris.meowpick.common.properties.DocInfoProperties;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
