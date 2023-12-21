@@ -1,0 +1,57 @@
+server:
+  port: 5508
+
+logging:
+  level:
+    com.xhpolaris:
+      repository: info
+    org.springframework.web.filter:
+      CommonsRequestLoggingFilter: debug
+  file:
+    path: logs
+  logback:
+    rollingpolicy:
+      max-history: 30
+
+spring:
+  application:
+    name: meowpick-core
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+  data:
+    redis:
+      repositories:
+        enabled: false
+      host: ${redis.host:localhost}
+      port: ${redis.port:6379}
+      password: ${redis.password}
+      database: 0
+    mongodb:
+      username: ${mongo.username:root}
+      password: ${mongo.password:root}
+      uri: ${mongo.uri:uri}
+  cache:
+    type: redis
+  profiles:
+    active: ${server.profile:dev}
+  mvc:
+    path-match:
+      matching-strategy: ant_path_matcher
+  jackson:
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: true
+doc-info:
+  enable: ${doc.enable:true}
+  title: API文档
+  description: 文档描述
+  version: v1.0.1
+  website-name: API文档
+  website-url:
+grpc:
+  client:
+    meowchat-content:
+      address: "static://meowchat-content.xh-polaris:8080"
+      enable-keep-alive: true
+      negotiationType: PLAINTEXT

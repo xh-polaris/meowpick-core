@@ -9,12 +9,20 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.xhpolaris.meowchat</groupId>
-	<artifactId>mall</artifactId>
+	<groupId>com.xhpolaris.meowpick</groupId>
+	<artifactId>meowpick-core</artifactId>
 	<version>1.0.0</version>
+	<packaging>pom</packaging>
 
-	<name>meowchat-mall</name>
-	<description>meowchat-mall</description>
+	<name>meowpick-core</name>
+	<description>选课猫</description>
+	<modules>
+		<module>meowpick-app</module>
+		<module>meowpick-trigger</module>
+		<module>meowpick-domain</module>
+		<module>meowpick-common</module>
+		<module>meowpick-infrastructure</module>
+	</modules>
 
 	<properties>
 		<java.version>17</java.version>
@@ -87,48 +95,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<extensions>
-			<extension>
-				<groupId>kr.motd.maven</groupId>
-				<artifactId>os-maven-plugin</artifactId>
-				<version>1.7.1</version>
-			</extension>
-		</extensions>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.7.5</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<includes>
-						<include>
-							<groupId>nothing</groupId>
-							<artifactId>nothing</artifactId>
-						</include>
-					</includes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 
 	<repositories>
 		<repository>
