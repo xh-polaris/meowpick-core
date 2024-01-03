@@ -1,0 +1,60 @@
+package com.xhpolaris.meowpick.infrastructure.pojo;
+
+import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
+import com.xhpolaris.meowpick.infrastructure.mapstruct.CourseMap;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+@Data
+@Document("course")
+@AllArgsConstructor
+@NoArgsConstructor
+public class CourseCollection {
+    @MongoId
+    private String id;
+    private String name;
+    private String category;
+    private String department;
+    private String depart;
+    private String point;
+
+    private List<String> teachers;
+    private List<String> campuses;
+    private List<String> tags;
+
+    @CreatedDate
+    private Timestamp crateAt;
+    @LastModifiedDate
+    private Timestamp updateAt;
+
+    public static Example<CourseCollection> toExample(CourseCmd.Query query) {
+        CourseCollection course = CourseMap.instance.query(query);
+
+        ExampleMatcher.GenericPropertyMatcher containsMatcher = ExampleMatcher.GenericPropertyMatchers.contains()
+                                                                                                      .ignoreCase();
+
+        // 定义 ExampleMatcher，这里使用了忽略大小写的匹配规则
+        ExampleMatcher matcher = ExampleMatcher.matchingAny()
+                                               .withMatcher("name", containsMatcher)
+                                               .withMatcher("category", containsMatcher)
+                                               .withMatcher("department", containsMatcher)
+                                               .withMatcher("depart", containsMatcher)
+                                               .withMatcher("point", containsMatcher)
+                                               .withMatcher("teachers", containsMatcher)
+                                               .withMatcher("campuses", containsMatcher)
+                                               .withIgnoreCase()
+                                               .withIgnoreNullValues();
+
+        return Example.of(course, matcher);
+    }
+}

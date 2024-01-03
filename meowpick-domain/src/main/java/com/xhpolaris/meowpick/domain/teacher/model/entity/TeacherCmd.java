@@ -1,26 +1,26 @@
-package com.xhpolaris.meowpick.domain.tag.model.entity;
+package com.xhpolaris.meowpick.domain.teacher.model.entity;
 
 import com.xhpolaris.meowpick.common.PageEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-public class TagCmd {
-    private TagCmd() {}
+public class TeacherCmd {
+    private TeacherCmd() {}
 
     @Data
-    @Schema(name = "TagCmd$CreateCmd")
+    @Schema(name = "TeacherCmd$CreateCmd")
     public static class CreateCmd {
 
     }
 
     @Data
-    @Schema(name = "TagCmd$UpdateCmd")
+    @Schema(name = "TeacherCmd$UpdateCmd")
     public static class UpdateCmd {
 
     }
 
     @Data
-    @Schema(name = "TagCmd$Query")
+    @Schema(name = "TeacherCmd$Query")
     public static class Query extends PageEntity.Query {
 
     }

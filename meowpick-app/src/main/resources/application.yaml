@@ -43,7 +43,7 @@ spring:
 doc-info:
   enable: ${doc.enable:true}
   title: API文档
-  description: 文档描述
+  description: swagger.json
   version: v1.0.1
   website-name: API文档
   website-url:

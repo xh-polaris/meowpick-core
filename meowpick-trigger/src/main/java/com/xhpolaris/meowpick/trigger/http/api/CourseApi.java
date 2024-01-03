@@ -13,27 +13,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Tag(name = "课程接口")
+@Tag(name = "CourseApi", description = "课程接口")
 @RequestMapping("/api/course")
 public interface CourseApi {
 
-    @Operation(summary = "新增课程")
     @PostMapping("/add")
+    @Operation(summary = "新增课程")
     CourseVO add(@Validated @RequestBody CourseCmd.CreateCmd cmd);
 
-    @Operation(summary = "删除课程")
     @PostMapping("/del/{id}")
+    @Operation(summary = "删除课程")
     CourseVO del(@PathVariable String id);
 
-    @Operation(summary = "更新课程")
     @PostMapping("/update")
+    @Operation(summary = "更新课程")
     CourseVO update(@Validated @RequestBody CourseCmd.UpdateCmd cmd);
 
-    @Operation(summary = "分页查询")
     @GetMapping("/query")
+    @Operation(summary = "分页查询")
     PageEntity<CourseVO> query(@Validated @ParameterObject CourseCmd.Query query);
 
-    @Operation(summary = "获取详情")
     @GetMapping("/{id}")
+    @Operation(summary = "获取详情")
     CourseVO get(@PathVariable String id);
 }

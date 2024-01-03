@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Tag(name = "标签接口")
+@Tag(name = "TagApi", description = "标签接口")
 @RequestMapping("/api/tag")
 public interface TagApi {
 

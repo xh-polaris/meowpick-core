@@ -2,11 +2,13 @@ package com.xhpolaris.meowpick;
 
 import com.xhpolaris.idlgen.meowchat.content.ContentServiceGrpc;
 import com.xhpolaris.idlgen.meowchat.content.ListPostReq;
+import com.xhpolaris.meowpick.common.enums.EnableEnums;
 import jakarta.servlet.http.HttpServletResponse;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
-
+@EnableFeignClients
+@EnableEnums
 @RestController
 @EnableScheduling
 @SpringBootApplication

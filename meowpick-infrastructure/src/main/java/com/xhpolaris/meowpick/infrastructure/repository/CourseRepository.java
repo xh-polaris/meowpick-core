@@ -6,18 +6,22 @@ import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
 import com.xhpolaris.meowpick.domain.course.repository.ICourseRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.CourseDao;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.CourseMap;
-import com.xhpolaris.meowpick.infrastructure.pojo.Course;
+import com.xhpolaris.meowpick.infrastructure.pojo.CourseCollection;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
-public class CourseRepository implements ICourseRepository {
+public class CourseRepository extends BasicRepository<CourseCollection, CourseVO> implements ICourseRepository {
     private final CourseDao courseDao;
+    private final MongoTemplate template;
 
     @Override
     public CourseVO createCourse(CourseCmd.CreateCmd cmd) {
-        Course db = CourseMap.instance.cmd2db(cmd);
+        CourseCollection db = CourseMap.instance.cmd2db(cmd);
 
         courseDao.insert(db);
 
@@ -26,7 +30,7 @@ public class CourseRepository implements ICourseRepository {
 
     @Override
     public CourseVO remove(String id) {
-        Course db = courseDao.findById(id).orElse(null);
+        CourseCollection db = courseDao.findById(id).orElse(null);
         if (db == null) {
             return null;
         }
@@ -38,7 +42,7 @@ public class CourseRepository implements ICourseRepository {
 
     @Override
     public CourseVO updateCourse(CourseCmd.UpdateCmd cmd) {
-        Course db = CourseMap.instance.cmd2db(cmd);
+        CourseCollection db = CourseMap.instance.cmd2db(cmd);
 
         courseDao.save(db);
 
@@ -47,12 +51,15 @@ public class CourseRepository implements ICourseRepository {
 
     @Override
     public PageEntity<CourseVO> page(CourseCmd.Query query) {
-        return null;
+        return pageOf(courseDao,
+                      CourseCollection.toExample(query),
+                      query,
+                      CourseMap.instance::db2vo);
     }
 
     @Override
     public CourseVO getById(String id) {
-        Course db = courseDao.findById(id).orElse(null);
+        CourseCollection db = courseDao.findById(id).orElse(null);
         if (db == null) {
             return null;
         }

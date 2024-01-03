@@ -1,10 +1,46 @@
 package com.xhpolaris.meowpick.common;
 
+import com.xhpolaris.meowpick.common.enums.state.HttpState;
 import lombok.Data;
+
+import java.util.Map;
 
 @Data
 public class JsonRet {
-    private Integer code;
-    private String errMsg;
-    private Object value;
+    @Data
+    static class State {
+        private Integer code;
+        private String errMsg;
+    }
+
+    private State state;
+    private Object payload;
+
+    public static JsonRet fail(HttpState state) {
+        JsonRet data = new JsonRet();
+
+        State type = new State();
+
+        type.setCode(state.getCode());
+        type.setErrMsg(state.getMsg());
+
+        data.setState(type);
+
+        data.setPayload(Map.of());
+
+        return data;
+    }
+
+    public static JsonRet then(Object payload) {
+        JsonRet data = new JsonRet();
+        State type = new State();
+
+        type.setCode(0);
+        type.setErrMsg("success");
+
+        data.setState(type);
+        data.setPayload(payload);
+
+        return data;
+    }
 }
