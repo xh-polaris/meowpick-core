@@ -21,7 +21,7 @@ public class ContextSupport implements Context, ApplicationContextAware {
 
     @Override
     public CurUser getUser() {
-        return null;
+        return CurUser.anonymous();
     }
 
     @Override

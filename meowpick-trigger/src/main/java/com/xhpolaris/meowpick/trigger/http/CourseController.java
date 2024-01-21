@@ -37,4 +37,14 @@ public class CourseController implements CourseApi {
     public CourseVO get(String id) {
         return service.findById(id);
     }
+
+    @Override
+    public boolean learn(String id) {
+        return service.learn(id);
+    }
+
+    @Override
+    public boolean want(String id) {
+        return service.want(id);
+    }
 }
