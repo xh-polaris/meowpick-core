@@ -4,4 +4,6 @@ import org.springframework.context.ApplicationEvent;
 
 public interface Context {
     void publish(ApplicationEvent event);
+
+    CurUser getUser();
 }

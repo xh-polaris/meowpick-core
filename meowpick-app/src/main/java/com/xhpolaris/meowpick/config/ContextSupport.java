@@ -1,6 +1,7 @@
 package com.xhpolaris.meowpick.config;
 
 import com.xhpolaris.meowpick.common.Context;
+import com.xhpolaris.meowpick.common.CurUser;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -16,6 +17,11 @@ public class ContextSupport implements Context, ApplicationContextAware {
     @Override
     public void publish(ApplicationEvent event) {
         applicationContext.publishEvent(event);
+    }
+
+    @Override
+    public CurUser getUser() {
+        return null;
     }
 
     @Override
