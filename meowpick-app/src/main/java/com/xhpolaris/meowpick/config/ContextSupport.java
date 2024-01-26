@@ -19,6 +19,7 @@ public class ContextSupport implements Context, ApplicationContextAware {
         applicationContext.publishEvent(event);
     }
 
+    //TODO
     @Override
     public CurUser getUser() {
         return null;
