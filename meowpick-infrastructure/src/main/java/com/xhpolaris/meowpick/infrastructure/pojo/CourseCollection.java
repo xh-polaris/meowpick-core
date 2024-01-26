@@ -27,7 +27,7 @@ public class CourseCollection {
     private String department;
     private String depart;
     private String point;
-
+    private String describe;
     private List<String> teachers;
     private List<String> campuses;
     private List<String> tags;

@@ -1,6 +1,7 @@
 package com.xhpolaris.meowpick.domain.course.repository;
 
 import com.xhpolaris.meowpick.common.PageEntity;
+import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
 
@@ -13,7 +14,7 @@ public interface ICourseRepository {
 
     PageEntity<CourseVO> page(CourseCmd.Query query);
 
-    CourseVO getById(String id);
+    Course getById(String id, String uid);
 
     boolean learned(String id, String uid);
 

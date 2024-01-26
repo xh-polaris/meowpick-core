@@ -1,16 +1,23 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
 import com.xhpolaris.meowpick.common.PageEntity;
+import com.xhpolaris.meowpick.common.consts.Consts;
+import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
 import com.xhpolaris.meowpick.domain.course.repository.ICourseRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.CourseDao;
+import com.xhpolaris.meowpick.infrastructure.dao.CourseLeanDao;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.CourseMap;
 import com.xhpolaris.meowpick.infrastructure.pojo.CourseCollection;
+import com.xhpolaris.meowpick.infrastructure.pojo.CourseLearnCollection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -18,6 +25,7 @@ import org.springframework.stereotype.Component;
 public class CourseRepository extends BasicRepository<CourseCollection, CourseVO> implements ICourseRepository {
     private final CourseDao courseDao;
     private final MongoTemplate template;
+    private final CourseLeanDao leanDao;
 
     @Override
     public CourseVO createCourse(CourseCmd.CreateCmd cmd) {
@@ -30,7 +38,8 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
 
     @Override
     public CourseVO remove(String id) {
-        CourseCollection db = courseDao.findById(id).orElse(null);
+        CourseCollection db = courseDao.findById(id)
+                                       .orElse(null);
         if (db == null) {
             return null;
         }
@@ -51,25 +60,55 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
 
     @Override
     public PageEntity<CourseVO> page(CourseCmd.Query query) {
-        return pageOf(courseDao,
-                      CourseCollection.toExample(query),
-                      query,
-                      CourseMap.instance::db2vo);
+        return pageOf(
+                courseDao,
+                CourseCollection.toExample(query),
+                query,
+                CourseMap.instance::db2vo
+                     );
     }
 
     @Override
-    public CourseVO getById(String id) {
-        CourseCollection db = courseDao.findById(id).orElse(null);
+    public Course getById(String id, String uid) {
+        CourseCollection db = courseDao.findById(id)
+                                       .orElse(null);
         if (db == null) {
             return null;
         }
 
-        return CourseMap.instance.db2vo(db);
+        CourseVO course = CourseMap.instance.db2vo(db);
+
+        Course vo = new Course();
+        List<CourseLearnCollection> learn = leanDao.findAllByActiveIsTrueAndCourse(id);
+
+        vo.setData(course);
+        vo.setLeaned(learn.stream().filter(i -> i.getType().equals(Consts.CourseLearn.LEARN)).count());
+        vo.setWanted(learn.stream().filter(i -> i.getType().equals(Consts.CourseLearn.WANT)).count());
+
+        vo.setLearn(Optional.ofNullable(leanDao.findByType(Consts.CourseLearn.LEARN, id, uid))
+                             .map(CourseLearnCollection::isActive).orElse(false));
+        vo.setWant(Optional.ofNullable(leanDao.findByType(Consts.CourseLearn.WANT, id, uid))
+                            .map(CourseLearnCollection::isActive).orElse(false));
+
+        return vo;
     }
 
     @Override
     public boolean learned(String id, String uid) {
-        return false;
+        CourseLearnCollection db = leanDao.findByType(Consts.CourseLearn.LEARN, id, uid);
+        if (db == null) {
+            db = new CourseLearnCollection();
+            db.setUid(uid);
+            db.setType(Consts.CourseLearn.LEARN);
+            db.setCourse(id);
+            db.setActive(false);
+        }
+
+        db.setActive(! db.isActive());
+
+        leanDao.save(db);
+
+        return true;
     }
 
     @Override

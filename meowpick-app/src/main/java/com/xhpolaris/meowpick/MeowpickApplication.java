@@ -3,7 +3,6 @@ package com.xhpolaris.meowpick;
 import com.xhpolaris.idlgen.meowchat.content.ContentServiceGrpc;
 import com.xhpolaris.idlgen.meowchat.content.ListPostReq;
 import com.xhpolaris.idlgen.platform.comment.CommentServiceGrpc;
-import com.xhpolaris.meowpick.common.enums.EnableEnums;
 import jakarta.servlet.http.HttpServletResponse;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.boot.SpringApplication;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @EnableCaching
-@EnableEnums
 @RestController
 @EnableScheduling
 @SpringBootApplication

@@ -13,6 +13,9 @@ public class CourseVO {
     private String category;
     private String department;
 
+    private String describe;
+
+
     private List<String> teachers;
     private List<String> campuses;
     private List<String> tags;

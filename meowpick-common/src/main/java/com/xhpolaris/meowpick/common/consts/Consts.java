@@ -4,4 +4,9 @@ public class Consts {
     private Consts() {}
 
     public static final String SPLIT = ":";
+
+    public interface CourseLearn {
+        String LEARN = "learn";
+        String WANT = "want";
+    }
 }

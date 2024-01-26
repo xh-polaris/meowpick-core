@@ -1,10 +1,12 @@
 package com.xhpolaris.meowpick.trigger.http.api;
 
 import com.xhpolaris.meowpick.common.PageEntity;
+import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,11 +37,11 @@ public interface CourseApi {
 
     @GetMapping("/{id}")
     @Operation(summary = "获取详情")
-    CourseVO get(@PathVariable String id);
+    Course get(@PathVariable String id);
 
     @PostMapping("/learn/{id}")
     @Operation(summary = "学过")
-    boolean learn(@PathVariable String id);
+    boolean learn(HttpServletRequest request, @PathVariable String id);
 
     @PostMapping("/want/{id}")
     @Operation(summary = "想选")

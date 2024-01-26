@@ -1,10 +1,12 @@
 package com.xhpolaris.meowpick.trigger.http;
 
 import com.xhpolaris.meowpick.common.PageEntity;
+import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
 import com.xhpolaris.meowpick.domain.course.service.CourseServer;
 import com.xhpolaris.meowpick.trigger.http.api.CourseApi;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,12 +36,12 @@ public class CourseController implements CourseApi {
     }
 
     @Override
-    public CourseVO get(String id) {
+    public Course get(String id) {
         return service.findById(id);
     }
 
     @Override
-    public boolean learn(String id) {
+    public boolean learn(HttpServletRequest request, String id) {
         return service.learn(id);
     }
 

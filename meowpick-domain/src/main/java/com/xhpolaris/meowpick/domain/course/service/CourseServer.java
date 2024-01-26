@@ -3,6 +3,7 @@ package com.xhpolaris.meowpick.domain.course.service;
 import com.xhpolaris.meowpick.common.Context;
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.SearchComponent;
+import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
 import com.xhpolaris.meowpick.domain.course.repository.ICourseRepository;
@@ -34,8 +35,8 @@ public class CourseServer implements SearchComponent<CourseVO> {
         return courseRepository.page(query);
     }
 
-    public CourseVO findById(String id) {
-        return courseRepository.getById(id);
+    public Course findById(String id) {
+        return courseRepository.getById(id, context.getUser().getId());
     }
 
     @Override
