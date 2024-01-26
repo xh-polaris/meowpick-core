@@ -36,4 +36,13 @@ public interface CourseApi {
     @GetMapping("/{id}")
     @Operation(summary = "获取详情")
     CourseVO get(@PathVariable String id);
+
+    @PostMapping("/learn/{id}")
+    @Operation(summary = "学过")
+    boolean learn(@PathVariable String id);
+
+    @PostMapping("/want/{id}")
+    @Operation(summary = "想选")
+    boolean want(@PathVariable String id);
+
 }

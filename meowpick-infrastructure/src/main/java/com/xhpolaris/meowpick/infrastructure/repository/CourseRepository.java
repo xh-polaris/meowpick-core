@@ -66,4 +66,14 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
 
         return CourseMap.instance.db2vo(db);
     }
+
+    @Override
+    public boolean learned(String id, String uid) {
+        return false;
+    }
+
+    @Override
+    public boolean want2learn(String id, String uid) {
+        return false;
+    }
 }

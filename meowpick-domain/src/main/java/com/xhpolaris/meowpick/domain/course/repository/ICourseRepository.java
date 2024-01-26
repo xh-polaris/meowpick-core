@@ -14,4 +14,8 @@ public interface ICourseRepository {
     PageEntity<CourseVO> page(CourseCmd.Query query);
 
     CourseVO getById(String id);
+
+    boolean learned(String id, String uid);
+
+    boolean want2learn(String id, String uid);
 }

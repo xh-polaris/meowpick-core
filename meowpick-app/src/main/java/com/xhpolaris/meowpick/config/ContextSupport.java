@@ -22,7 +22,7 @@ public class ContextSupport implements Context, ApplicationContextAware {
     //TODO
     @Override
     public CurUser getUser() {
-        return null;
+        return CurUser.anonymous();
     }
 
     @Override
