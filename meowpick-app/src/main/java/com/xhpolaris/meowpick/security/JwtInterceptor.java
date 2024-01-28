@@ -17,7 +17,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 @RequiredArgsConstructor
 public class JwtInterceptor implements HandlerInterceptor {
-    private Context context;
+    private final Context context;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -26,7 +26,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
         try {
             Jws<Claims> claims = Jwts.parser()
-                    .setSigningKey(context.properties().getPublic_key())
+                    .setSigningKey(context.properties().getPublicKey())
                     .parseClaimsJws(token);
 
             String subject = claims.getBody().getSubject();

@@ -53,3 +53,7 @@ grpc:
       address: "static://meowchat-content.xh-polaris:8080"
       enable-keep-alive: true
       negotiationType: PLAINTEXT
+
+app:
+  security:
+    enable: false
