@@ -6,13 +6,12 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import lombok.RequiredArgsConstructor;
 import org.springdoc.core.models.GroupedOpenApi;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "doc-info.enable", havingValue = "true")
+//@ConditionalOnProperty(name = "doc-info.enable", havingValue = "true")
 public class SwaggerConfig {
     private final DocInfoProperties docInfo;
 
@@ -27,6 +26,9 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi publicApi() {
-        return GroupedOpenApi.builder().group(docInfo.getDescription()).pathsToMatch("/api/**").build();
+        return GroupedOpenApi.builder()
+                             .group(docInfo.getDescription())
+                             .pathsToMatch("/api/**")
+                             .build();
     }
 }

@@ -2,7 +2,6 @@ package com.xhpolaris.meowpick;
 
 import com.xhpolaris.idlgen.meowchat.content.ContentServiceGrpc;
 import com.xhpolaris.idlgen.meowchat.content.ListPostReq;
-import com.xhpolaris.idlgen.platform.comment.CommentServiceGrpc;
 import jakarta.servlet.http.HttpServletResponse;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.boot.SpringApplication;
@@ -24,9 +23,6 @@ import java.io.IOException;
 public class MeowpickApplication {
     @GrpcClient("meowchat-content")
     private ContentServiceGrpc.ContentServiceBlockingStub meowchatContentService;
-
-    @GrpcClient("meowchat-content")
-    private CommentServiceGrpc.CommentServiceBlockingStub grpc;
 
     public static void main(String[] args) {
         SpringApplication.run(MeowpickApplication.class, args);
