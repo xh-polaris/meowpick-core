@@ -13,9 +13,11 @@ public class SearchHistoryCollection {
     private String id;
 
     private boolean deleted;
+//    搜索次数
     private long count = 1;
     private boolean isUser;
 
+//    搜索内容
     private String text;
     private String uid;
     private Timestamp createAt;

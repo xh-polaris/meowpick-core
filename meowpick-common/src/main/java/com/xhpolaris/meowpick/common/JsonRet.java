@@ -1,6 +1,6 @@
 package com.xhpolaris.meowpick.common;
 
-import com.xhpolaris.meowpick.common.enums.state.HttpState;
+import com.xhpolaris.meowpick.common.enums.HttpStateEn;
 import lombok.Data;
 
 import java.util.Map;
@@ -16,7 +16,7 @@ public class JsonRet {
     private State state;
     private Object payload;
 
-    public static JsonRet fail(HttpState state) {
+    public static JsonRet fail(HttpStateEn state) {
         JsonRet data = new JsonRet();
 
         State type = new State();

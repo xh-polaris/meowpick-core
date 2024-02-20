@@ -16,5 +16,5 @@ public class TagCollection {
     @Indexed(unique = true)
     private String key;
 
-    private List<TagCollection> tags;
+    private List<String> tags;
 }

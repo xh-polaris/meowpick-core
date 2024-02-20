@@ -4,7 +4,7 @@ import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.tag.model.entity.TagCmd;
 import com.xhpolaris.meowpick.domain.tag.model.valobj.TagVO;
 import com.xhpolaris.meowpick.domain.tag.service.TagServer;
-import com.xhpolaris.meowpick.trigger.http.api.TagApi;
+import com.xhpolaris.meowpick.api.TagApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -1,8 +1,10 @@
-package com.xhpolaris.meowpick.trigger.http.api;
+package com.xhpolaris.meowpick.api;
 
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.comment.model.entity.CommentCmd;
+import com.xhpolaris.meowpick.domain.comment.model.entity.ReplyCmd;
 import com.xhpolaris.meowpick.domain.comment.model.valobj.CommentVO;
+import com.xhpolaris.meowpick.domain.comment.model.valobj.ReplyVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Tag(name = "CommentApi", description = "评论接口")
 @RequestMapping("/api/comment")
@@ -36,4 +40,12 @@ public interface CommentApi {
     @GetMapping("/{id}")
     @Operation(summary = "获取详情")
     CommentVO get(@PathVariable String id);
+
+    @PostMapping("/reply/{id}")
+    @Operation(summary = "新增回复")
+    ReplyVO replyTo(@PathVariable String id, @RequestBody ReplyCmd.CreateCmd cmd);
+
+    @GetMapping("/reply/{id}")
+    @Operation(summary = "获取回复列表")
+    List<ReplyVO> replies(@PathVariable String id);
 }

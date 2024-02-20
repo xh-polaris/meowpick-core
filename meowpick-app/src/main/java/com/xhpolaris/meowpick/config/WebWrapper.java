@@ -2,7 +2,7 @@ package com.xhpolaris.meowpick.config;
 
 import com.google.gson.Gson;
 import com.xhpolaris.meowpick.common.JsonRet;
-import com.xhpolaris.meowpick.common.enums.state.HttpState;
+import com.xhpolaris.meowpick.common.enums.HttpStateEn;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -31,7 +31,7 @@ public class WebWrapper implements ResponseBodyAdvice<Object> {
                                   @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   @NonNull ServerHttpRequest request,
                                   @NonNull ServerHttpResponse response) {
-        if (body instanceof HttpState state) {
+        if (body instanceof HttpStateEn state) {
             return JsonRet.fail(state);
         }
         if (body instanceof String) {

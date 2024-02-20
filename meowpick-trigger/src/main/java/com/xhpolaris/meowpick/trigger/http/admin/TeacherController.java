@@ -1,40 +1,40 @@
-package com.xhpolaris.meowpick.infrastructure.repository;
+package com.xhpolaris.meowpick.trigger.http.admin;
 
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.teacher.model.entity.TeacherCmd;
 import com.xhpolaris.meowpick.domain.teacher.model.valobj.TeacherVO;
-import com.xhpolaris.meowpick.domain.teacher.repository.ITeacherRepository;
-import com.xhpolaris.meowpick.infrastructure.dao.TeacherDao;
+import com.xhpolaris.meowpick.domain.teacher.service.TeacherServer;
+import com.xhpolaris.meowpick.api.TeacherApi;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RestController;
 
-@Component
+@RestController
 @RequiredArgsConstructor
-public class TeacherRepository implements ITeacherRepository {
-    private final TeacherDao teacherDao;
+public class TeacherController implements TeacherApi {
+    private final TeacherServer service;
 
     @Override
     public TeacherVO add(TeacherCmd.CreateCmd cmd) {
-        return null;
+        return service.add(cmd);
     }
 
     @Override
-    public TeacherVO remove(String id) {
-        return null;
+    public TeacherVO del(String id) {
+        return service.del(id);
     }
 
     @Override
     public TeacherVO update(TeacherCmd.UpdateCmd cmd) {
-        return null;
+        return service.update(cmd);
     }
 
     @Override
     public PageEntity<TeacherVO> query(TeacherCmd.Query query) {
-        return null;
+        return service.query(query);
     }
 
     @Override
     public TeacherVO get(String id) {
-        return null;
+        return service.get(id);
     }
 }

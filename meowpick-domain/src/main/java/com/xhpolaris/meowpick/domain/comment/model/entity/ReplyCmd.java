@@ -1,16 +1,15 @@
 package com.xhpolaris.meowpick.domain.comment.model.entity;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.common.enums.CommentStatsEn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-public class CommentCmd {
-    private CommentCmd() {}
+public class ReplyCmd {
+    private ReplyCmd() {}
 
     @Data
-    @Schema(name = "CommentCmd$CreateCmd")
+    @Schema(name = "ReplyCmd$CreateCmd")
     public static class CreateCmd {
         @NotNull
         private String target;
@@ -19,7 +18,7 @@ public class CommentCmd {
     }
 
     @Data
-    @Schema(name = "CommentCmd$UpdateCmd")
+    @Schema(name = "ReplyCmd$UpdateCmd")
     public static class UpdateCmd {
         @NotNull
         private String id;
@@ -28,7 +27,7 @@ public class CommentCmd {
     }
 
     @Data
-    @Schema(name = "CommentCmd$Query")
+    @Schema(name = "ReplyCmd$Query")
     public static class Query extends PageEntity.Query {
         private String id;
     }

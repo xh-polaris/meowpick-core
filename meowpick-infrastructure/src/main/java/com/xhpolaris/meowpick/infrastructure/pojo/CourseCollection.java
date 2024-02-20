@@ -24,9 +24,12 @@ public class CourseCollection {
     private String id;
     private String name;
     private String category;
+//    院系
     private String department;
     private String depart;
+//    绩点
     private String point;
+//    描述
     private String describe;
     private List<String> teachers;
     private List<String> campuses;

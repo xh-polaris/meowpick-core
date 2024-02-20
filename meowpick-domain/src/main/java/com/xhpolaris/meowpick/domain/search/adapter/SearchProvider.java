@@ -17,7 +17,7 @@ public class SearchProvider implements InitializingBean {
     private static final Map<String, SearchComponent<?>> maps = new HashMap<>(8);
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         maps.put("course", courseServer);
     }
 

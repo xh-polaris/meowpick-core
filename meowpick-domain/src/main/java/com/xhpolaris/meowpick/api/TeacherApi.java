@@ -1,12 +1,13 @@
-package com.xhpolaris.meowpick.trigger.http.api;
+package com.xhpolaris.meowpick.api;
 
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
+import com.xhpolaris.meowpick.domain.teacher.model.entity.TeacherCmd;
+import com.xhpolaris.meowpick.domain.teacher.model.valobj.TeacherVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,36 +16,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Tag(name = "CourseApi", description = "课程接口")
-@RequestMapping("/api/course")
-public interface CourseApi {
-
+@Tag(name = "TeacherApi", description = "教师接口")
+@RequestMapping("/api/teacher")
+public interface TeacherApi {
     @PostMapping("/add")
-    @Operation(summary = "新增课程")
-    CourseVO add(@Validated @RequestBody CourseCmd.CreateCmd cmd);
+    @Operation(summary = "新增")
+    TeacherVO add(@Validated @RequestBody TeacherCmd.CreateCmd cmd);
 
     @PostMapping("/del/{id}")
-    @Operation(summary = "删除课程")
-    CourseVO del(@PathVariable String id);
+    @Operation(summary = "删除")
+    TeacherVO del(@PathVariable String id);
 
     @PostMapping("/update")
-    @Operation(summary = "更新课程")
-    CourseVO update(@Validated @RequestBody CourseCmd.UpdateCmd cmd);
+    @Operation(summary = "更新")
+    TeacherVO update(@Validated @RequestBody TeacherCmd.UpdateCmd cmd);
 
     @GetMapping("/query")
     @Operation(summary = "分页查询")
-    PageEntity<CourseVO> query(@Validated @ParameterObject CourseCmd.Query query);
+    PageEntity<TeacherVO> query(@Validated @ParameterObject TeacherCmd.Query query);
 
     @GetMapping("/{id}")
     @Operation(summary = "获取详情")
-    Course get(@PathVariable String id);
-
-    @PostMapping("/learn/{id}")
-    @Operation(summary = "学过")
-    boolean learn(HttpServletRequest request, @PathVariable String id);
-
-    @PostMapping("/want/{id}")
-    @Operation(summary = "想选")
-    boolean want(@PathVariable String id);
+    TeacherVO get(@PathVariable String id);
 
 }

@@ -3,26 +3,28 @@ package com.xhpolaris.meowpick.infrastructure.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Data
-@NoArgsConstructor
+@Document("action")
 @AllArgsConstructor
-@Document("comment_index")
-public class CommentIndexCollection {
+@NoArgsConstructor
+public class ActionCollection {
+
+    @Data
+    public static class Action {
+        private String uid;
+        private String emoji;
+        private Timestamp crateAt;
+    }
+
     @MongoId
     private String id;
-    @Indexed
-    private String foreignId;
-    private String commentId;
-    private String moduleType;
-    private String commentStats;
+    private String target;
 
-    private Timestamp createAt;
-    private Timestamp updateAt;
-
+    private List<Action> like;
 }

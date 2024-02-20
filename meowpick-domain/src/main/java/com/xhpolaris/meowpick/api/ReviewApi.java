@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.trigger.http.api;
+package com.xhpolaris.meowpick.api;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 

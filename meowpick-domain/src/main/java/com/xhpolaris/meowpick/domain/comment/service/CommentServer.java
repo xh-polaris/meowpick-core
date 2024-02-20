@@ -10,24 +10,24 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CommentServer {
-    private final ICommentRepository repository;
+    private final ICommentRepository commentRepository;
     public CommentVO commit(CommentCmd.CreateCmd cmd) {
-        return repository.add(cmd);
+        return commentRepository.add(cmd);
     }
 
     public CommentVO remove(String id) {
-        return repository.del(id);
+        return commentRepository.del(id);
     }
 
     public CommentVO update(CommentCmd.UpdateCmd cmd) {
-        return repository.update(cmd);
+        return commentRepository.update(cmd);
     }
 
     public PageEntity<CommentVO> query(CommentCmd.Query query) {
-        return repository.query(query);
+        return commentRepository.query(query);
     }
 
     public CommentVO get(String id) {
-        return repository.find(id);
+        return commentRepository.find(id);
     }
 }

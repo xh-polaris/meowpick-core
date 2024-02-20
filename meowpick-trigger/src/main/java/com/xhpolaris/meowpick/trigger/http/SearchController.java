@@ -3,7 +3,7 @@ package com.xhpolaris.meowpick.trigger.http;
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.search.model.entity.SearchCmd;
 import com.xhpolaris.meowpick.domain.search.service.SearchServer;
-import com.xhpolaris.meowpick.trigger.http.api.SearchApi;
+import com.xhpolaris.meowpick.api.SearchApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +21,7 @@ public class SearchController implements SearchApi {
 
     @Override
     public List<?> recent() {
-        return List.of();
+        return searchServer.recent();
     }
 
     @Override
