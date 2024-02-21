@@ -44,11 +44,5 @@ public class CourseServer implements SearchComponent<CourseVO> {
         return this.query(CourseCmd.Query.of(query.getKeyword(), query));
     }
 
-    public boolean learn(String id) {
-        return courseRepository.learned(id, context.getUser().getId());
-    }
 
-    public boolean want(String id) {
-        return courseRepository.want2learn(id, context.getUser().getId());
-    }
 }

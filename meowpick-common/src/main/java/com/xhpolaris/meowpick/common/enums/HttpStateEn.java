@@ -10,7 +10,7 @@ public enum HttpStateEn implements BaseEnum {
     TARGETNOTEXISTS("目标不存在", "not_exists",1501);
 
     private final String msg;
-    private String value;
+    private final String value;
     private final Integer code;
 
 }

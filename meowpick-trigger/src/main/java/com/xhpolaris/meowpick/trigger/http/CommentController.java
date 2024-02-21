@@ -40,7 +40,7 @@ public class CommentController implements CommentApi {
     }
 
     @Override
-    public CommentVO get(String id) {
+    public ReplyVO get(String id) {
         return service.get(id);
     }
 

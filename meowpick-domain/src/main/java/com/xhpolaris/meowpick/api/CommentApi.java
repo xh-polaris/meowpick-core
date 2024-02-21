@@ -39,7 +39,7 @@ public interface CommentApi {
 
     @GetMapping("/{id}")
     @Operation(summary = "获取详情")
-    CommentVO get(@PathVariable String id);
+    ReplyVO get(@PathVariable String id);
 
     @PostMapping("/reply/{id}")
     @Operation(summary = "新增回复")

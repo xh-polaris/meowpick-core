@@ -21,11 +21,12 @@ public class CommentCollection {
     public static class Reply {
         private String id;
         private String text;
+        private String uid;
         @CreatedDate
         private Timestamp crateAt;
         @LastModifiedDate
         private Timestamp updateAt;
-        private List<Reply> replies;
+//        private List<Reply> replies;
     }
 
     @MongoId

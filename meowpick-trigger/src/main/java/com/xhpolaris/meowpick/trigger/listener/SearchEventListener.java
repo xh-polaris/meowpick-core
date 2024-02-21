@@ -15,6 +15,6 @@ public class SearchEventListener {
 
     @EventListener(SearchEvent.class)
     void onSearch(SearchEvent event) {
-
+        service.note(event);
     }
 }

@@ -3,6 +3,7 @@ package com.xhpolaris.meowpick.domain.comment.service;
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.comment.model.entity.CommentCmd;
 import com.xhpolaris.meowpick.domain.comment.model.valobj.CommentVO;
+import com.xhpolaris.meowpick.domain.comment.model.valobj.ReplyVO;
 import com.xhpolaris.meowpick.domain.comment.repository.ICommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ public class CommentServer {
         return commentRepository.query(query);
     }
 
-    public CommentVO get(String id) {
+    public ReplyVO get(String id) {
         return commentRepository.find(id);
     }
 }

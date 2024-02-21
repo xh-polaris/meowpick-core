@@ -1,9 +1,14 @@
 package com.xhpolaris.meowpick.domain.course.repository;
 
 import com.xhpolaris.meowpick.common.PageEntity;
+import com.xhpolaris.meowpick.common.enums.CourseNoteEn;
 import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
+import com.xhpolaris.meowpick.domain.course.model.entity.CourseNoteCmd;
+import com.xhpolaris.meowpick.domain.course.model.valobj.CourseNote;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
+
+import java.util.List;
 
 public interface ICourseRepository {
     CourseVO createCourse(CourseCmd.CreateCmd cmd);
@@ -16,7 +21,7 @@ public interface ICourseRepository {
 
     Course getById(String id, String uid);
 
-    boolean learned(String id, String uid);
+    CourseNote history(String uid, String course);
 
-    boolean want2learn(String id, String uid);
+    boolean note(String uid, String course, CourseNoteCmd.CreateCmd cmd, CourseNoteEn en);
 }

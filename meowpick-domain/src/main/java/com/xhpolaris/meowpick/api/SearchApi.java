@@ -2,6 +2,7 @@ package com.xhpolaris.meowpick.api;
 
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.search.model.entity.SearchCmd;
+import com.xhpolaris.meowpick.domain.search.model.valobj.SearchHistoryVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;
@@ -21,7 +22,7 @@ public interface SearchApi {
 
     @Operation(summary = "最近搜过")
     @GetMapping("/recent")
-    List<?> recent();
+    List<SearchHistoryVO> recent();
 
     @Operation(summary = "搜索建议")
     @GetMapping("/suggest")

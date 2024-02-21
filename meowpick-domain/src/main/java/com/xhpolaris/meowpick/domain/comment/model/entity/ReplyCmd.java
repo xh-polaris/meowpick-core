@@ -12,8 +12,6 @@ public class ReplyCmd {
     @Schema(name = "ReplyCmd$CreateCmd")
     public static class CreateCmd {
         @NotNull
-        private String target;
-        @NotNull
         private String text;
     }
 
