@@ -21,8 +21,8 @@ public class SearchServer {
 
     public PageEntity<?> query(SearchCmd.Query query) {
         context.publish(new SearchEvent(context.getUser().getId(),
-                                        query.getCategory(),
-                                        query.getKeyword()
+                query.getCategory(),
+                query.getKeyword()
         ));
         return provider.get(query.getCategory()).search(query);
     }

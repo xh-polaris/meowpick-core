@@ -1,9 +1,6 @@
 package com.xhpolaris.meowpick.api;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
-import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
-import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
 import com.xhpolaris.meowpick.domain.teacher.model.entity.TeacherCmd;
 import com.xhpolaris.meowpick.domain.teacher.model.valobj.TeacherVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,6 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Tag(name = "TeacherApi", description = "教师接口")
 @RequestMapping("/api/teacher")
@@ -38,5 +38,8 @@ public interface TeacherApi {
     @GetMapping("/{id}")
     @Operation(summary = "获取详情")
     TeacherVO get(@PathVariable String id);
+
+    @GetMapping("/batch")
+    List<TeacherVO> getBatch(@ParameterObject @RequestParam List<String> id);
 
 }

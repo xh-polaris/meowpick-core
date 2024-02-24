@@ -2,7 +2,7 @@ package com.xhpolaris.meowpick.domain.course.model.valobj;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -14,7 +14,7 @@ public class CourseNote {
         private String title;
         private String text;
         private List<String> img;
-        private Timestamp crateAt;
+        private Date crateAt;
     }
 
     private Float score;

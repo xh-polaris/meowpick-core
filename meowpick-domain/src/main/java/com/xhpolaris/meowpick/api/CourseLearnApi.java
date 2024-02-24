@@ -27,4 +27,7 @@ public interface CourseLearnApi {
     @GetMapping("/{id}")
     CourseNote course_note_list(@PathVariable String id);
 
+    @GetMapping("/course/{id}")
+    List<Float> course_score_list(@PathVariable String id);
+
 }

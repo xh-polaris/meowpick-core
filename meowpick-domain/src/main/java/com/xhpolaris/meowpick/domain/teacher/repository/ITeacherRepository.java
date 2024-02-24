@@ -4,6 +4,8 @@ import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.teacher.model.entity.TeacherCmd;
 import com.xhpolaris.meowpick.domain.teacher.model.valobj.TeacherVO;
 
+import java.util.List;
+
 public interface ITeacherRepository {
     TeacherVO add(TeacherCmd.CreateCmd cmd);
 
@@ -14,4 +16,6 @@ public interface ITeacherRepository {
     PageEntity<TeacherVO> query(TeacherCmd.Query query);
 
     TeacherVO get(String id);
+
+    List<TeacherVO> in(List<String> id);
 }

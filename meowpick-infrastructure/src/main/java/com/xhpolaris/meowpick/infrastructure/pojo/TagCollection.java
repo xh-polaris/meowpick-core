@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -16,5 +17,5 @@ public class TagCollection {
     @Indexed(unique = true)
     private String key;
 
-    private List<String> tags;
+    private List<String> tags = new ArrayList<>();
 }

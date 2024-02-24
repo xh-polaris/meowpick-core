@@ -2,7 +2,6 @@ package com.xhpolaris.meowpick.trigger.http;
 
 import com.xhpolaris.meowpick.api.CourseLearnApi;
 import com.xhpolaris.meowpick.common.Context;
-import com.xhpolaris.meowpick.common.enums.CourseNoteEn;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseNoteCmd;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseNote;
 import com.xhpolaris.meowpick.domain.course.service.CourseNoteServer;
@@ -27,21 +26,26 @@ public class CourseNoteController implements CourseLearnApi {
     @Override
     public boolean start(String id, CourseNoteCmd.CreateCmd cmd) {
 
-        return service.start(context.getUser().getId(), id, cmd, CourseNoteEn.start);
+        return service.start(context.getUser().getId(), id, cmd, service.currentState(context.getUser().getId(), id));
     }
 
     @Override
     public boolean note(String id, CourseNoteCmd.CreateCmd cmd) {
-        return service.note(context.getUser().getId(), id, cmd, CourseNoteEn.note);
+        return service.note(context.getUser().getId(), id, cmd, service.currentState(context.getUser().getId(), id));
     }
 
     @Override
     public boolean end(String id, CourseNoteCmd.CreateCmd cmd) {
-        return service.end(context.getUser().getId(), id, cmd, CourseNoteEn.end);
+        return service.end(context.getUser().getId(), id, cmd, service.currentState(context.getUser().getId(), id));
     }
 
     @Override
     public CourseNote course_note_list(String id) {
         return service.list(context.getUser().getId(), id);
+    }
+
+    @Override
+    public List<Float> course_score_list(String id) {
+        return service.list(id);
     }
 }

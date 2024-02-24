@@ -2,17 +2,15 @@ package com.xhpolaris.meowpick.domain.course.state.impl;
 
 import com.xhpolaris.meowpick.common.enums.CourseNoteEn;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseNoteCmd;
+import com.xhpolaris.meowpick.domain.course.repository.ICourseRepository;
 import com.xhpolaris.meowpick.domain.course.state.AbstractCourseNote;
 import org.springframework.stereotype.Component;
 
-@Component(CourseNoteEn.Name.start)
-public class StartNote extends AbstractCourseNote {
-    @Override
-    public boolean start(String uid,
-                         String course,
-                         CourseNoteCmd.CreateCmd cmd,
-                         CourseNoteEn en) {
-        return repository.note(uid, course, cmd, en);
+@Component(CourseNoteEn.Name.note)
+public class NoteState extends AbstractCourseNote {
+
+    public NoteState(ICourseRepository repository) {
+        super(repository);
     }
 
     @Override
@@ -20,7 +18,7 @@ public class StartNote extends AbstractCourseNote {
                         String course,
                         CourseNoteCmd.CreateCmd cmd,
                         CourseNoteEn en) {
-        return repository.note(uid, course, cmd, en);
+        return repository.note(uid, course, cmd, CourseNoteEn.note);
     }
 
     @Override
@@ -28,6 +26,6 @@ public class StartNote extends AbstractCourseNote {
                        String course,
                        CourseNoteCmd.CreateCmd cmd,
                        CourseNoteEn en) {
-        return repository.note(uid, course, cmd, en);
+        return repository.note(uid, course, cmd, CourseNoteEn.end);
     }
 }

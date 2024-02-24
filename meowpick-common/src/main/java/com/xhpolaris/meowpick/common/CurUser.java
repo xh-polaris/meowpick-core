@@ -12,7 +12,7 @@ public class CurUser {
     private String avatar;
     private String nickName;
 
-    private static CurUser anonymous = new CurUser("anonymous", "avatar", "anonymous");
+    private static CurUser anonymous = new CurUser("anonymous1", "avatar", "anonymous");
     public static CurUser anonymous() {
         return anonymous;
     }

@@ -19,7 +19,6 @@ import com.xhpolaris.meowpick.infrastructure.pojo.CourseLearnCollection;
 import com.xhpolaris.meowpick.infrastructure.pojo.CourseLearnHistoryCollection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
     public CourseVO createCourse(CourseCmd.CreateCmd cmd) {
         CourseCollection db = CourseMap.instance.cmd2db(cmd);
 
-        courseDao.insert(db);
+        courseDao.save(db);
 
         return CourseMap.instance.db2vo(db);
     }
@@ -126,10 +125,46 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
     }
 
     @Override
+    public List<Float> courseScoreList(String id) {
+        return historyDao.findAllByCourse(id)
+                         .stream()
+                         .map(CourseLearnHistoryCollection::getScore)
+                         .toList();
+    }
+
+    @Override
+    public CourseNoteEn currentState(String uid, String course) {
+        Integer code = Optional.ofNullable(historyDao.findByUidAndCourse(uid, course))
+                               .map(CourseLearnHistoryCollection::getHistories)
+                               .orElse(List.of())
+                               .stream()
+                               .map(CourseLearnHistoryCollection.History::getEn)
+                               .max(Integer::compareTo)
+                               .orElse(CourseNoteEn.start.getCode());
+
+        return CourseNoteEn.of(code);
+    }
+
+    @Override
     public boolean note(String uid,
                         String course,
                         CourseNoteCmd.CreateCmd cmd,
                         CourseNoteEn en) {
-        return false;
+        CourseLearnHistoryCollection history = Optional.ofNullable(historyDao.findByUidAndCourse(uid, course))
+                                                       .orElse(new CourseLearnHistoryCollection());
+        CourseLearnHistoryCollection.History hs = new CourseLearnHistoryCollection.History();
+
+        hs.setEn(en.getCode());
+        hs.setStep(en.getValue());
+        hs.setText(cmd.getText());
+        hs.setTitle(cmd.getTitle());
+
+        history.setUid(uid);
+        history.setCourse(course);
+        history.setScore(cmd.getScore());
+        history.getHistories().add(hs);
+        historyDao.save(history);
+
+        return true;
     }
 }

@@ -2,7 +2,7 @@ package com.xhpolaris.meowpick.domain.user.model.valobj;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -12,7 +12,7 @@ public class ActionVO {
     public static class Action {
         private String uid;
         private String emoji;
-        private Timestamp crateAt;
+        private Date crateAt;
     }
 
 

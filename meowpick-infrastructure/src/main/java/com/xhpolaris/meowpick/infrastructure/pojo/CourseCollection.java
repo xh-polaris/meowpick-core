@@ -12,7 +12,8 @@ import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -24,39 +25,39 @@ public class CourseCollection {
     private String id;
     private String name;
     private String category;
-//    院系
+    //    院系
     private String department;
     private String depart;
-//    绩点
+    //    绩点
     private String point;
-//    描述
+    //    描述
     private String describe;
-    private List<String> teachers;
-    private List<String> campuses;
-    private List<String> tags;
+    private List<String> teachers = new ArrayList<>();
+    private List<String> campuses = new ArrayList<>();
+    private List<String> tags = new ArrayList<>();
 
     @CreatedDate
-    private Timestamp crateAt;
+    private Date crateAt;
     @LastModifiedDate
-    private Timestamp updateAt;
+    private Date updateAt;
 
     public static Example<CourseCollection> toExample(CourseCmd.Query query) {
         CourseCollection course = CourseMap.instance.query(query);
 
         ExampleMatcher.GenericPropertyMatcher containsMatcher = ExampleMatcher.GenericPropertyMatchers.contains()
-                                                                                                      .ignoreCase();
+                .ignoreCase();
 
         // 定义 ExampleMatcher，这里使用了忽略大小写的匹配规则
         ExampleMatcher matcher = ExampleMatcher.matchingAny()
-                                               .withMatcher("name", containsMatcher)
-                                               .withMatcher("category", containsMatcher)
-                                               .withMatcher("department", containsMatcher)
-                                               .withMatcher("depart", containsMatcher)
-                                               .withMatcher("point", containsMatcher)
-                                               .withMatcher("teachers", containsMatcher)
-                                               .withMatcher("campuses", containsMatcher)
-                                               .withIgnoreCase()
-                                               .withIgnoreNullValues();
+                .withMatcher("name", containsMatcher)
+                .withMatcher("category", containsMatcher)
+                .withMatcher("department", containsMatcher)
+                .withMatcher("depart", containsMatcher)
+                .withMatcher("point", containsMatcher)
+                .withMatcher("teachers", containsMatcher)
+                .withMatcher("campuses", containsMatcher)
+                .withIgnoreCase()
+                .withIgnoreNullValues();
 
         return Example.of(course, matcher);
     }

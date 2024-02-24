@@ -9,7 +9,9 @@ public class CourseNoteCmd {
     @Data
     @Schema(name = "CourseNote$Query")
     public static class CreateCmd {
-
+        private String title;
+        private String text;
+        private Float score;
     }
 
     @Data

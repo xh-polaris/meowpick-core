@@ -24,4 +24,8 @@ public interface ICourseRepository {
     CourseNote history(String uid, String course);
 
     boolean note(String uid, String course, CourseNoteCmd.CreateCmd cmd, CourseNoteEn en);
+
+    List<Float> courseScoreList(String id);
+
+    CourseNoteEn currentState(String uid, String course);
 }

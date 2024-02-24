@@ -30,7 +30,7 @@ public class SearcherRepository implements ISearcherRepository {
 
     @Override
     public void note(SearchEvent event) {
-        SearchHistoryCollection history = searchHistoryDao.findByUidAndTextOrderByCreateAt(event.getUid(),
+        SearchHistoryCollection history = searchHistoryDao.findByUidAndText(event.getUid(),
                                                                             event.getText());
         if (history != null) {
             history.setCount(history.getCount() + 1);

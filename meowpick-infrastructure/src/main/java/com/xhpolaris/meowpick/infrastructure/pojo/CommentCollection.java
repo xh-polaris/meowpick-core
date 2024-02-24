@@ -8,7 +8,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -23,9 +24,9 @@ public class CommentCollection {
         private String text;
         private String uid;
         @CreatedDate
-        private Timestamp crateAt;
+        private Date crateAt;
         @LastModifiedDate
-        private Timestamp updateAt;
+        private Date updateAt;
 //        private List<Reply> replies;
     }
 
@@ -35,10 +36,10 @@ public class CommentCollection {
     private String target;
     private String text;
     private String uid;
-    private List<Reply> replies;
+    private List<Reply> replies = new ArrayList<>();
 
     @CreatedDate
-    private Timestamp crateAt;
+    private Date crateAt;
     @LastModifiedDate
-    private Timestamp updateAt;
+    private Date updateAt;
 }

@@ -3,19 +3,19 @@ package com.xhpolaris.meowpick.domain.course.state;
 import com.xhpolaris.meowpick.common.enums.CourseNoteEn;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseNoteCmd;
 import com.xhpolaris.meowpick.domain.course.repository.ICourseRepository;
+import lombok.RequiredArgsConstructor;
 
-import javax.annotation.Resource;
-
+@RequiredArgsConstructor
 public abstract class AbstractCourseNote implements ICourseNote{
-    @Resource
-    protected ICourseRepository repository;
+//    @Resource
+    protected final ICourseRepository repository;
 
     @Override
     public boolean start(String uid,
                          String course,
                          CourseNoteCmd.CreateCmd cmd,
                          CourseNoteEn currentState) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("当前状态无法操作");
     }
 
     @Override
@@ -23,7 +23,7 @@ public abstract class AbstractCourseNote implements ICourseNote{
                         String course,
                         CourseNoteCmd.CreateCmd cmd,
                         CourseNoteEn currentState) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("当前状态无法操作");
     }
 
     @Override
@@ -31,6 +31,6 @@ public abstract class AbstractCourseNote implements ICourseNote{
                        String course,
                        CourseNoteCmd.CreateCmd cmd,
                        CourseNoteEn currentState) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("当前状态无法操作");
     }
 }

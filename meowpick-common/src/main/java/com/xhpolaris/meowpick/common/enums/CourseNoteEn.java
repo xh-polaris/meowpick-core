@@ -19,4 +19,14 @@ public enum CourseNoteEn implements BaseEnum {
         String note = "course_note_note";
         String end = "course_note_end";
     }
+
+    public static CourseNoteEn of(Integer code) {
+        for (CourseNoteEn note : CourseNoteEn.values()) {
+            if (note.getCode().equals(code)) {
+                return note;
+            }
+        }
+        throw new IllegalArgumentException("Invalid code: " + code);
+    }
+
 }

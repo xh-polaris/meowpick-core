@@ -21,25 +21,33 @@ public class CourseNoteServer {
     public boolean start(String uid,
                          String course,
                          CourseNoteCmd.CreateCmd cmd,
-                         CourseNoteEn courseNoteEn) {
-        return provider.get(uid, course, courseNoteEn).start(uid, course, cmd, courseNoteEn);
+                         CourseNoteEn en) {
+        return provider.get(en).start(uid, course, cmd, en);
     }
 
     public boolean note(String uid,
                         String course,
                         CourseNoteCmd.CreateCmd cmd,
-                        CourseNoteEn courseNoteEn) {
-        return provider.get(uid, course, courseNoteEn).note(uid, course, cmd, courseNoteEn);
+                        CourseNoteEn en) {
+        return provider.get(en).note(uid, course, cmd, en);
     }
 
     public boolean end(String uid,
                        String course,
                        CourseNoteCmd.CreateCmd cmd,
-                       CourseNoteEn courseNoteEn) {
-        return provider.get(uid, course, courseNoteEn).end(uid, course, cmd, courseNoteEn);
+                       CourseNoteEn en) {
+        return provider.get(en).end(uid, course, cmd, en);
     }
 
     public CourseNote list(String uid, String course) {
         return repository.history(uid, course);
+    }
+
+    public List<Float> list(String id) {
+        return repository.courseScoreList(id);
+    }
+
+    public CourseNoteEn currentState(String uid, String course) {
+        return repository.currentState(uid, course);
     }
 }

@@ -3,10 +3,13 @@ package com.xhpolaris.meowpick.infrastructure.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -19,12 +22,15 @@ public class UserActionCollection {
     public static class Action {
         private String target;
         private String emoji;
-        private Timestamp crateAt;
+        @CreatedDate
+        private Date crateAt;
+        @LastModifiedDate
+        private Date updateAt;
     }
 
     @MongoId
     private String id;
     private String uid;
 
-    private List<Action> like;
+    private List<Action> like = new ArrayList<>();
 }

@@ -17,6 +17,6 @@ public class PageEntity<T> {
         private Integer size = 10;
         private String regex;
         private Date startAt;
-        private Date endAt;
+        private Date  endAt;
     }
 }

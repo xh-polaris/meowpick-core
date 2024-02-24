@@ -3,7 +3,7 @@ package com.xhpolaris.meowpick.domain.comment.model.valobj;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -12,8 +12,8 @@ public class ReplyVO {
     private String id;
     private String uid;
     private String text;
-    private Timestamp crateAt;
-    private Timestamp updateAt;
+    private Date crateAt;
+    private Date  updateAt;
 
     List<ReplyVO> replies;
 }
