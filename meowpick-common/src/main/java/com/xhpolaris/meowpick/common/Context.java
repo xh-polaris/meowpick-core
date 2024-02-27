@@ -9,4 +9,6 @@ public interface Context {
     AppProperties properties();
 
     CurUser getUser();
+
+    String uid();
 }

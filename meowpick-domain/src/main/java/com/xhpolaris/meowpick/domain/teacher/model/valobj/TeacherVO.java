@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @Schema
 public class TeacherVO {
+    private String id;
     private String avatar;
     private String name;
     private String depart;

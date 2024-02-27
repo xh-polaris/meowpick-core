@@ -2,6 +2,7 @@ package com.xhpolaris.meowpick.domain.user.model.valobj;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,9 @@ public class ActionVO {
         private Date crateAt;
     }
 
+    private boolean like;
+    private Integer like_cnt;
+    private boolean share;
 
-    private List<Action> like;
+    private List<Action> likes = new ArrayList<>();
 }

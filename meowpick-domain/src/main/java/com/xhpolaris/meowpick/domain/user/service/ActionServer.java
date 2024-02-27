@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -21,8 +19,8 @@ public class ActionServer {
         return repository.like(context.getUser().getId(), id, cmd);
     }
 
-    public ActionVO actions(String id) {
-        return repository.get(id);
+    public ActionVO relation(String id) {
+        return repository.get(id, context.uid());
     }
 
     public boolean like(String id, String target) {

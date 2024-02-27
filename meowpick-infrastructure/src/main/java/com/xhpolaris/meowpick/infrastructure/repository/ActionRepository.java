@@ -13,11 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -75,11 +73,11 @@ public class ActionRepository implements IActionRepository {
                              ActionCollection action) {
         user.setLike(user.getLike()
                          .stream()
-                         .filter(i -> ! i.getTarget().equals(target))
+                         .filter(i -> !i.getTarget().equals(target))
                          .toList());
         action.setLike(action.getLike()
                              .stream()
-                             .filter(i -> ! i.getUid().equals(uid))
+                             .filter(i -> !i.getUid().equals(uid))
                              .toList());
 
         userActionDao.save(user);
@@ -89,15 +87,21 @@ public class ActionRepository implements IActionRepository {
     }
 
     @Override
-    public ActionVO get(String id) {
+    public ActionVO get(String id, String uid) {
         ActionVO vo = new ActionVO();
 
-        vo.setLike(Optional.ofNullable(actionDao.findByTarget(id))
-                           .map(ActionCollection::getLike)
-                           .orElse(Collections.emptyList())
-                           .stream()
-                           .map(ActionMap.instance::db2vo)
-                           .toList());
+        List<ActionVO.Action> like_list = Optional.ofNullable(actionDao.findByTarget(id))
+                                                  .map(ActionCollection::getLike)
+                                                  .orElse(Collections.emptyList())
+                                                  .stream()
+                                                  .map(ActionMap.instance::db2vo)
+                                                  .toList();
+        vo.setLikes(like_list);
+        vo.setLike(like_list.stream()
+                             .map(ActionVO.Action::getUid)
+                             .collect(Collectors.toSet())
+                             .contains(uid));
+        vo.setLike_cnt(like_list.size());
 
         return vo;
     }

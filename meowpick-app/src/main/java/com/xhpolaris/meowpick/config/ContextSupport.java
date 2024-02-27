@@ -34,6 +34,11 @@ public class ContextSupport implements Context, ApplicationContextAware {
     }
 
     @Override
+    public String uid() {
+        return getUser().getId();
+    }
+
+    @Override
     public void setApplicationContext(
             @Nonnull ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;

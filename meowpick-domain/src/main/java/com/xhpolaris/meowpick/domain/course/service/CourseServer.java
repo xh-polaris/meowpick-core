@@ -2,7 +2,6 @@ package com.xhpolaris.meowpick.domain.course.service;
 
 import com.xhpolaris.meowpick.common.Context;
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.domain.SearchComponent;
 import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CourseServer implements SearchComponent<CourseVO> {
+public class CourseServer {
     private final ICourseRepository courseRepository;
     private final Context context;
 
@@ -39,10 +38,7 @@ public class CourseServer implements SearchComponent<CourseVO> {
         return courseRepository.getById(id, context.getUser().getId());
     }
 
-    @Override
     public PageEntity<CourseVO> search(SearchCmd.Query query) {
         return this.query(CourseCmd.Query.of(query.getKeyword(), query));
     }
-
-
 }

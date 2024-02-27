@@ -1,5 +1,6 @@
 package com.xhpolaris.meowpick.domain.comment.model.valobj;
 
+import com.xhpolaris.meowpick.domain.user.model.valobj.ActionVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -15,4 +16,6 @@ public class CommentVO {
     private Date updateAt;
 
     private Integer reply;
+
+    private ActionVO relation;
 }

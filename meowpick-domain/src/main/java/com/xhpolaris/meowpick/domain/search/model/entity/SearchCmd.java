@@ -1,6 +1,7 @@
 package com.xhpolaris.meowpick.domain.search.model.entity;
 
 import com.xhpolaris.meowpick.common.PageEntity;
+import com.xhpolaris.meowpick.common.enums.TypeEn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -10,6 +11,6 @@ public class SearchCmd {
     @Schema(name = "SearchCmd$Query")
     public static class Query extends PageEntity.Query {
         private String keyword;
-        private String category;
+        private TypeEn type;
     }
 }

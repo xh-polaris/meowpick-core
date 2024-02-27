@@ -5,6 +5,7 @@ import com.xhpolaris.meowpick.domain.comment.model.entity.CommentCmd;
 import com.xhpolaris.meowpick.domain.comment.model.valobj.CommentVO;
 import com.xhpolaris.meowpick.domain.comment.model.valobj.ReplyVO;
 import com.xhpolaris.meowpick.domain.comment.repository.ICommentRepository;
+import com.xhpolaris.meowpick.domain.user.service.ActionServer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentServer {
     private final ICommentRepository commentRepository;
+    private final ActionServer actionServer;
+
     public CommentVO commit(CommentCmd.CreateCmd cmd) {
         return commentRepository.add(cmd);
     }
@@ -25,7 +28,10 @@ public class CommentServer {
     }
 
     public PageEntity<CommentVO> query(CommentCmd.Query query) {
-        return commentRepository.query(query);
+        PageEntity<CommentVO> page = commentRepository.query(query);
+        page.getRows().forEach(vo -> vo.setRelation(actionServer.relation(vo.getId())));
+
+        return page;
     }
 
     public ReplyVO get(String id) {

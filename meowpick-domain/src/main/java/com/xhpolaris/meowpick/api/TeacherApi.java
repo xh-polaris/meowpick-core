@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -39,7 +38,7 @@ public interface TeacherApi {
     @Operation(summary = "获取详情")
     TeacherVO get(@PathVariable String id);
 
-    @GetMapping("/batch")
-    List<TeacherVO> getBatch(@ParameterObject @RequestParam List<String> id);
+    @PostMapping("/batch")
+    List<TeacherVO> getBatch(@RequestBody List<String> id);
 
 }
