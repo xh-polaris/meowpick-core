@@ -3,6 +3,7 @@ package com.xhpolaris.meowpick.domain.search.service;
 import com.xhpolaris.meowpick.common.Context;
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.common.event.SearchEvent;
+import com.xhpolaris.meowpick.domain.search.adapter.ISearcher;
 import com.xhpolaris.meowpick.domain.search.adapter.factory.SearchProvider;
 import com.xhpolaris.meowpick.domain.search.model.entity.SearchCmd;
 import com.xhpolaris.meowpick.domain.search.model.valobj.SearchHistoryVO;
@@ -21,10 +22,12 @@ public class SearchServer {
 
     public PageEntity<?> query(SearchCmd.Query query) {
         context.publish(new SearchEvent(context.getUser().getId(),
-                query.getType().getValue(),
-                query.getKeyword()
+                                        query.getType().getValue(),
+                                        query.getKeyword()
         ));
-        return provider.query(query);
+
+        ISearcher searcher = provider.query(query);
+        return searcher.search(query);
     }
 
     public List<SearchHistoryVO> recent() {

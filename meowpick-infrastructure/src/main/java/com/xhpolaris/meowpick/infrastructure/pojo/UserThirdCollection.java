@@ -11,22 +11,21 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 import java.util.Date;
 
 @Data
-@Document("user")
+@Document("user_third_account")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCollection {
+public class UserThirdCollection {
     @MongoId
     private String id;
-    private String name;
-    private String avatar;
-    private String phone;
-    private String email;
-    private String password;
-    private boolean auth;
+
+    private String userId;
+
+    private String type;
+    private String token;
+    private boolean bind;
 
     @CreatedDate
     private Date crateAt;
     @LastModifiedDate
     private Date updateAt;
-
 }

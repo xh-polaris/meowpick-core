@@ -25,7 +25,6 @@
             <optional>true</optional>
         </dependency>
 
-
         <dependency>
             <groupId>com.xhpolaris.meowpick</groupId>
             <artifactId>meowpick-common</artifactId>

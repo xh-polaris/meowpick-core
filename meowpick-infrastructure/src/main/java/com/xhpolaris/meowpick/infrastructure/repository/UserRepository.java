@@ -1,5 +1,7 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
+import com.xhpolaris.meowpick.common.exceptions.NotFindException;
+import com.xhpolaris.meowpick.domain.user.model.entity.LoginCmd;
 import com.xhpolaris.meowpick.domain.user.model.entity.UserCmd;
 import com.xhpolaris.meowpick.domain.user.model.valobj.UserVO;
 import com.xhpolaris.meowpick.domain.user.repository.IUserRepository;
@@ -41,7 +43,22 @@ public class UserRepository extends BasicRepository<UserCollection, UserVO> impl
         return null;
     }
 
-    public void test(){
+    @Override
+    public UserVO getByPhone(String phone) {
+        return Optional.ofNullable(userDao.findByPhone(phone))
+                       .map(UserMap.instance::db2vo)
+                       .orElseThrow(() -> new NotFindException(""));
+    }
+
+    @Override
+    public UserVO registry(LoginCmd.CreateCmd cmd) {
+        UserCollection db = UserMap.instance.cmd2db(cmd);
+        userDao.save(db);
+
+        return UserMap.instance.db2vo(db);
+    }
+
+    public void test() {
         Query query = new Query();
         Criteria criteria = new Criteria();
 
