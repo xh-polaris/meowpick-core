@@ -1,10 +1,9 @@
 package com.xhpolaris.meowpick.config;
 
 import com.google.gson.Gson;
-import com.xhpolaris.meowpick.auth.SecurityConfigurer;
-import com.xhpolaris.meowpick.auth.TokenBasedAutoLogin.TokenFilter;
 import com.xhpolaris.meowpick.common.JsonRet;
 import com.xhpolaris.meowpick.common.enums.HttpStateEn;
+import com.xhpolaris.meowpick.security.SecurityConfigurer;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +11,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -65,9 +63,9 @@ public class SecurityConfig {
     }
 
     protected void config(HttpSecurity http) throws Exception {
-        http.addFilterBefore(new TokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(new TokenFilter(), UsernamePasswordAuthenticationFilter.class);
         for (var configurer : configurers) {
-            configurer.configure(http);
+            http.apply(configurer);
         }
     }
 

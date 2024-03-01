@@ -1,11 +1,11 @@
-package com.xhpolaris.meowpick.auth;
+package com.xhpolaris.meowpick.security.authentication;
 
+import com.xhpolaris.meowpick.security.authorize.MeowUser;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -13,7 +13,7 @@ import java.util.Collections;
 @Setter
 public class MeowAuthenticationToken extends UsernamePasswordAuthenticationToken {
     private MeowUser user;
-    private boolean needChangePwd;
+    private boolean  needChangePwd;
     private String session;
     private String lastLoginInfo;
     private Object data;

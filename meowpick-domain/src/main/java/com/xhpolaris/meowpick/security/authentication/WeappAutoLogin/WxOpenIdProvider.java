@@ -1,6 +1,6 @@
-package com.xhpolaris.meowpick.auth.WeappAutoLogin;
+package com.xhpolaris.meowpick.security.authentication.WeappAutoLogin;
 
-import com.xhpolaris.meowpick.auth.MeowAuthenticationToken;
+import com.xhpolaris.meowpick.security.authentication.MeowAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

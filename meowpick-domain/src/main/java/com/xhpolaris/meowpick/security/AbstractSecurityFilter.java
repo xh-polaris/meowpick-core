@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.auth;
+package com.xhpolaris.meowpick.security;
 
 import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,16 +20,23 @@ public abstract class AbstractSecurityFilter extends AbstractAuthenticationProce
     }
 
     @Override
+    protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
+        doFilterInternal(request);
+
+        return shouldAuthentication() && super.requiresAuthentication(request, response);
+    }
+
+    protected boolean shouldAuthentication() {
+        return true;
+    }
+
+
+    @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
-                                                HttpServletResponse response) throws
-                                                                              AuthenticationException {
+                                                HttpServletResponse response) throws AuthenticationException {
         postAuthentication(request);
 
         return getAuthenticationManager().authenticate(buildToken(request));
-    }
-
-    protected void postAuthentication(HttpServletRequest request) {
-//        throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
     }
 
     protected Authentication buildToken(HttpServletRequest request) {
@@ -39,7 +46,7 @@ public abstract class AbstractSecurityFilter extends AbstractAuthenticationProce
     @SneakyThrows
     protected String obtainParameter(String parameter) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String             type = request.getContentType();
+        String             type    = request.getContentType();
         if (MediaType.APPLICATION_JSON_VALUE.equals(type)) {
             return RequestJsonUtils.getRequestJsonObject(request).getString(parameter);
         }
@@ -48,6 +55,15 @@ public abstract class AbstractSecurityFilter extends AbstractAuthenticationProce
     }
 
     protected String obtainHeader(String parameter) {
-        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader(parameter);
+        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest()
+                                                                                       .getHeader(parameter);
+    }
+
+    protected void postAuthentication(HttpServletRequest request) {
+//        throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+    }
+
+    protected void doFilterInternal(HttpServletRequest request) {
+
     }
 }

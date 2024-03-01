@@ -1,37 +1,44 @@
-package com.xhpolaris.meowpick.auth;
+package com.xhpolaris.meowpick.security;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @SuppressWarnings("all")
-public class SecurityConfigurer {
+public abstract class SecurityConfigurer extends AbstractHttpConfigurer<SecurityConfigurer, HttpSecurity> {
     private AuthenticationSuccessHandler successHandler;
     private AuthenticationFailureHandler failureHandler;
-    private RememberMeServices rememberMeServices;
-    private HttpSecurity http;
+    private RememberMeServices           rememberMeServices;
+    private HttpSecurity                 http;
 
-    private AuthenticationProvider provider;
-    private AbstractSecurityFilter filter;
+    private List<AuthenticationProvider> providers = new ArrayList<>();
+    private AbstractSecurityFilter       filter;
 
-
-    protected void init(HttpSecurity builder) throws Exception {
-        if (provider != null) {
-            builder.authenticationProvider(provider);
+    @Override
+    public void init(HttpSecurity builder) throws Exception {
+        postInit(providers);
+        if (providers.size() != 0) {
+            providers.forEach(builder::authenticationProvider);
         }
     }
 
+    @Override
     public void configure(HttpSecurity builder) throws Exception {
         this.http = builder;
-        init(builder);
-
+//        init(builder);
+        filter = buildFilter();
         if (filter != null) {
-            filter.setAuthenticationManager(new ProviderManager(provider));
+            filter.setAuthenticationManager(getAuthenticationManager());
             if (this.successHandler != null) {
                 filter.setAuthenticationSuccessHandler(successHandler);
             }
@@ -44,12 +51,22 @@ public class SecurityConfigurer {
         }
     }
 
+    protected void postInit(List<AuthenticationProvider> providers) {
+
+    }
+
+    protected abstract AbstractSecurityFilter buildFilter();
+
     protected AbstractSecurityFilter postProcess(AbstractSecurityFilter filter) {
         return filter;
     }
 
     protected AuthenticationManager getAuthenticationManager() {
-        return http.getSharedObject(AuthenticationManager.class);
+        AuthenticationManager manager = http.getSharedObject(AuthenticationManager.class);
+        if (manager == null) {
+            return new ProviderManager(providers);
+        }
+        return manager;
     }
 
     private void addFilter(AbstractSecurityFilter filter) {
@@ -71,8 +88,8 @@ public class SecurityConfigurer {
         return this;
     }
 
-    public SecurityConfigurer provider(AuthenticationProvider provider) {
-        this.provider = provider;
+    public SecurityConfigurer provider(AuthenticationProvider... providers) {
+        this.providers = Arrays.asList(providers);
         return this;
     }
 

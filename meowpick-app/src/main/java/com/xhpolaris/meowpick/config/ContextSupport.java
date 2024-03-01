@@ -3,6 +3,7 @@ package com.xhpolaris.meowpick.config;
 import com.xhpolaris.meowpick.common.Context;
 import com.xhpolaris.meowpick.common.CurUser;
 import com.xhpolaris.meowpick.common.properties.AppProperties;
+import com.xhpolaris.meowpick.security.authorize.MeowUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -11,12 +12,13 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class ContextSupport implements Context, ApplicationContextAware {
-    private ApplicationContext applicationContext;
-    private final AppProperties properties;
+    private       ApplicationContext applicationContext;
+    private final AppProperties      properties;
 
     @Override
     public void publish(ApplicationEvent event) {
@@ -30,7 +32,9 @@ public class ContextSupport implements Context, ApplicationContextAware {
 
     @Override
     public CurUser getUser() {
-        return CurUser.anonymous();
+        return Optional.ofNullable(MeowUser.getCurrentUser())
+                       .map(MeowUser::get)
+                       .orElse(CurUser.anonymous());
     }
 
     @Override
