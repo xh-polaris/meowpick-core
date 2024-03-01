@@ -38,6 +38,7 @@ public class SecurityConfig {
 
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.csrf(AbstractHttpConfigurer::disable);
+        http.cors(AbstractHttpConfigurer::disable);
 
         http.authorizeHttpRequests(r -> r.requestMatchers(canPermitAntPatterns.toArray(new String[0]))
                                          .permitAll()

@@ -31,20 +31,4 @@ public class UserController {
         return null;
     }
 
-//    @PostMapping("/token")
-//    public String getTokenByCode(@RequestBody String code){
-//        System.out.println("code: " + code);
-//
-//        String url = "https://api.weixin.qq.com/sns/jscode2session?appid={APPID}&secret={SECRET}&js_code={code}&grant_type=authorization_code";
-//        ResponseEntity<String> res = restTemplate.getForEntity(url, String.class, Consts.APPID, Consts.SECRET, code);
-//        if(res.getStatusCode() == HttpStatus.OK){
-//            System.out.println(res.getBody());
-//
-//            return res.getBody();
-//        }
-//
-//        return null;
-//    }
-
-
 }

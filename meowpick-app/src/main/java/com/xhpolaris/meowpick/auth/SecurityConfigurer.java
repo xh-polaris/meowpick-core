@@ -2,6 +2,7 @@ package com.xhpolaris.meowpick.auth;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -30,7 +31,7 @@ public class SecurityConfigurer {
         init(builder);
 
         if (filter != null) {
-            filter.setAuthenticationManager(getAuthenticationManager());
+            filter.setAuthenticationManager(new ProviderManager(provider));
             if (this.successHandler != null) {
                 filter.setAuthenticationSuccessHandler(successHandler);
             }

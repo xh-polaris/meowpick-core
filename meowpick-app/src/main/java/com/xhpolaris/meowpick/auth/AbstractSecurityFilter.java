@@ -1,8 +1,11 @@
 package com.xhpolaris.meowpick.auth;
 
+import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -33,8 +36,15 @@ public abstract class AbstractSecurityFilter extends AbstractAuthenticationProce
         return null;
     }
 
+    @SneakyThrows
     protected String obtainParameter(String parameter) {
-        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getParameter(parameter);
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String             type = request.getContentType();
+        if (MediaType.APPLICATION_JSON_VALUE.equals(type)) {
+            return RequestJsonUtils.getRequestJsonObject(request).getString(parameter);
+        }
+
+        return request.getParameter(parameter);
     }
 
     protected String obtainHeader(String parameter) {
