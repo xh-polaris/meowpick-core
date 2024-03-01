@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.common.auth;
+package com.xhpolaris.meowpick.auth;
 
 
 import lombok.Getter;

@@ -1,15 +1,21 @@
 package com.xhpolaris.meowpick.config;
 
 import com.google.gson.Gson;
+import com.xhpolaris.meowpick.auth.TokenBasedAutoLogin.TokenFilter;
+import com.xhpolaris.meowpick.auth.WeappAutoLogin.WxOpenIdConfigurer;
 import com.xhpolaris.meowpick.common.JsonRet;
+import com.xhpolaris.meowpick.auth.AbstractSecurityConfigurer;
 import com.xhpolaris.meowpick.common.enums.HttpStateEn;
+import com.xhpolaris.meowpick.domain.user.model.valobj.TokenVO;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.SecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,17 +23,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
+@SuppressWarnings("all")
 public class SecurityConfig {
     private final Gson gson;
-    protected final List<String> canPermitAntPatterns = new ArrayList<>();
+    protected final List<AbstractSecurityConfigurer> configurers;
 
-    public SecurityConfig(Gson gson) {
+    protected List<String> canPermitAntPatterns = new ArrayList<>();
+
+    public SecurityConfig(Gson gson, List<AbstractSecurityConfigurer> configurers) {
         this.gson = gson;
-        initPermitAntPatterns();
+        this.configurers = configurers;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        config(http);
+
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.csrf(AbstractHttpConfigurer::disable);
 
@@ -55,8 +66,11 @@ public class SecurityConfig {
         out.close();
     }
 
-    protected void addFilter(HttpSecurity http) {
-
+    protected void config(HttpSecurity http) throws Exception {
+        http.addFilterBefore(new TokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        for (var configurer : configurers) {
+            configurer.configure(http);
+        }
     }
 
     protected void initPermitAntPatterns() {

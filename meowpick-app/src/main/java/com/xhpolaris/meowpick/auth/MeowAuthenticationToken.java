@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.common.auth;
+package com.xhpolaris.meowpick.auth;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 @Getter
 @Setter
@@ -18,10 +19,23 @@ public class MeowAuthenticationToken extends UsernamePasswordAuthenticationToken
     private Object data;
 
     public MeowAuthenticationToken(Object principal, Object credentials) {
-        super(principal, credentials, new ArrayList());
+        super(principal, credentials);
     }
 
     public MeowAuthenticationToken(Object principal, Object credentials, Collection<? extends GrantedAuthority> authorities) {
         super(principal, credentials, authorities);
+    }
+
+    public static MeowAuthenticationToken unauthorized(String token) {
+        return new MeowAuthenticationToken(token, "");
+    }
+
+    public static MeowAuthenticationToken authorized(String id, String name,
+                                                     boolean enable) {
+        MeowAuthenticationToken token = new MeowAuthenticationToken("", "", Collections.emptyList());
+
+        token.user = new MeowUser(name, name, id, enable);
+
+        return token;
     }
 }
