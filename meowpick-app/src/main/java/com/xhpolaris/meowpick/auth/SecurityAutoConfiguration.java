@@ -1,9 +1,9 @@
 package com.xhpolaris.meowpick.auth;
 
 import com.google.gson.Gson;
-import com.xhpolaris.meowpick.auth.WeappAutoLogin.WxOpenIdConfigurer;
+import com.xhpolaris.meowpick.auth.WeappAutoLogin.WxOpenIdFilter;
+import com.xhpolaris.meowpick.auth.WeappAutoLogin.WxOpenIdProvider;
 import com.xhpolaris.meowpick.common.JsonRet;
-import com.xhpolaris.meowpick.common.enums.HttpStateEn;
 import com.xhpolaris.meowpick.domain.user.model.valobj.TokenVO;
 import com.xhpolaris.meowpick.domain.user.model.valobj.UserVO;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,30 +20,29 @@ public class SecurityAutoConfiguration {
     private final Gson gson;
 
     @Bean
-    AbstractSecurityConfigurer weapp() {
-        WxOpenIdConfigurer configurer = new WxOpenIdConfigurer();
+    SecurityConfigurer weapp() {
+        return new SecurityConfigurer()
+                .filter(new WxOpenIdFilter())
+                .provider(new WxOpenIdProvider())
+                .successHandler((req, res, auth) -> {
+                    MeowUser user = null;
+                    if (auth instanceof MeowAuthenticationToken) {
+                        user = ((MeowAuthenticationToken) auth).getUser();
+                    }
 
-        configurer.successHandler((req, res, auth) -> {
-            MeowUser user = null;
-            if (auth instanceof MeowAuthenticationToken) {
-                user = ((MeowAuthenticationToken) auth).getUser();
-            }
+                    TokenVO vo = new TokenVO();
 
-            TokenVO vo = new TokenVO();
+                    UserVO uservo = new UserVO();
+                    if (user != null) {
+                        uservo.setId(user.getUserId());
+                        uservo.setName(user.getUsername());
+                    }
 
-            UserVO uservo = new UserVO();
-            if (user != null) {
-                uservo.setId(user.getUserId());
-                uservo.setName(user.getUsername());
-            }
+                    vo.setUser(uservo);
+                    vo.setToken("token");
 
-            vo.setUser(uservo);
-            vo.setToken("token");
-
-            then(res, vo);
-        });
-
-        return configurer;
+                    then(res, vo);
+                });
     }
 
     private void then(HttpServletResponse response, Object data) throws

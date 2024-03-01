@@ -1,16 +1,13 @@
 package com.xhpolaris.meowpick.config;
 
 import com.google.gson.Gson;
+import com.xhpolaris.meowpick.auth.SecurityConfigurer;
 import com.xhpolaris.meowpick.auth.TokenBasedAutoLogin.TokenFilter;
-import com.xhpolaris.meowpick.auth.WeappAutoLogin.WxOpenIdConfigurer;
 import com.xhpolaris.meowpick.common.JsonRet;
-import com.xhpolaris.meowpick.auth.AbstractSecurityConfigurer;
 import com.xhpolaris.meowpick.common.enums.HttpStateEn;
-import com.xhpolaris.meowpick.domain.user.model.valobj.TokenVO;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.SecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -26,11 +23,11 @@ import java.util.List;
 @SuppressWarnings("all")
 public class SecurityConfig {
     private final Gson gson;
-    protected final List<AbstractSecurityConfigurer> configurers;
+    protected final List<SecurityConfigurer> configurers;
 
     protected List<String> canPermitAntPatterns = new ArrayList<>();
 
-    public SecurityConfig(Gson gson, List<AbstractSecurityConfigurer> configurers) {
+    public SecurityConfig(Gson gson, List<SecurityConfigurer> configurers) {
         this.gson = gson;
         this.configurers = configurers;
     }
