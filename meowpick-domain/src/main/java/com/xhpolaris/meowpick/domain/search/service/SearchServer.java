@@ -21,7 +21,7 @@ public class SearchServer {
     private final ISearcherRepository repository;
 
     public PageEntity<?> query(SearchCmd.Query query) {
-        context.publish(new SearchEvent(context.getUser().getId(),
+        context.publish(new SearchEvent(context.uid(),
                                         query.getType().getValue(),
                                         query.getKeyword()
         ));
@@ -31,7 +31,7 @@ public class SearchServer {
     }
 
     public List<SearchHistoryVO> recent() {
-        return repository.recent(context.getUser().getId());
+        return repository.recent(context.uid());
     }
 
     public void note(SearchEvent event) {

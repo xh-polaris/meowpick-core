@@ -35,7 +35,7 @@ public class CourseServer {
     }
 
     public Course findById(String id) {
-        return courseRepository.getById(id, context.getUser().getId());
+        return courseRepository.getById(id, context.uid());
     }
 
     public PageEntity<CourseVO> search(SearchCmd.Query query) {

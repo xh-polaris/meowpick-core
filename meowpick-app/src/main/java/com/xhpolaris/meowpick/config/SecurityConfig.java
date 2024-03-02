@@ -1,43 +1,44 @@
 package com.xhpolaris.meowpick.config;
 
-import com.google.gson.Gson;
 import com.xhpolaris.meowpick.common.JsonRet;
 import com.xhpolaris.meowpick.common.enums.HttpStateEn;
-import com.xhpolaris.meowpick.security.SecurityConfigurer;
+import com.xhpolaris.meowpick.common.security.SecurityConfigurer;
+import com.xhpolaris.meowpick.common.security.authorize.TokenBasedAutoLogin.MeowpickTokenBasedRememberMeService;
+import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 @Configuration
 @SuppressWarnings("all")
+@RequiredArgsConstructor
 public class SecurityConfig {
-    private final Gson gson;
+
     protected final List<SecurityConfigurer> configurers;
-
-    protected List<String> canPermitAntPatterns = new ArrayList<>();
-
-    public SecurityConfig(Gson gson, List<SecurityConfigurer> configurers) {
-        this.gson = gson;
-        this.configurers = configurers;
-    }
+    protected       List<String>             canPermitAntPatterns = new ArrayList<>();
+    private final   UserDetailsService       userDetailsService;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http)
+    throws Exception {
         config(http);
 
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(AbstractHttpConfigurer::disable);
 
+        http.rememberMe(r -> r.rememberMeServices(new MeowpickTokenBasedRememberMeService(userDetailsService))
+                              .userDetailsService(userDetailsService).key("remember-key"));
         http.authorizeHttpRequests(r -> r.requestMatchers(canPermitAntPatterns.toArray(new String[0]))
                                          .permitAll()
                                          .anyRequest()
@@ -52,24 +53,31 @@ public class SecurityConfig {
         return http.build();
     }
 
-    private void fail(HttpServletResponse response, HttpStateEn stateEn) throws
-                                                                         IOException {
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("utf-8");
-        PrintWriter out = response.getWriter();
-        out.write(gson.toJson(JsonRet.fail(stateEn)));
-        out.close();
+    private void fail(HttpServletResponse response, HttpStateEn stateEn)
+    throws IOException {
+        RequestJsonUtils.write(JsonRet.fail(stateEn));
     }
 
-    protected void config(HttpSecurity http) throws Exception {
-//        http.addFilterBefore(new TokenFilter(), UsernamePasswordAuthenticationFilter.class);
+    protected void config(HttpSecurity http)
+    throws Exception {
+        initPermitAntPatterns();
+
         for (var configurer : configurers) {
             http.apply(configurer);
         }
     }
 
     protected void initPermitAntPatterns() {
-        this.canPermitAntPatterns.addAll(List.of("/napi/internal/**", "/napi/public/**", "/account/**", "/error", "/health"));
+        this.canPermitAntPatterns.addAll(List.of(
+                "/api/action/weapp/**",
+
+                "/v3/**",
+                "/swagger**/**",
+                "/doc.html",
+                "/napi/internal/**",
+                "/napi/public/**",
+                "/account/**",
+                "/error",
+                "/health"));
     }
 }

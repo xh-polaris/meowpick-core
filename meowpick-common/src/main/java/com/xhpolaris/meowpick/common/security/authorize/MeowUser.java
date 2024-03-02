@@ -1,9 +1,8 @@
-package com.xhpolaris.meowpick.security.authorize;
+package com.xhpolaris.meowpick.common.security.authorize;
 
 
-import com.xhpolaris.meowpick.common.CurUser;
-import com.xhpolaris.meowpick.security.authentication.MeowAuthenticationToken;
-import com.xhpolaris.meowpick.security.authentication.MeowRememberMeAuthenticationToken;
+import com.xhpolaris.meowpick.common.security.authentication.MeowAuthenticationToken;
+import com.xhpolaris.meowpick.common.security.authentication.MeowRememberMeAuthenticationToken;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.Authentication;
@@ -41,9 +40,6 @@ public class MeowUser extends User {
 
     public static MeowUser getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null) {
-            return null;
-        }
 
         if (auth instanceof MeowAuthenticationToken token) {
             return token.getUser();
@@ -53,17 +49,17 @@ public class MeowUser extends User {
 //        else if (auth instanceof NsocAkSkAuthenticationToken token) {
 //            return token.getUser();
 //        }
-        else {
-            return null;
-        }
+        return anonymous();
     }
 
-    public CurUser get() {
-        CurUser user = new CurUser();
+    private static MeowUser anonymous = new MeowUser("anonymous", "anonymous", "1", true);
 
-        user.setId(this.userId);
-        user.setNickName(this.displayName);
+    public static MeowUser anonymous() {
+        return anonymous;
+    }
 
-        return user;
+    @Override
+    public String getUsername() {
+        return this.displayName;
     }
 }

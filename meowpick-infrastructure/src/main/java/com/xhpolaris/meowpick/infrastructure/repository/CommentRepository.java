@@ -23,12 +23,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CommentRepository implements ICommentRepository {
     private final CommentDao commentDao;
-    private final Context context;
+    private final Context    context;
 
     @Override
     public CommentVO add(CommentCmd.CreateCmd cmd) {
         CommentCollection db = CommentMap.instance.cmd2db(cmd);
-        db.setUid(context.getUser().getId());
+        db.setUid(context.uid());
         commentDao.save(db);
         return CommentMap.instance.db2vo(db);
     }
@@ -60,9 +60,9 @@ public class CommentRepository implements ICommentRepository {
     @Override
     public PageEntity<CommentVO> query(CommentCmd.Query query) {
         Page<CommentCollection> page = commentDao.findAllByTargetOrderByCrateAt(query.getId(),
-                                                                                 PageRequest.of(query.getPage(),
-                                                                                 query.getSize()
-                                                                                ));
+                PageRequest.of(query.getPage(),
+                        query.getSize()
+                              ));
 
         return BasicRepository.page(page, c -> {
             CommentVO vo = CommentMap.instance.db2vo(c);
@@ -83,7 +83,10 @@ public class CommentRepository implements ICommentRepository {
         }
 
         ReplyVO vo = CommentMap.instance.db2reply(db);
-        vo.setReplies(db.getReplies().stream().map(CommentMap.instance::db2reply).toList());
+        vo.setReplies(db.getReplies()
+                        .stream()
+                        .map(CommentMap.instance::db2reply)
+                        .toList());
 
         return vo;
     }

@@ -1,6 +1,6 @@
-package com.xhpolaris.meowpick.security.authentication;
+package com.xhpolaris.meowpick.common.security.authentication;
 
-import com.xhpolaris.meowpick.security.authorize.MeowUser;
+import com.xhpolaris.meowpick.common.security.authorize.MeowUser;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,15 +26,14 @@ public class MeowAuthenticationToken extends UsernamePasswordAuthenticationToken
         super(principal, credentials, authorities);
     }
 
-    public static MeowAuthenticationToken unauthorized(String token) {
-        return new MeowAuthenticationToken(token, "");
+    public static MeowAuthenticationToken unauthorized(String token, String key) {
+        return new MeowAuthenticationToken(token, key);
     }
 
-    public static MeowAuthenticationToken authorized(String id, String name,
-                                                     boolean enable) {
+    public static MeowAuthenticationToken authorized(String id, String name) {
         MeowAuthenticationToken token = new MeowAuthenticationToken("", "", Collections.emptyList());
 
-        token.user = new MeowUser(name, name, id, enable);
+        token.user = new MeowUser(name, name, id, true);
 
         return token;
     }

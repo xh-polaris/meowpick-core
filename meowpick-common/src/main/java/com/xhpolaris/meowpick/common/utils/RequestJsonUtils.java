@@ -2,53 +2,66 @@ package com.xhpolaris.meowpick.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.SneakyThrows;
+import org.springframework.http.MediaType;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 public class RequestJsonUtils {
-    public static JSONObject getRequestJsonObject(HttpServletRequest request) throws IOException {
+    private static final ThreadLocal<JSONObject> data = new ThreadLocal<>();
+
+    public static JSONObject getRequestJsonObject(HttpServletRequest request)
+    throws IOException {
         String json = getRequestJsonString(request);
-        return JSONObject.parseObject(json);
+        if (data.get() == null) {
+            data.set(JSONObject.parseObject(json));
+        }
+        return data.get();
     }
-    /***
-     * 获取 request 中 json 字符串的内容
-     *
-     * @param request
-     * @return : <code>byte[]</code>
-     * @throws IOException
-     */
+
+    @SneakyThrows
+    public static void write(Object data) {
+        HttpServletResponse response = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getResponse();
+
+        assert response != null;
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding(StandardCharsets.UTF_8.name());
+
+        PrintWriter out = response.getWriter();
+        out.write(Meowpick.toJson(data));
+        out.close();
+    }
+
     public static String getRequestJsonString(HttpServletRequest request)
-            throws IOException {
+    throws IOException {
         String submitMehtod = request.getMethod();
         // GET
         if (submitMehtod.equals("GET")) {
-            return new String(request.getQueryString().getBytes("iso-8859-1"),"utf-8").replaceAll("%22", "\"");
+            return new String(request.getQueryString()
+                                     .getBytes("iso-8859-1"), "utf-8").replaceAll("%22", "\"");
             // POST
         } else {
             return getRequestPostStr(request);
         }
     }
 
-    /**
-     * 描述:获取 post 请求的 byte[] 数组
-     * <pre>
-     * 举例：
-     * </pre>
-     * @param request
-     * @return
-     * @throws IOException
-     */
     public static byte[] getRequestPostBytes(HttpServletRequest request)
-            throws IOException {
+    throws IOException {
         int contentLength = request.getContentLength();
-        if(contentLength<0){
+        if (contentLength < 0) {
             return null;
         }
         byte buffer[] = new byte[contentLength];
-        for (int i = 0; i < contentLength;) {
+        for (int i = 0; i < contentLength; ) {
 
-            int readlen = request.getInputStream().read(buffer, i,
-                    contentLength - i);
+            int readlen = request.getInputStream().read(buffer, i, contentLength - i);
             if (readlen == -1) {
                 break;
             }
@@ -57,18 +70,9 @@ public class RequestJsonUtils {
         return buffer;
     }
 
-    /**
-     * 描述:获取 post 请求内容
-     * <pre>
-     * 举例：
-     * </pre>
-     * @param request
-     * @return
-     * @throws IOException
-     */
     public static String getRequestPostStr(HttpServletRequest request)
-            throws IOException {
-        byte buffer[] = getRequestPostBytes(request);
+    throws IOException {
+        byte   buffer[]     = getRequestPostBytes(request);
         String charEncoding = request.getCharacterEncoding();
         if (charEncoding == null) {
             charEncoding = "UTF-8";

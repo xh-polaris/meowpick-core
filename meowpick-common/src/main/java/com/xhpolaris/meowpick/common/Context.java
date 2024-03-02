@@ -1,6 +1,7 @@
 package com.xhpolaris.meowpick.common;
 
 import com.xhpolaris.meowpick.common.properties.AppProperties;
+import com.xhpolaris.meowpick.common.security.authorize.MeowUser;
 import org.springframework.context.ApplicationEvent;
 
 public interface Context {
@@ -8,7 +9,7 @@ public interface Context {
 
     AppProperties properties();
 
-    CurUser getUser();
+    MeowUser getUser();
 
     String uid();
 }

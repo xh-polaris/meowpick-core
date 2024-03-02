@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.support;
 
+import com.xhpolaris.meowpick.common.security.authorize.MeowUser;
 import com.xhpolaris.meowpick.domain.user.service.UserServer;
-import com.xhpolaris.meowpick.security.authorize.MeowUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

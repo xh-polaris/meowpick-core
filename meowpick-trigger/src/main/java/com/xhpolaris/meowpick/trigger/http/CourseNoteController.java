@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseNoteController implements CourseLearnApi {
     private final CourseNoteServer service;
-    private final Context context;
+    private final Context          context;
 
 //    综合
 
@@ -26,22 +26,23 @@ public class CourseNoteController implements CourseLearnApi {
     @Override
     public boolean start(String id, CourseNoteCmd.CreateCmd cmd) {
 
-        return service.start(context.getUser().getId(), id, cmd, service.currentState(context.getUser().getId(), id));
+        return service.start(context.uid(), id, cmd, service.currentState(context.uid(),
+                id));
     }
 
     @Override
     public boolean note(String id, CourseNoteCmd.CreateCmd cmd) {
-        return service.note(context.getUser().getId(), id, cmd, service.currentState(context.getUser().getId(), id));
+        return service.note(context.uid(), id, cmd, service.currentState(context.uid(), id));
     }
 
     @Override
     public boolean end(String id, CourseNoteCmd.CreateCmd cmd) {
-        return service.end(context.getUser().getId(), id, cmd, service.currentState(context.getUser().getId(), id));
+        return service.end(context.uid(), id, cmd, service.currentState(context.uid(), id));
     }
 
     @Override
     public CourseNote course_note_list(String id) {
-        return service.list(context.getUser().getId(), id);
+        return service.list(context.uid(), id);
     }
 
     @Override

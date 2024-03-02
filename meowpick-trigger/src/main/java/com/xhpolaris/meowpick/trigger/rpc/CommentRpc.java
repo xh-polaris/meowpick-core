@@ -51,7 +51,7 @@
 //        if (vo == null) {
 //            return true;
 //        }
-//        if (vo.getUid() != context.getUser().getId()) {
+//        if (vo.getUid() != context.uid()) {
 //            return true;
 //        }
 //        return false;

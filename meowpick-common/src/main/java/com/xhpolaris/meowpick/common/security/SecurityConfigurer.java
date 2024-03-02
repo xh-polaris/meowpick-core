@@ -1,5 +1,7 @@
-package com.xhpolaris.meowpick.security;
+package com.xhpolaris.meowpick.common.security;
 
+import com.xhpolaris.meowpick.common.JsonRet;
+import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -10,6 +12,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,7 +55,6 @@ public abstract class SecurityConfigurer extends AbstractHttpConfigurer<Security
     }
 
     protected void postInit(List<AuthenticationProvider> providers) {
-
     }
 
     protected abstract AbstractSecurityFilter buildFilter();
@@ -98,4 +100,7 @@ public abstract class SecurityConfigurer extends AbstractHttpConfigurer<Security
         return this;
     }
 
+    public void write(Object data) throws IOException {
+        RequestJsonUtils.write(JsonRet.then(data));
+    }
 }

@@ -16,7 +16,7 @@ public class ActionServer {
     private final Context context;
 
     public boolean like(String id, ActionCmd.CreateCmd cmd) {
-        return repository.like(context.getUser().getId(), id, cmd);
+        return repository.like(context.uid(), id, cmd);
     }
 
     public ActionVO relation(String id) {

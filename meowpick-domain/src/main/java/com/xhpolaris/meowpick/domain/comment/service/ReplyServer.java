@@ -22,6 +22,6 @@ public class ReplyServer {
     }
 
     public ReplyVO reply(String id, ReplyCmd.CreateCmd cmd) {
-        return replyRepository.reply(context.getUser().getId(), id, cmd);
+        return replyRepository.reply(context.uid(), id, cmd);
     }
 }

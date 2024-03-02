@@ -1,8 +1,8 @@
 package com.xhpolaris.meowpick.config;
 
-import com.google.gson.Gson;
 import com.xhpolaris.meowpick.common.JsonRet;
 import com.xhpolaris.meowpick.common.enums.HttpStateEn;
+import com.xhpolaris.meowpick.common.utils.Meowpick;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 @RequiredArgsConstructor
 @RestControllerAdvice(basePackages = "com.xhpolaris.meowpick.trigger.http")
 public class WebWrapper implements ResponseBodyAdvice<Object> {
-    private final Gson gson;
 
     @Override
     public boolean supports(MethodParameter returnType,
@@ -35,7 +34,7 @@ public class WebWrapper implements ResponseBodyAdvice<Object> {
             return JsonRet.fail(state);
         }
         if (body instanceof String) {
-            return gson.toJson(JsonRet.then(body));
+            return Meowpick.toJson(JsonRet.then(body));
         }
         if (body instanceof JsonRet) {
             return body;

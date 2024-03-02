@@ -24,6 +24,11 @@ public class UserCollection {
     private String password;
     private boolean auth;
 
+    private boolean account_enable;
+    private boolean account_lock;
+    private boolean account_expire;
+    private boolean account_credential;
+
     @CreatedDate
     private Date crateAt;
     @LastModifiedDate

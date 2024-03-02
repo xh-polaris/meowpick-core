@@ -28,8 +28,8 @@ import java.util.Optional;
 @Component
 @RequiredArgsConstructor
 public class CourseRepository extends BasicRepository<CourseCollection, CourseVO> implements ICourseRepository {
-    private final CourseDao courseDao;
-    private final CourseLeanDao leanDao;
+    private final CourseDao             courseDao;
+    private final CourseLeanDao         leanDao;
     private final CourseLearnHistoryDao historyDao;
 
     @Override
@@ -65,9 +65,9 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
     @Override
     public PageEntity<CourseVO> page(CourseCmd.Query query) {
         return pageOf(courseDao,
-                      CourseCollection.toExample(query),
-                      query,
-                      CourseMap.instance::db2vo
+                CourseCollection.toExample(query),
+                query,
+                CourseMap.instance::db2vo
                      );
     }
 
@@ -80,7 +80,7 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
 
         CourseVO course = CourseMap.instance.db2vo(db);
 
-        Course vo = new Course();
+        Course                      vo    = new Course();
         List<CourseLearnCollection> learn = leanDao.findAllByActiveIsTrueAndCourse(id);
 
         vo.setData(course);
@@ -92,14 +92,14 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
                           .count());
 
         vo.setLearn(Optional.ofNullable(leanDao.findByType(Consts.CourseLearn.LEARN,
-                                                           id,
-                                                           uid
+                                    id,
+                                    uid
                                                           ))
                             .map(CourseLearnCollection::isActive)
                             .orElse(false));
         vo.setWant(Optional.ofNullable(leanDao.findByType(Consts.CourseLearn.WANT,
-                                                          id,
-                                                          uid
+                                   id,
+                                   uid
                                                          ))
                            .map(CourseLearnCollection::isActive)
                            .orElse(false));

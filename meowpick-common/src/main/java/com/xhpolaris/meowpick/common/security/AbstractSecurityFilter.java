@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.security;
+package com.xhpolaris.meowpick.common.security;
 
 import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,20 +20,9 @@ public abstract class AbstractSecurityFilter extends AbstractAuthenticationProce
     }
 
     @Override
-    protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        doFilterInternal(request);
-
-        return shouldAuthentication() && super.requiresAuthentication(request, response);
-    }
-
-    protected boolean shouldAuthentication() {
-        return true;
-    }
-
-
-    @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
-                                                HttpServletResponse response) throws AuthenticationException {
+                                                HttpServletResponse response)
+    throws AuthenticationException {
         postAuthentication(request);
 
         return getAuthenticationManager().authenticate(buildToken(request));
