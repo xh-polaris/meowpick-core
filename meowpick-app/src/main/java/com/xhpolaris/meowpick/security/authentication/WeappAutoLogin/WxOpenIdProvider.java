@@ -1,20 +1,20 @@
-package com.xhpolaris.meowpick.common.security.authentication.WeappAutoLogin;
+package com.xhpolaris.meowpick.security.authentication.WeappAutoLogin;
 
-import com.xhpolaris.meowpick.common.security.authentication.MeowAuthenticationToken;
-import com.xhpolaris.meowpick.common.security.authorize.MeowUser;
+import com.xhpolaris.meowpick.common.authorize.MeowAuthenticationToken;
+import com.xhpolaris.meowpick.common.authorize.MeowUser;
+import com.xhpolaris.meowpick.common.authorize.MeowUserDetailService;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Setter
 public class WxOpenIdProvider extends AbstractUserDetailsAuthenticationProvider {
-    private final UserDetailsService userDetailsService;
+    private final MeowUserDetailService userDetailsService;
 
-    public WxOpenIdProvider(UserDetailsService userDetailsService) {
+    public WxOpenIdProvider(MeowUserDetailService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -36,8 +36,7 @@ public class WxOpenIdProvider extends AbstractUserDetailsAuthenticationProvider 
     @Override
     protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication)
     throws AuthenticationException {
-        return MeowUser.anonymous();
-//        return userDetailsService.loadUserByUsername(authentication.getPrincipal().toString());
+        return userDetailsService.loadUserByUsername(username);
     }
 
     @Override

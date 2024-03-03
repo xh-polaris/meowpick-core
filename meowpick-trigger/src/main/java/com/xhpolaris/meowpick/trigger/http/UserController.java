@@ -24,11 +24,7 @@ public class UserController {
 
     @PostMapping("/add")
     public UserVO add(@RequestBody UserCmd.CreateCmd cmd){
-        log.info("add");
-        log.info(cmd.getName());
-        log.info(cmd.getAvatar());
-//        return service.createUser(cmd);
-        return null;
+        return service.createUser(cmd);
     }
 
 }

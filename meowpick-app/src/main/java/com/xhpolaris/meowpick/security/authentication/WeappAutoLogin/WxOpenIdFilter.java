@@ -1,7 +1,7 @@
-package com.xhpolaris.meowpick.common.security.authentication.WeappAutoLogin;
+package com.xhpolaris.meowpick.security.authentication.WeappAutoLogin;
 
-import com.xhpolaris.meowpick.common.security.AbstractSecurityFilter;
-import com.xhpolaris.meowpick.common.security.authentication.MeowAuthenticationToken;
+import com.xhpolaris.meowpick.common.authorize.MeowAuthenticationToken;
+import com.xhpolaris.meowpick.security.AbstractSecurityFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 

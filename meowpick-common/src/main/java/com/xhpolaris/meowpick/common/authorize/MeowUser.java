@@ -1,8 +1,6 @@
-package com.xhpolaris.meowpick.common.security.authorize;
+package com.xhpolaris.meowpick.common.authorize;
 
 
-import com.xhpolaris.meowpick.common.security.authentication.MeowAuthenticationToken;
-import com.xhpolaris.meowpick.common.security.authentication.MeowRememberMeAuthenticationToken;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.Authentication;
@@ -19,6 +17,7 @@ public class MeowUser extends User {
     private String  displayName;
     private String  userId;
     private boolean byToken;
+    private String avatar;
 
     public MeowUser(String username,
                     String displayName,
@@ -52,7 +51,7 @@ public class MeowUser extends User {
         return anonymous();
     }
 
-    private static MeowUser anonymous = new MeowUser("anonymous", "anonymous", "1", true);
+    private static MeowUser anonymous = new MeowUser("anonymous", "anonymous", "65e43a7aa6fd34617f043a8e", true);
 
     public static MeowUser anonymous() {
         return anonymous;

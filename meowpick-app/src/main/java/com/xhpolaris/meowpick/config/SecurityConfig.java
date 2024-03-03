@@ -1,10 +1,11 @@
 package com.xhpolaris.meowpick.config;
 
 import com.xhpolaris.meowpick.common.JsonRet;
+import com.xhpolaris.meowpick.common.authorize.MeowUserDetailService;
+import com.xhpolaris.meowpick.common.consts.Consts;
 import com.xhpolaris.meowpick.common.enums.HttpStateEn;
-import com.xhpolaris.meowpick.common.security.SecurityConfigurer;
-import com.xhpolaris.meowpick.common.security.authorize.TokenBasedAutoLogin.MeowpickTokenBasedRememberMeService;
 import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
+import com.xhpolaris.meowpick.security.SecurityConfigurer;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +13,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.RememberMeServices;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +27,8 @@ public class SecurityConfig {
 
     protected final List<SecurityConfigurer> configurers;
     protected       List<String>             canPermitAntPatterns = new ArrayList<>();
-    private final   UserDetailsService       userDetailsService;
+    private final   MeowUserDetailService    userDetailsService;
+    private final   RememberMeServices       rememberMeServices;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)
@@ -37,12 +39,13 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http.cors(AbstractHttpConfigurer::disable);
 
-        http.rememberMe(r -> r.rememberMeServices(new MeowpickTokenBasedRememberMeService(userDetailsService))
-                              .userDetailsService(userDetailsService).key("remember-key"));
+        http.rememberMe(r -> r.rememberMeServices(rememberMeServices).key(Consts.Authorize.KEY));
         http.authorizeHttpRequests(r -> r.requestMatchers(canPermitAntPatterns.toArray(new String[0]))
                                          .permitAll()
                                          .anyRequest()
-                                         .authenticated());
+//                                         .authenticated()
+                                         .permitAll()
+                                  );
 
         http.exceptionHandling(d -> d.accessDeniedHandler((req, res, ex) -> {
             fail(res, HttpStateEn.unauthorized);
@@ -69,8 +72,9 @@ public class SecurityConfig {
 
     protected void initPermitAntPatterns() {
         this.canPermitAntPatterns.addAll(List.of(
+                "/",
                 "/api/action/weapp/**",
-
+                "/webjars/**",
                 "/v3/**",
                 "/swagger**/**",
                 "/doc.html",

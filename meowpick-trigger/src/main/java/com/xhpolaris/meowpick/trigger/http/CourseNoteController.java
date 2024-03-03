@@ -46,7 +46,7 @@ public class CourseNoteController implements CourseLearnApi {
     }
 
     @Override
-    public List<Float> course_score_list(String id) {
+    public List<Integer> course_score_list(String id) {
         return service.list(id);
     }
 }

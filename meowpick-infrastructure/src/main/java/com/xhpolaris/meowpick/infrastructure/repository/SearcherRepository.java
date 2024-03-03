@@ -19,19 +19,20 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class SearcherRepository implements ISearcherRepository {
-    private final SearchHistoryDao searchHistoryDao;
+    private final SearchHistoryDao        searchHistoryDao;
     private final SearchHistoryProperties properties;
 
     @Override
     public List<SearchHistoryVO> recent(String uid) {
-        Page<SearchHistoryCollection> page = searchHistoryDao.findAll(PageRequest.of(0, properties.getSize()));
+        Page<SearchHistoryCollection> page = searchHistoryDao
+                .findAllByUidOrderByCreateAtDesc(uid, PageRequest.of(0, properties.getSize()));
         return page.getContent().stream().map(SearchHistoryMap.instance::db2vo).toList();
     }
 
     @Override
     public void note(SearchEvent event) {
         SearchHistoryCollection history = searchHistoryDao.findByUidAndText(event.getUid(),
-                                                                            event.getText());
+                event.getText());
         if (history != null) {
             history.setCount(history.getCount() + 1);
 

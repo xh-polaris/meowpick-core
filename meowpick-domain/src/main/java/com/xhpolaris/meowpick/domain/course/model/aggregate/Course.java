@@ -11,6 +11,8 @@ public class Course {
     private Long leaned;
     private Long wanted;
 
+    private Integer score;
+
     private boolean isLearn;
     private boolean isWant;
 }

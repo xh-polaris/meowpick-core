@@ -1,6 +1,6 @@
-package com.xhpolaris.meowpick.common.security.authentication;
+package com.xhpolaris.meowpick.common.authorize;
 
-import com.xhpolaris.meowpick.common.security.authorize.MeowUser;
+import com.xhpolaris.meowpick.common.consts.Consts;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
@@ -15,7 +15,7 @@ public class MeowRememberMeAuthenticationToken extends RememberMeAuthenticationT
 
     public MeowRememberMeAuthenticationToken(Object principal,
                                              Collection<? extends GrantedAuthority> authorities) {
-        super("remember-key", principal, authorities);
+        super(Consts.Authorize.KEY, principal, authorities);
     }
 
     public static MeowRememberMeAuthenticationToken authorized(String id,

@@ -28,6 +28,6 @@ public interface CourseLearnApi {
     CourseNote course_note_list(@PathVariable String id);
 
     @GetMapping("/course/{id}")
-    List<Float> course_score_list(@PathVariable String id);
+    List<Integer> course_score_list(@PathVariable String id);
 
 }

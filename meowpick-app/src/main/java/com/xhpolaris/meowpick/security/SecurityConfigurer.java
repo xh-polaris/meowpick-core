@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.common.security;
+package com.xhpolaris.meowpick.security;
 
 import com.xhpolaris.meowpick.common.JsonRet;
 import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
@@ -47,6 +47,9 @@ public abstract class SecurityConfigurer extends AbstractHttpConfigurer<Security
             }
             if (this.failureHandler != null) {
                 filter.setAuthenticationFailureHandler(failureHandler);
+            }
+            if (this.rememberMeServices != null) {
+                filter.setRememberMeServices(this.rememberMeServices);
             }
 
             filter = postProcess(filter);

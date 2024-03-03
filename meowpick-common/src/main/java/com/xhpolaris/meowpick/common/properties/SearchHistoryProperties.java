@@ -8,5 +8,5 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "search-history")
 public class SearchHistoryProperties {
-    private Integer size = 15;
+    private Integer size = 8;
 }

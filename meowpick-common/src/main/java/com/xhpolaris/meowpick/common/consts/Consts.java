@@ -9,4 +9,8 @@ public class Consts {
         String LEARN = "learn";
         String WANT = "want";
     }
+
+    public interface Authorize {
+        String KEY = "token_based";
+    }
 }

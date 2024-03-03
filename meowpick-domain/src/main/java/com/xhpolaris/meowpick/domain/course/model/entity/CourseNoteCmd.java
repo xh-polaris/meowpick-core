@@ -3,6 +3,8 @@ package com.xhpolaris.meowpick.domain.course.model.entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.util.List;
+
 public class CourseNoteCmd {
     private CourseNoteCmd() {}
 
@@ -11,7 +13,8 @@ public class CourseNoteCmd {
     public static class CreateCmd {
         private String title;
         private String text;
-        private Float score;
+        private Integer score;
+        private List<String> tags;
     }
 
     @Data

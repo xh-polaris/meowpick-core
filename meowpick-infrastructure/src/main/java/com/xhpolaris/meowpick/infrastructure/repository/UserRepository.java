@@ -10,15 +10,9 @@ import com.xhpolaris.meowpick.infrastructure.mapstruct.UserMap;
 import com.xhpolaris.meowpick.infrastructure.pojo.UserCollection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -39,8 +33,7 @@ public class UserRepository extends BasicRepository<UserCollection, UserVO> impl
 
     @Override
     public UserVO getById(String id) {
-        Optional<UserCollection> db = userDao.findById(id);
-        return null;
+        return userDao.findById(id).map(UserMap.instance::db2vo).orElse(null);
     }
 
     @Override
@@ -58,20 +51,4 @@ public class UserRepository extends BasicRepository<UserCollection, UserVO> impl
         return UserMap.instance.db2vo(db);
     }
 
-    public void test() {
-        Query query = new Query();
-        Criteria criteria = new Criteria();
-
-        criteria.and("name").is("tom")
-                .and("age").gt(20);
-
-        query.addCriteria(criteria);
-
-        Sort sort = Sort.by(Sort.Direction.ASC, "age");
-        Pageable pageable = PageRequest.of(0, 2, sort);
-
-        List<UserCollection> users = template.find(query.with(pageable), UserCollection.class);
-        log.info(users.toString());
-
-    }
 }

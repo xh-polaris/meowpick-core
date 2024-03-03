@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.common.security;
+package com.xhpolaris.meowpick.security;
 
 import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
 import jakarta.servlet.http.HttpServletRequest;

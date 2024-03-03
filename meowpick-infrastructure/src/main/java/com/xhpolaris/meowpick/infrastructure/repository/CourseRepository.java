@@ -1,7 +1,6 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.common.consts.Consts;
 import com.xhpolaris.meowpick.common.enums.CourseNoteEn;
 import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
@@ -15,12 +14,12 @@ import com.xhpolaris.meowpick.infrastructure.dao.CourseLearnHistoryDao;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.CourseLearnHistoryMap;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.CourseMap;
 import com.xhpolaris.meowpick.infrastructure.pojo.CourseCollection;
-import com.xhpolaris.meowpick.infrastructure.pojo.CourseLearnCollection;
 import com.xhpolaris.meowpick.infrastructure.pojo.CourseLearnHistoryCollection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -80,29 +79,39 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
 
         CourseVO course = CourseMap.instance.db2vo(db);
 
-        Course                      vo    = new Course();
-        List<CourseLearnCollection> learn = leanDao.findAllByActiveIsTrueAndCourse(id);
+        Course vo = new Course();
 
+        List<CourseLearnHistoryCollection> list = historyDao.findAllByCourse(id);
+        CourseLearnHistoryCollection history =
+                Optional.ofNullable(historyDao.findByUidAndCourse(uid, id)).orElse(new CourseLearnHistoryCollection());
+
+        List<CourseLearnHistoryCollection.History> historyList = list.stream()
+                                                                     .map(CourseLearnHistoryCollection::getHistories)
+                                                                     .flatMap(Collection::stream)
+                                                                     .toList();
+
+        vo.setScore(history.getScore());
         vo.setData(course);
-        vo.setLeaned(learn.stream()
-                          .filter(i -> i.getType().equals(Consts.CourseLearn.LEARN))
-                          .count());
-        vo.setWanted(learn.stream()
-                          .filter(i -> i.getType().equals(Consts.CourseLearn.WANT))
-                          .count());
 
-        vo.setLearn(Optional.ofNullable(leanDao.findByType(Consts.CourseLearn.LEARN,
-                                    id,
-                                    uid
-                                                          ))
-                            .map(CourseLearnCollection::isActive)
-                            .orElse(false));
-        vo.setWant(Optional.ofNullable(leanDao.findByType(Consts.CourseLearn.WANT,
-                                   id,
-                                   uid
-                                                         ))
-                           .map(CourseLearnCollection::isActive)
-                           .orElse(false));
+        vo.setWanted(historyList.stream()
+                                .map(CourseLearnHistoryCollection.History::getStep)
+                                .filter(i -> CourseNoteEn.start.getValue().equals(i))
+                                .count());
+        vo.setLeaned(historyList.stream()
+                                .map(CourseLearnHistoryCollection.History::getStep)
+                                .filter(i -> CourseNoteEn.end.getValue().equals(i))
+                                .count());
+
+        vo.setWant(history.getHistories()
+                          .stream()
+                          .filter(i -> CourseNoteEn.start.getValue().equals(i.getStep()))
+                          .toList()
+                          .isEmpty());
+        vo.setLearn(history.getHistories()
+                           .stream()
+                           .filter(i -> CourseNoteEn.end.getValue().equals(i.getStep()))
+                           .toList()
+                           .isEmpty());
 
         return vo;
     }
@@ -125,7 +134,7 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
     }
 
     @Override
-    public List<Float> courseScoreList(String id) {
+    public List<Integer> courseScoreList(String id) {
         return historyDao.findAllByCourse(id)
                          .stream()
                          .map(CourseLearnHistoryCollection::getScore)

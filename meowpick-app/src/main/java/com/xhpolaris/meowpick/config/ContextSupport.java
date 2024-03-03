@@ -1,8 +1,8 @@
 package com.xhpolaris.meowpick.config;
 
 import com.xhpolaris.meowpick.common.Context;
+import com.xhpolaris.meowpick.common.authorize.MeowUser;
 import com.xhpolaris.meowpick.common.properties.AppProperties;
-import com.xhpolaris.meowpick.common.security.authorize.MeowUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -11,7 +11,6 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -31,8 +30,7 @@ public class ContextSupport implements Context, ApplicationContextAware {
 
     @Override
     public MeowUser getUser() {
-        return Optional.ofNullable(MeowUser.getCurrentUser())
-                       .orElse(MeowUser.anonymous());
+        return MeowUser.getCurrentUser();
     }
 
     @Override

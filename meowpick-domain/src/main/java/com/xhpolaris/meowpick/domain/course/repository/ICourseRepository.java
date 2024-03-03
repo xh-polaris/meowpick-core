@@ -25,7 +25,7 @@ public interface ICourseRepository {
 
     boolean note(String uid, String course, CourseNoteCmd.CreateCmd cmd, CourseNoteEn en);
 
-    List<Float> courseScoreList(String id);
+    List<Integer> courseScoreList(String id);
 
     CourseNoteEn currentState(String uid, String course);
 }

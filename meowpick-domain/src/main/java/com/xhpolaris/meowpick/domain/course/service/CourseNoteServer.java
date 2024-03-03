@@ -43,7 +43,7 @@ public class CourseNoteServer {
         return repository.history(uid, course);
     }
 
-    public List<Float> list(String id) {
+    public List<Integer> list(String id) {
         return repository.courseScoreList(id);
     }
 

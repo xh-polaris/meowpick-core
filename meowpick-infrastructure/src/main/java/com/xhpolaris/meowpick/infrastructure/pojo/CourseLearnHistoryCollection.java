@@ -32,7 +32,7 @@ public class CourseLearnHistoryCollection {
 
 
     private String id;
-    private Float score;
+    private Integer score = 0;
     private String uid;
     private String course;
     private List<History> histories = new ArrayList<>();
