@@ -28,10 +28,10 @@ public class MeowAuthenticationToken extends UsernamePasswordAuthenticationToken
         return new MeowAuthenticationToken(token, key);
     }
 
-    public static MeowAuthenticationToken authorized(String id, String name) {
+    public static MeowAuthenticationToken authorized(MeowUser user) {
         MeowAuthenticationToken token = new MeowAuthenticationToken("", "", Collections.emptyList());
 
-        token.user = new MeowUser(name, name, id, true);
+        token.user = user;
 
         return token;
     }

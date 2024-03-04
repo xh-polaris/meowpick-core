@@ -6,13 +6,17 @@ import com.xhpolaris.meowpick.common.enums.UserLoginEn;
 import com.xhpolaris.meowpick.domain.user.auto_login.factory.LoginProvider;
 import com.xhpolaris.meowpick.domain.user.model.entity.LoginCmd;
 import com.xhpolaris.meowpick.domain.user.model.valobj.UserVO;
+import com.xhpolaris.meowpick.domain.user.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class UserDetailServer implements MeowUserDetailService {
-    private final LoginProvider loginProvider;
+    private final LoginProvider   loginProvider;
+    private final IUserRepository userRepository;
 
     @Override
     public MeowUser loadUserByToken(UserLoginEn loginType, String token) {
@@ -22,6 +26,15 @@ public class UserDetailServer implements MeowUserDetailService {
 
         UserVO user = loginProvider.autoLogin(query);
 
-        return MeowUser.authorized(user.getId(), user.getName());
+        return MeowUser.authorized(user.getId(), user.getName(), user.isAccount_enable(), user.isAccount_expire(),
+                user.isAccount_lock(), List.of());
+    }
+
+    @Override
+    public MeowUser loadUserById(String id) {
+        UserVO user = userRepository.getById(id);
+
+        return MeowUser.authorized(user.getId(), user.getName(), user.isAccount_enable(), user.isAccount_expire(),
+                user.isAccount_lock(), List.of());
     }
 }

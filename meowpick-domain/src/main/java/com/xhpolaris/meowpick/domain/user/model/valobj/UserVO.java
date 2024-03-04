@@ -7,9 +7,13 @@ import lombok.Data;
 @Data
 @Schema(name = "UserVO")
 public class UserVO {
-    private String id;
-    private String name;
-    private String avatar;
+    private String  id;
+    private String  name;
+    private String  avatar;
+    private boolean account_enable;
+    private boolean account_lock;
+    private boolean account_expire;
+    private boolean account_credential;
 
     public static UserVO of(MeowUser user) {
         UserVO vo = new UserVO();

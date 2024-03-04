@@ -4,27 +4,22 @@ import com.xhpolaris.meowpick.common.consts.Consts;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 
-import java.util.Collection;
+import java.util.Collections;
 
 @Getter
 @Setter
 public class MeowRememberMeAuthenticationToken extends RememberMeAuthenticationToken {
     private MeowUser user;
 
-    public MeowRememberMeAuthenticationToken(Object principal,
-                                             Collection<? extends GrantedAuthority> authorities) {
-        super(Consts.Authorize.KEY, principal, authorities);
+    public MeowRememberMeAuthenticationToken() {
+        super(Consts.Authorize.KEY, "MeowRememberMeAuthenticationToken", Collections.emptyList());
     }
 
-    public static MeowRememberMeAuthenticationToken authorized(String id,
-                                                               String name,
-                                                               Collection<? extends GrantedAuthority> authorities) {
-        MeowRememberMeAuthenticationToken token =
-                new MeowRememberMeAuthenticationToken(name, authorities);
+    public static MeowRememberMeAuthenticationToken authorized(MeowUser user) {
+        MeowRememberMeAuthenticationToken token = new MeowRememberMeAuthenticationToken();
 
-        token.user = new MeowUser(name, name, id, true);
+        token.user = user;
 
         return token;
     }

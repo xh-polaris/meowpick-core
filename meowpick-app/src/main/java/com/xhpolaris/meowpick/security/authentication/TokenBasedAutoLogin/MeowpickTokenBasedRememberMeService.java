@@ -4,25 +4,35 @@ import com.xhpolaris.meowpick.common.JsonRet;
 import com.xhpolaris.meowpick.common.authorize.MeowRememberMeAuthenticationToken;
 import com.xhpolaris.meowpick.common.authorize.MeowUser;
 import com.xhpolaris.meowpick.common.authorize.MeowUserDetailService;
+import com.xhpolaris.meowpick.common.consts.Consts;
 import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.web.authentication.NullRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.InvalidCookieException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Collection;
 
 @Component
 @RequiredArgsConstructor
 public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices {
+    public static final  int            TWO_WEEKS_S = 1209600;
+    private static final String         DELIMITER   = ":";
+
     private final MeowUserDetailService userDetailsService;
     private final UserDetailsChecker    userDetailsChecker = new AccountStatusUserDetailsChecker();
 
@@ -31,7 +41,20 @@ public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices 
     }
 
     protected MeowUser retrieveUser(String[] tokens) {
-        return MeowUser.anonymous();
+        String id         = tokens[0];
+        long   expiryTime = getTokenExpiryTime(tokens[1]);
+        String signature  = tokens[2];
+
+        if (expiryTime < System.currentTimeMillis()) {
+        }
+
+        MeowUser user = userDetailsService.loadUserById(id);
+
+        String expectedTokenSignature = makeTokenSignature(user, expiryTime);
+        if (!expectedTokenSignature.equals(signature)) {
+        }
+
+        return user;
     }
 
     @Override
@@ -45,15 +68,62 @@ public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices 
         MeowUser user   = retrieveUser(tokens);
         this.userDetailsChecker.check(user);
 
-        return createSuccessFulAuthentication(request, user);
+        return createSuccessFulAuthentication(user);
     }
 
-    protected Authentication createSuccessFulAuthentication(HttpServletRequest request, MeowUser user) {
-        return MeowRememberMeAuthenticationToken.authorized("65e43a7aa6fd34617f043a8e", user.getUsername(), mapAuthorities(user));
+    protected Authentication createSuccessFulAuthentication(MeowUser user) {
+        return MeowRememberMeAuthenticationToken.authorized(user);
     }
 
+    @SneakyThrows
     protected String[] decodeToken(String rememberMeToken) {
-        return new String[0];
+        String cookieAsPlainText = new String(Base64.getDecoder().decode(rememberMeToken), StandardCharsets.UTF_8);
+
+        System.out.println(cookieAsPlainText);
+        String[] tokens = StringUtils.delimitedListToStringArray(cookieAsPlainText, DELIMITER);
+        for (int i = 0; i < tokens.length; i++) {
+            tokens[i] = URLDecoder.decode(tokens[i], StandardCharsets.UTF_8);
+        }
+        return tokens;
+    }
+
+    private String encodeToken(String[] tokens) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < tokens.length; i++) {
+            sb.append(URLEncoder.encode(tokens[i], StandardCharsets.UTF_8));
+            if (i < tokens.length - 1) {
+                sb.append(DELIMITER);
+            }
+        }
+
+        System.out.println(sb);
+        return Base64.getEncoder().encodeToString(sb.toString().getBytes(StandardCharsets.UTF_8));
+    }
+
+    private String makeTokenSignature(MeowUser user, long expiryTime) {
+        return Consts.Authorize.KEY;
+    }
+
+    protected String getToken(MeowUser user) {
+        long expiryTime = System.currentTimeMillis();
+        expiryTime += 1000L * TWO_WEEKS_S;
+
+        String signatureValue = makeTokenSignature(user, expiryTime);
+
+        return encodeToken(new String[]{
+                user.getUserId(),
+                Long.toString(expiryTime),
+                signatureValue
+        });
+    }
+
+    private long getTokenExpiryTime(String time) {
+        try {
+            return Long.parseLong(time);
+        } catch (NumberFormatException nfe) {
+            throw new InvalidCookieException(
+                    "token[1] did not contain a valid number (contained '" + time + "')");
+        }
     }
 
     private String extractRememberMeToken(HttpServletRequest request) {
@@ -70,9 +140,11 @@ public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices 
                              HttpServletResponse response,
                              Authentication successfulAuthentication) {
         System.out.println(successfulAuthentication);
+        MeowUser user = MeowUser.getUser(successfulAuthentication);
+
         Response resp = new Response();
 
-        resp.setToken("hello world rememberMe");
+        resp.setToken(getToken(user));
 
         RequestJsonUtils.write(JsonRet.then(resp));
     }

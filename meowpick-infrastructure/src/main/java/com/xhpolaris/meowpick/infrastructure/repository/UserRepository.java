@@ -33,7 +33,7 @@ public class UserRepository extends BasicRepository<UserCollection, UserVO> impl
 
     @Override
     public UserVO getById(String id) {
-        return userDao.findById(id).map(UserMap.instance::db2vo).orElse(null);
+        return userDao.findById(id).map(UserMap.instance::db2vo).orElseThrow(() -> new NotFindException(""));
     }
 
     @Override

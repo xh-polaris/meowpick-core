@@ -13,4 +13,6 @@ public interface MeowUserDetailService extends UserDetailsService {
     }
 
     MeowUser loadUserByToken(UserLoginEn loginType, String token);
+
+    MeowUser loadUserById(String id);
 }

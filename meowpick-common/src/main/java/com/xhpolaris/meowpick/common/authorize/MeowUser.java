@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Setter
 @Getter
@@ -18,15 +17,17 @@ public class MeowUser extends User {
     private String  displayName;
     private String  userId;
     private boolean byToken;
-    private String avatar;
+    private String  avatar;
 
-    public MeowUser(String username,
-                    String displayName,
-                    String userId,
+    public MeowUser(String id,
+                    String name,
+                    boolean enable,
+                    boolean expired,
+                    boolean lock,
                     Collection<? extends GrantedAuthority> authorities) {
-        super(username, "", authorities);
-        this.setDisplayName(displayName);
-        this.setUserId(userId);
+        super(name, "", enable, expired, true, lock, authorities);
+        this.userId = id;
+        this.displayName = name;
     }
 
     public MeowUser(String username,
@@ -38,9 +39,7 @@ public class MeowUser extends User {
         this.setUserId(userId);
     }
 
-    public static MeowUser getCurrentUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
+    public static MeowUser getUser(Authentication auth) {
         if (auth instanceof MeowAuthenticationToken token) {
             return token.getUser();
         } else if (auth instanceof MeowRememberMeAuthenticationToken token) {
@@ -52,7 +51,11 @@ public class MeowUser extends User {
         return anonymous();
     }
 
-    private static MeowUser anonymous = new MeowUser("anonymous", "anonymous", "65e43a7aa6fd34617f043a8e", true);
+    public static MeowUser getCurrentUser() {
+        return getUser(SecurityContextHolder.getContext().getAuthentication());
+    }
+
+    private static MeowUser anonymous = new MeowUser("anonymous", "anonymous", "anonymous", true);
 
     public static MeowUser anonymous() {
         return anonymous;
@@ -63,7 +66,12 @@ public class MeowUser extends User {
         return this.displayName;
     }
 
-    public static MeowUser authorized(String id, String name) {
-        return new MeowUser(name, name, id, List.of());
+    public static MeowUser authorized(String id,
+                                      String name,
+                                      boolean enable,
+                                      boolean expired,
+                                      boolean lock,
+                                      Collection<? extends GrantedAuthority> authorities) {
+        return new MeowUser(id, name, enable, expired, lock, authorities);
     }
 }
