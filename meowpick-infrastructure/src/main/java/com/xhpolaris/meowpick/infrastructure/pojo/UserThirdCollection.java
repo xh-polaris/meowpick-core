@@ -22,7 +22,7 @@ public class UserThirdCollection {
 
     private String type;
     private String token;
-    private boolean bind;
+    private boolean bind = true;
 
     @CreatedDate
     private Date crateAt;

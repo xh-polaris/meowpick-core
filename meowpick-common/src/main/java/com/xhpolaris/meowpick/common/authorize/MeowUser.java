@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Setter
 @Getter
@@ -60,5 +61,9 @@ public class MeowUser extends User {
     @Override
     public String getUsername() {
         return this.displayName;
+    }
+
+    public static MeowUser authorized(String id, String name) {
+        return new MeowUser(name, name, id, List.of());
     }
 }

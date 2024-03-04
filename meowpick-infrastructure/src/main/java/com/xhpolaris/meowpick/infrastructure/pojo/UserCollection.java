@@ -24,10 +24,10 @@ public class UserCollection {
     private String password;
     private boolean auth;
 
-    private boolean account_enable;
-    private boolean account_lock;
-    private boolean account_expire;
-    private boolean account_credential;
+    private boolean account_enable = true;
+    private boolean account_lock = true;
+    private boolean account_expire = true;
+    private boolean account_credential = true;
 
     @CreatedDate
     private Date crateAt;

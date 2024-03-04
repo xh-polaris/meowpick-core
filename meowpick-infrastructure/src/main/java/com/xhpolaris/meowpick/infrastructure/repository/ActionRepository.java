@@ -105,17 +105,4 @@ public class ActionRepository implements IActionRepository {
 
         return vo;
     }
-
-    @Override
-    public boolean $like(String uid, String target) {
-        UserActionCollection user = userActionDao.findByUid(uid);
-        if (user == null) {
-            return false;
-        }
-        return user.getLike()
-                   .stream()
-                   .map(UserActionCollection.Action::getTarget)
-                   .collect(Collectors.toSet())
-                   .contains(target);
-    }
 }

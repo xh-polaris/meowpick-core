@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public final class Meowpick {
+    private Meowpick() {}
 
     private static final Gson gson = new GsonBuilder().create();
 

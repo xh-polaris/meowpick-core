@@ -22,8 +22,4 @@ public class ActionServer {
     public ActionVO relation(String id) {
         return repository.get(id, context.uid());
     }
-
-    public boolean like(String id, String target) {
-        return repository.$like(id, target);
-    }
 }

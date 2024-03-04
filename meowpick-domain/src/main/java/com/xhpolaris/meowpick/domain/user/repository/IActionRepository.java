@@ -7,6 +7,4 @@ public interface IActionRepository {
     boolean like(String uid, String target, ActionCmd.CreateCmd cmd);
 
     ActionVO get(String id, String uid);
-
-    boolean $like(String id, String target);
 }

@@ -3,19 +3,25 @@ package com.xhpolaris.meowpick.support;
 import com.xhpolaris.meowpick.common.authorize.MeowUser;
 import com.xhpolaris.meowpick.common.authorize.MeowUserDetailService;
 import com.xhpolaris.meowpick.common.enums.UserLoginEn;
-import com.xhpolaris.meowpick.domain.user.service.UserServer;
+import com.xhpolaris.meowpick.domain.user.auto_login.factory.LoginProvider;
+import com.xhpolaris.meowpick.domain.user.model.entity.LoginCmd;
+import com.xhpolaris.meowpick.domain.user.model.valobj.UserVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class UserDetailServer implements MeowUserDetailService {
-    private final UserServer server;
+    private final LoginProvider loginProvider;
 
     @Override
     public MeowUser loadUserByToken(UserLoginEn loginType, String token) {
-        return new MeowUser("eicen", "eicen", "65e43a7aa6fd34617f043a8e", List.of());
+        LoginCmd.Query query = new LoginCmd.Query();
+        query.setType(loginType);
+        query.setToken(token);
+
+        UserVO user = loginProvider.autoLogin(query);
+
+        return MeowUser.authorized(user.getId(), user.getName());
     }
 }

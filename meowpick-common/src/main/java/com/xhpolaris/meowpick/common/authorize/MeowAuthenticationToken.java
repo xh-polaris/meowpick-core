@@ -15,7 +15,6 @@ public class MeowAuthenticationToken extends UsernamePasswordAuthenticationToken
     private boolean  needChangePwd;
     private String session;
     private String lastLoginInfo;
-    private Object data;
 
     public MeowAuthenticationToken(Object principal, Object credentials) {
         super(principal, credentials);

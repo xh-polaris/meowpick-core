@@ -45,7 +45,7 @@ public class RequestJsonUtils {
         // GET
         if (submitMehtod.equals("GET")) {
             return new String(request.getQueryString()
-                                     .getBytes("iso-8859-1"), "utf-8").replaceAll("%22", "\"");
+                                     .getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8).replace("%22", "\"");
             // POST
         } else {
             return getRequestPostStr(request);
@@ -72,7 +72,7 @@ public class RequestJsonUtils {
 
     public static String getRequestPostStr(HttpServletRequest request)
     throws IOException {
-        byte   buffer[]     = getRequestPostBytes(request);
+        byte[] buffer       = getRequestPostBytes(request);
         String charEncoding = request.getCharacterEncoding();
         if (charEncoding == null) {
             charEncoding = "UTF-8";

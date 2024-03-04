@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum UserLoginEn implements BaseEnum {
+    password("账号密码", Name.email, -4),
     email("邮件", Name.email, -3),
     phone("电话", Name.phone, -2),
     weapp("微信小程序", Name.weapp, -1),
@@ -18,21 +19,22 @@ public enum UserLoginEn implements BaseEnum {
     facebook("脸书", Name.facebook, 6),
     twitter("推特", Name.twitter, 7),
     ;
-    private final String msg;
-    private final String value;
+    private final String  msg;
+    private final String  value;
     private final Integer code;
 
     public interface Name {
-        String email = "UserLoginEn.email";
-        String phone = "UserLoginEn.phone";
-        String weapp = "UserLoginEn.weapp";
-        String wx = "UserLoginEn.wx";
-        String qq = "UserLoginEn.qq";
-        String tiktok = "UserLoginEn.tiktok";
-        String weibo = "UserLoginEn.weibo";
-        String apple = "UserLoginEn.apple";
-        String google = "UserLoginEn.google";
+        String password = "UserLoginEn.usernamePassword";
+        String email    = "UserLoginEn.email";
+        String phone    = "UserLoginEn.phone";
+        String weapp    = "UserLoginEn.weapp";
+        String wx       = "UserLoginEn.wx";
+        String qq       = "UserLoginEn.qq";
+        String tiktok   = "UserLoginEn.tiktok";
+        String weibo    = "UserLoginEn.weibo";
+        String apple    = "UserLoginEn.apple";
+        String google   = "UserLoginEn.google";
         String facebook = "UserLoginEn.facebook";
-        String twitter = "UserLoginEn.twitter";
+        String twitter  = "UserLoginEn.twitter";
     }
 }
