@@ -1,7 +1,5 @@
 package com.xhpolaris.meowpick.security;
 
-import com.xhpolaris.meowpick.common.JsonRet;
-import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -12,10 +10,10 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @SuppressWarnings("all")
 public abstract class SecurityConfigurer extends AbstractHttpConfigurer<SecurityConfigurer, HttpSecurity> {
@@ -28,7 +26,8 @@ public abstract class SecurityConfigurer extends AbstractHttpConfigurer<Security
     private AbstractSecurityFilter       filter;
 
     @Override
-    public void init(HttpSecurity builder) throws Exception {
+    public void init(HttpSecurity builder)
+    throws Exception {
         postInit(providers);
         if (providers.size() != 0) {
             providers.forEach(builder::authenticationProvider);
@@ -36,7 +35,8 @@ public abstract class SecurityConfigurer extends AbstractHttpConfigurer<Security
     }
 
     @Override
-    public void configure(HttpSecurity builder) throws Exception {
+    public void configure(HttpSecurity builder)
+    throws Exception {
         this.http = builder;
 //        init(builder);
         filter = buildFilter();
@@ -67,11 +67,8 @@ public abstract class SecurityConfigurer extends AbstractHttpConfigurer<Security
     }
 
     protected AuthenticationManager getAuthenticationManager() {
-        AuthenticationManager manager = http.getSharedObject(AuthenticationManager.class);
-        if (manager == null) {
-            return new ProviderManager(providers);
-        }
-        return manager;
+        return Optional.ofNullable(http.getSharedObject(AuthenticationManager.class))
+                       .orElse(new ProviderManager(providers));
     }
 
     private void addFilter(AbstractSecurityFilter filter) {
@@ -101,9 +98,5 @@ public abstract class SecurityConfigurer extends AbstractHttpConfigurer<Security
     public SecurityConfigurer filter(AbstractSecurityFilter filter) {
         this.filter = filter;
         return this;
-    }
-
-    public void write(Object data) throws IOException {
-        RequestJsonUtils.write(JsonRet.then(data));
     }
 }

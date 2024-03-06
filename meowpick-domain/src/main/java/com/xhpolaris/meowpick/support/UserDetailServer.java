@@ -10,8 +10,6 @@ import com.xhpolaris.meowpick.domain.user.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component
 @RequiredArgsConstructor
 public class UserDetailServer implements MeowUserDetailService {
@@ -27,7 +25,7 @@ public class UserDetailServer implements MeowUserDetailService {
         UserVO user = loginProvider.autoLogin(query);
 
         return MeowUser.authorized(user.getId(), user.getName(), user.isAccount_enable(), user.isAccount_expire(),
-                user.isAccount_lock(), List.of());
+                user.isAccount_lock());
     }
 
     @Override
@@ -35,6 +33,6 @@ public class UserDetailServer implements MeowUserDetailService {
         UserVO user = userRepository.getById(id);
 
         return MeowUser.authorized(user.getId(), user.getName(), user.isAccount_enable(), user.isAccount_expire(),
-                user.isAccount_lock(), List.of());
+                user.isAccount_lock());
     }
 }

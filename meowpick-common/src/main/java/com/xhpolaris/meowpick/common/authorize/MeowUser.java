@@ -4,12 +4,11 @@ package com.xhpolaris.meowpick.common.authorize;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Setter
 @Getter
@@ -23,9 +22,8 @@ public class MeowUser extends User {
                     String name,
                     boolean enable,
                     boolean expired,
-                    boolean lock,
-                    Collection<? extends GrantedAuthority> authorities) {
-        super(name, "", enable, expired, true, lock, authorities);
+                    boolean lock) {
+        super(name, "", enable, expired, true, lock, List.of());
         this.userId = id;
         this.displayName = name;
     }
@@ -70,8 +68,7 @@ public class MeowUser extends User {
                                       String name,
                                       boolean enable,
                                       boolean expired,
-                                      boolean lock,
-                                      Collection<? extends GrantedAuthority> authorities) {
-        return new MeowUser(id, name, enable, expired, lock, authorities);
+                                      boolean lock) {
+        return new MeowUser(id, name, enable, expired, lock);
     }
 }
