@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "weapp")
 public class WeappProperties {
     private String appid;
-    private String appsecret;
+    private String secret;
     private String url;
 }

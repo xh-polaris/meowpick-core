@@ -8,6 +8,7 @@ import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
 import com.xhpolaris.meowpick.security.SecurityConfigurer;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,6 +24,10 @@ import java.util.List;
 @Configuration
 @SuppressWarnings("all")
 @RequiredArgsConstructor
+@ConditionalOnProperty(
+        name = "app.security",
+        havingValue = "true"
+)
 public class SecurityConfig {
 
     protected final List<SecurityConfigurer> configurers;
@@ -43,8 +48,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(r -> r.requestMatchers(canPermitAntPatterns.toArray(new String[0]))
                                          .permitAll()
                                          .anyRequest()
-//                                         .authenticated()
-                                         .permitAll()
+                                         .authenticated()
                                   );
 
         http.exceptionHandling(d -> d.accessDeniedHandler((req, res, ex) -> {

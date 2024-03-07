@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "doc-info")
 public class DocInfoProperties {
-    private String title;
-    private String description;
-    private String version;
-    private String websiteName;
-    private String websiteUrl;
+    private String  title;
+    private String  description;
+    private String  version;
+    private String  websiteName;
+    private String  websiteUrl;
     private boolean enable;
 }

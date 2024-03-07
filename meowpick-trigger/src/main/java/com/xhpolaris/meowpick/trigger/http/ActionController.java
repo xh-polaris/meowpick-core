@@ -27,7 +27,7 @@ public class ActionController implements ActionApi {
     @Override
     public WeappVO weapp_openid(String id) {
         String code2SessionRespStr = restTemplate.getForObject(props.getUrl(), String.class,
-                props.getAppid(), props.getAppsecret(), id);
+                props.getAppid(), props.getSecret(), id);
 
         WeappVO.WxResponse response = Meowpick.fromJson(code2SessionRespStr, WeappVO.WxResponse.class);
 

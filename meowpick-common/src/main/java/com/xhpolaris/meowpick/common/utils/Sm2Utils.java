@@ -34,12 +34,7 @@ import java.util.Base64;
  */
 @Slf4j
 public class Sm2Utils {
-    
-    /**
-     * 加签
-     * @param plainText
-     * @return
-     */
+
     public static String sign(String plainText, String privateKeyStr) {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         try {   
@@ -56,13 +51,7 @@ public class Sm2Utils {
             throw new RuntimeException(e);
         }
     }
-    
-    /**
-     * 验签
-     * @param plainText
-     * @param signatureValue
-     * @return
-     */
+
     public static boolean verify(String plainText, String signatureValue, String publicKeyStr) {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         try {
@@ -82,13 +71,8 @@ public class Sm2Utils {
             return false;
         }
     }
-    
-    /**
-     * 加密
-     * @param plainText
-     * @return
-     */
-    public static byte[] encrypt(String plainText, String publicKeyStr) throws Exception {
+
+    public static byte[] encrypt(String plainText, String publicKeyStr) {
         Security.addProvider(new BouncyCastleProvider());
         try {   
             // 获取椭圆曲线KEY生成器
@@ -100,8 +84,7 @@ public class Sm2Utils {
             //数据加密
             StandardSM2Engine engine = new StandardSM2Engine(new SM3Digest(), SM2Engine.Mode.C1C3C2);
             engine.init(true, new ParametersWithRandom(publicKeyParamerters));
-            byte[] encryptData = engine.processBlock(plainText.getBytes(), 0, plainText.getBytes().length);
-            return encryptData;
+            return engine.processBlock(plainText.getBytes(), 0, plainText.getBytes().length);
         } catch (NoSuchAlgorithmException | InvalidKeySpecException 
                 | InvalidKeyException | InvalidCipherTextException e) {
             throw new RuntimeException(e);
@@ -141,8 +124,7 @@ public class Sm2Utils {
             // 使用SM2的算法区域初始化密钥生成器
             kpg.initialize(sm2Spec, random);
             // 获取密钥对
-            KeyPair keyPair = kpg.generateKeyPair();
-            return keyPair;
+            return kpg.generateKeyPair();
         } catch (Exception e) {
             log.error("generate sm2 key pair failed:{}", e.getMessage(), e);
             return null;
@@ -151,13 +133,14 @@ public class Sm2Utils {
     
     public static void main(String[] args) throws Exception {
         KeyPair keyPair = generateSm2KeyPair();
-        String privateKey = Base64.getEncoder().encodeToString(keyPair.getPrivate().getEncoded());
-        String publicKey  = Base64.getEncoder().encodeToString(keyPair.getPublic().getEncoded());
-        String data = "{\"daId\":\"123456\"}";
-        String encryptedJsonStr =  Hex.encodeHexString(encrypt(data, publicKey)) + "";//16进制字符串
-        String decryptedJsonStr = decrypt(Hex.decodeHex(encryptedJsonStr), privateKey);
-        String sign = Hex.encodeHexString(Base64.getDecoder().decode(sign(data, privateKey)));
-        boolean flag = verify(Hex.encodeHexString(data.getBytes()), sign, publicKey);
+        assert keyPair != null;
+        String  privateKey       = Base64.getEncoder().encodeToString(keyPair.getPrivate().getEncoded());
+        String  publicKey        = Base64.getEncoder().encodeToString(keyPair.getPublic().getEncoded());
+        String  data             = "{\"daId\":\"123456\"}";
+        String  encryptedJsonStr = Hex.encodeHexString(encrypt(data, publicKey));//16进制字符串
+        String  decryptedJsonStr = decrypt(Hex.decodeHex(encryptedJsonStr), privateKey);
+        String  sign             = Hex.encodeHexString(Base64.getDecoder().decode(sign(data, privateKey)));
+        boolean flag             = verify(Hex.encodeHexString(data.getBytes()), sign, publicKey);
         System.out.println("base64后privateKey:" + privateKey);
         System.out.println("base64后publicKey:" + publicKey);
         System.out.println("加密前数据:" + data);

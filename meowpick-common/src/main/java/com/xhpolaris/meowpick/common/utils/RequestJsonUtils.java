@@ -58,7 +58,7 @@ public class RequestJsonUtils {
         if (contentLength < 0) {
             return null;
         }
-        byte buffer[] = new byte[contentLength];
+        byte[] buffer = new byte[contentLength];
         for (int i = 0; i < contentLength; ) {
 
             int readlen = request.getInputStream().read(buffer, i, contentLength - i);

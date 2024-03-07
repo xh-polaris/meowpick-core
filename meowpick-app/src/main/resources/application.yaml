@@ -41,7 +41,7 @@ spring:
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: true
 doc-info:
-#  enable: ${doc.enable:true}
+  enable: ${doc.enable:true}
   title: API文档
   description: swagger.json
   version: v1.0.1
@@ -56,10 +56,12 @@ grpc:
 
 app:
   security:
-    enable: false
+    enable: true
+  public-key: ${app.publicKey:public-key}
+  private-key: ${app.privateKey:private-key}
 weapp:
   appid: appid
-  appsecret: appsecret
+  secret: appsecret
   url: https://api.weixin.qq.com/sns/jscode2session?appid={APPID}&secret={SECRET}&js_code={JSCODE}&grant_type=authorization_code
 search-history:
   size: 8

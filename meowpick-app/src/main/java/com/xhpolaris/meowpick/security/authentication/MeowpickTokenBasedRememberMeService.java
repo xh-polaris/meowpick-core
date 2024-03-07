@@ -1,9 +1,10 @@
-package com.xhpolaris.meowpick.security.authentication.TokenBasedAutoLogin;
+package com.xhpolaris.meowpick.security.authentication;
 
 import com.xhpolaris.meowpick.common.JsonRet;
 import com.xhpolaris.meowpick.common.authorize.MeowRememberMeAuthenticationToken;
 import com.xhpolaris.meowpick.common.authorize.MeowUser;
 import com.xhpolaris.meowpick.common.authorize.MeowUserDetailService;
+import com.xhpolaris.meowpick.common.consts.Consts;
 import com.xhpolaris.meowpick.common.properties.AppProperties;
 import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
 import com.xhpolaris.meowpick.common.utils.Sm2Utils;
@@ -28,12 +29,11 @@ import java.nio.charset.StandardCharsets;
 @Component
 @RequiredArgsConstructor
 public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices {
-    public static final  int           TWO_WEEKS_S = 1209600;
-    private static final String        DELIMITER   = ":";
-    private final        AppProperties appProperties;
-
-    private final MeowUserDetailService userDetailsService;
-    private final UserDetailsChecker    userDetailsChecker = new AccountStatusUserDetailsChecker();
+    public static final  int                   Token_WEEKS_S      = Consts.TOKEN_WEEKS;
+    private static final String                DELIMITER          = Consts.SPLIT;
+    private final        UserDetailsChecker    userDetailsChecker = new AccountStatusUserDetailsChecker();
+    private final        AppProperties         appProperties;
+    private final        MeowUserDetailService userDetailsService;
 
     protected MeowUser retrieveUser(String[] tokens) {
         String id         = tokens[0];
@@ -90,7 +90,7 @@ public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices 
 
     protected String getToken(MeowUser user) {
         long expiryTime = System.currentTimeMillis();
-        expiryTime += 1000L * TWO_WEEKS_S;
+        expiryTime += 1000L * Token_WEEKS_S;
 
 //        String signatureValue = makeTokenSignature(user, expiryTime);
 

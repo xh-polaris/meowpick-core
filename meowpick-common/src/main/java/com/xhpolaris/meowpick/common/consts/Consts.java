@@ -1,16 +1,13 @@
 package com.xhpolaris.meowpick.common.consts;
 
 public class Consts {
-    private Consts() {}
-
-    public static final String SPLIT = ":";
-
-    public interface CourseLearn {
-        String LEARN = "learn";
-        String WANT = "want";
+    private Consts() {
     }
 
+    public static final String SPLIT       = ":";
+    public static final int    TOKEN_WEEKS = 7257600;
+
     public interface Authorize {
-        String KEY = "token_based";
+        String KEY = "PWI2hfQKFNo0rUR1eTXGt";
     }
 }

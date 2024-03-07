@@ -29,6 +29,7 @@ import org.bouncycastle.util.Pack;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Objects;
 
 /**
  * 自定义SM2Engine类，对加密解密数据进行了ASN.1编码
@@ -103,15 +104,6 @@ public class StandardSM2Engine {
         return new FixedPointCombMultiplier();
     }
 
-    /**
-     * 加密
-     * 
-     * @param in
-     * @param inOff
-     * @param inLen
-     * @return
-     * @throws InvalidCipherTextException
-     */
     private byte[] encrypt(byte[] in, int inOff, int inLen) throws InvalidCipherTextException {
         byte[] c2 = new byte[inLen];
 
@@ -142,15 +134,6 @@ public class StandardSM2Engine {
         return convertToASN1(c1P, c2, c3);
     }
 
-    /**
-     * 解密
-     * 
-     * @param in
-     * @param inOff
-     * @param inLen
-     * @return
-     * @throws InvalidCipherTextException
-     */
     private byte[] decrypt(byte[] in, int inOff, int inLen) throws InvalidCipherTextException {
         byte[] decryptData = new byte[inLen];
         System.arraycopy(in, inOff, decryptData, 0, decryptData.length);
@@ -290,14 +273,12 @@ public class StandardSM2Engine {
         DEROctetString derDig = new DEROctetString(c3);
         DEROctetString derEnc = new DEROctetString(c2);
         ASN1EncodableVector v = new ASN1EncodableVector();
-        switch (mode) {
-        case C1C3C2:
+        if (Objects.requireNonNull(mode) == Mode.C1C3C2) {
             v.add(x);
             v.add(y);
             v.add(derDig);
             v.add(derEnc);
-            break;
-        default:
+        } else {
             v.add(x);
             v.add(y);
             v.add(derEnc);

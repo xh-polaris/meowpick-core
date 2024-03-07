@@ -16,17 +16,18 @@ import java.util.Date;
 @AllArgsConstructor
 public class UserCollection {
     @MongoId
-    private String id;
-    private String name;
-    private String avatar;
-    private String phone;
-    private String email;
-    private String password;
+    private String  id;
+    private String  name;
+    private String  avatar;
+    private String  phone;
+    private String  email;
+    private String  password;
     private boolean auth;
+    private String  teacher;
 
-    private boolean account_enable = true;
-    private boolean account_lock = true;
-    private boolean account_expire = true;
+    private boolean account_enable     = true;
+    private boolean account_lock       = true;
+    private boolean account_expire     = true;
     private boolean account_credential = true;
 
     @CreatedDate
