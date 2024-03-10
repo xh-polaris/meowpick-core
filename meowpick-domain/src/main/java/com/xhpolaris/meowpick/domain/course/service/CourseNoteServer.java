@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -45,6 +46,10 @@ public class CourseNoteServer {
 
     public List<Integer> list(String id) {
         return repository.courseScoreList(id);
+    }
+
+    public Map<String, List<Integer>> listIn(List<String> ids) {
+        return repository.courseScoreListIn(ids);
     }
 
     public CourseNoteEn currentState(String uid, String course) {

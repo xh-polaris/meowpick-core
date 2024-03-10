@@ -9,6 +9,7 @@ import com.xhpolaris.meowpick.domain.course.model.valobj.CourseNote;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ICourseRepository {
     CourseVO createCourse(CourseCmd.CreateCmd cmd);
@@ -28,4 +29,6 @@ public interface ICourseRepository {
     List<Integer> courseScoreList(String id);
 
     CourseNoteEn currentState(String uid, String course);
+
+    Map<String, List<Integer>> courseScoreListIn(List<String> ids);
 }

@@ -3,8 +3,7 @@ FROM openjdk:17
 ARG WORKDIR=/opt/freud
 
 WORKDIR ${WORKDIR}
-COPY target/lib ./lib
-COPY meowpick-app/target/*.jar meowpick.jar
+COPY meowpick-app/target/meowpick-app-1.0.0.jar meowpick.jar
 
 EXPOSE 5508
 
@@ -13,7 +12,5 @@ ENV LANGUAGE=zh_CN.UTF-8
 ENV LC_ALL=zh_CN.UTF-8
 ENV TZ=Asia/Shanghai
 ENV SPRING_PROFILES_ACTIVE=prod
-
-COPY target/*.jar freud.jar
 
 ENTRYPOINT java -jar meowpick.jar

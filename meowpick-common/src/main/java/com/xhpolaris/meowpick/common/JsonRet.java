@@ -17,12 +17,16 @@ public class JsonRet {
     private Object payload;
 
     public static JsonRet fail(HttpStateEn state) {
+        return fail(state, state.getMsg());
+    }
+
+    public static JsonRet fail(HttpStateEn state, Object ...args) {
         JsonRet data = new JsonRet();
 
         State type = new State();
 
         type.setCode(state.getCode());
-        type.setErrMsg(state.getMsg());
+        type.setErrMsg(String.format(state.getMsg(), args));
 
         data.setState(type);
 

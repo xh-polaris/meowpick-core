@@ -51,8 +51,4 @@ public abstract class AbstractSecurityFilter extends AbstractAuthenticationProce
     protected void postAuthentication(HttpServletRequest request) {
 //        throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
     }
-
-    protected void doFilterInternal(HttpServletRequest request) {
-
-    }
 }

@@ -54,7 +54,7 @@ public class StandardSM2Engine {
     }
 
     public StandardSM2Engine(Digest digest) {
-        this(digest, Mode.C1C2C3);
+        this(digest, Mode.C1C3C2);
     }
 
     public StandardSM2Engine(Digest digest, Mode mode) {

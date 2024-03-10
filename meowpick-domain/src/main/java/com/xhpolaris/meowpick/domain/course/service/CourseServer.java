@@ -2,6 +2,7 @@ package com.xhpolaris.meowpick.domain.course.service;
 
 import com.xhpolaris.meowpick.common.Context;
 import com.xhpolaris.meowpick.common.PageEntity;
+import com.xhpolaris.meowpick.common.utils.ScoreTransfor;
 import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
@@ -11,12 +12,17 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CourseServer {
     private final ICourseRepository courseRepository;
-    private final Context context;
+    private final Context           context;
+    private final CourseNoteServer  noteServer;
 
     public CourseVO exec(CourseCmd.CreateCmd cmd) {
         return courseRepository.createCourse(cmd);
@@ -35,10 +41,33 @@ public class CourseServer {
     }
 
     public Course findById(String id) {
-        return courseRepository.getById(id, context.uid());
+        Course vo = courseRepository.getById(id, context.uid());
+
+        vo.setScore(ScoreTransfor.transfor(noteServer.list(id)));
+        vo.setNotes(noteServer.list(context.uid(), id));
+
+        return vo;
     }
 
-    public PageEntity<CourseVO> search(SearchCmd.Query query) {
-        return this.query(CourseCmd.Query.of(query.getKeyword(), query));
+    public PageEntity<Course> search(SearchCmd.Query query) {
+        PageEntity<CourseVO> page = this.query(CourseCmd.Query.of(query.getKeyword(), query));
+
+        PageEntity<Course> vo = new PageEntity<>();
+
+        Map<String, List<Integer>> scoreMap = noteServer.listIn(page.getRows()
+                                                                    .stream()
+                                                                    .map(CourseVO::getId)
+                                                                    .toList());
+
+        vo.setTotal(page.getTotal());
+        vo.setRows(page.getRows().stream().map(e -> {
+            Course course = new Course();
+
+            course.setData(e);
+            course.setScore(ScoreTransfor.transfor(scoreMap.getOrDefault(e.getId(), Collections.emptyList())));
+
+            return course;
+        }).toList());
+        return vo;
     }
 }

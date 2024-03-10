@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -40,5 +41,10 @@ public class WebWrapper implements ResponseBodyAdvice<Object> {
             return body;
         }
         return JsonRet.then(body);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public JsonRet fail(Exception ex) {
+        return JsonRet.fail(HttpStateEn.biz, ex.getMessage());
     }
 }

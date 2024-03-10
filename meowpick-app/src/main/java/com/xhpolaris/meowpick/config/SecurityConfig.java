@@ -8,6 +8,7 @@ import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
 import com.xhpolaris.meowpick.security.SecurityConfigurer;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,11 +22,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Configuration
 @SuppressWarnings("all")
 @RequiredArgsConstructor
 @ConditionalOnProperty(
-        name = "app.security",
+        name = "app.security.enable",
         havingValue = "true"
 )
 public class SecurityConfig {
@@ -38,6 +40,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)
     throws Exception {
+        log.info("start security config");
         config(http);
 
         http.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

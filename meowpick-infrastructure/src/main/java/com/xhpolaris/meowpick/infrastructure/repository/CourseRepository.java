@@ -2,6 +2,7 @@ package com.xhpolaris.meowpick.infrastructure.repository;
 
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.common.enums.CourseNoteEn;
+import com.xhpolaris.meowpick.common.utils.TimeUtils;
 import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseNoteCmd;
@@ -9,7 +10,6 @@ import com.xhpolaris.meowpick.domain.course.model.valobj.CourseNote;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
 import com.xhpolaris.meowpick.domain.course.repository.ICourseRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.CourseDao;
-import com.xhpolaris.meowpick.infrastructure.dao.CourseLeanDao;
 import com.xhpolaris.meowpick.infrastructure.dao.CourseLearnHistoryDao;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.CourseLearnHistoryMap;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.CourseMap;
@@ -19,16 +19,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class CourseRepository extends BasicRepository<CourseCollection, CourseVO> implements ICourseRepository {
     private final CourseDao             courseDao;
-    private final CourseLeanDao         leanDao;
     private final CourseLearnHistoryDao historyDao;
 
     @Override
@@ -87,31 +87,21 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
 
         List<CourseLearnHistoryCollection.History> historyList = list.stream()
                                                                      .map(CourseLearnHistoryCollection::getHistories)
-                                                                     .flatMap(Collection::stream)
+                                                                     .map(e -> e.stream()
+                                                                                .findFirst()
+                                                                                .orElse(new CourseLearnHistoryCollection.History()))
                                                                      .toList();
 
-        vo.setScore(history.getScore());
+
         vo.setData(course);
-
-        vo.setWanted(historyList.stream()
-                                .map(CourseLearnHistoryCollection.History::getStep)
-                                .filter(i -> CourseNoteEn.start.getValue().equals(i))
-                                .count());
-        vo.setLeaned(historyList.stream()
-                                .map(CourseLearnHistoryCollection.History::getStep)
-                                .filter(i -> CourseNoteEn.end.getValue().equals(i))
-                                .count());
-
-        vo.setWant(history.getHistories()
-                          .stream()
-                          .filter(i -> CourseNoteEn.start.getValue().equals(i.getStep()))
-                          .toList()
-                          .isEmpty());
-        vo.setLearn(history.getHistories()
-                           .stream()
-                           .filter(i -> CourseNoteEn.end.getValue().equals(i.getStep()))
-                           .toList()
-                           .isEmpty());
+        vo.setWant_cnt(historyList.stream()
+                                  .map(CourseLearnHistoryCollection.History::getEnums)
+                                  .filter(CourseNoteEn.start::equals)
+                                  .count());
+        vo.setLearn_cnt(historyList.stream()
+                                   .map(CourseLearnHistoryCollection.History::getEnums)
+                                   .filter(CourseNoteEn.end::equals)
+                                   .count());
 
         return vo;
     }
@@ -147,11 +137,25 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
                                .map(CourseLearnHistoryCollection::getHistories)
                                .orElse(List.of())
                                .stream()
-                               .map(CourseLearnHistoryCollection.History::getEn)
-                               .max(Integer::compareTo)
-                               .orElse(CourseNoteEn.start.getCode());
+                               .findFirst() // Use findFirst() instead of get(0)
+                               .flatMap(history -> Optional.ofNullable(history.getEnums())
+                                                           .map(CourseNoteEn::getCode))
+                               .orElse(-1);
 
-        return CourseNoteEn.of(code);
+        try {
+            return CourseNoteEn.of(code + 1);
+        } catch (IllegalArgumentException ex) {
+            return CourseNoteEn.end;
+        }
+    }
+
+    @Override
+    public Map<String, List<Integer>> courseScoreListIn(List<String> ids) {
+        List<CourseLearnHistoryCollection> list = historyDao.findAllByCourseIn(ids);
+        Map<String, List<CourseLearnHistoryCollection>> groupByCourse = list.stream()
+                                                                            .collect(Collectors.groupingBy(CourseLearnHistoryCollection::getCourse));
+        return groupByCourse.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey,
+                e -> e.getValue().stream().map(CourseLearnHistoryCollection::getScore).toList()));
     }
 
     @Override
@@ -163,15 +167,17 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
                                                        .orElse(new CourseLearnHistoryCollection());
         CourseLearnHistoryCollection.History hs = new CourseLearnHistoryCollection.History();
 
-        hs.setEn(en.getCode());
-        hs.setStep(en.getValue());
+        hs.setEnums(en);
         hs.setText(cmd.getText());
         hs.setTitle(cmd.getTitle());
+        hs.setCrateAt(TimeUtils.nowDate());
 
         history.setUid(uid);
         history.setCourse(course);
         history.setScore(cmd.getScore());
-        history.getHistories().add(hs);
+        history.getHistories().add(0, hs);
+        history.setTags(cmd.getTags());
+
         historyDao.save(history);
 
         return true;

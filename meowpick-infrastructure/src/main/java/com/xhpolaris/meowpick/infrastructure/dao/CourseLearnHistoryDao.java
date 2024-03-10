@@ -8,4 +8,5 @@ import java.util.List;
 public interface CourseLearnHistoryDao extends MongoRepository<CourseLearnHistoryCollection, String> {
     CourseLearnHistoryCollection findByUidAndCourse(String uid, String course);
     List<CourseLearnHistoryCollection> findAllByCourse(String course);
+    List<CourseLearnHistoryCollection> findAllByCourseIn(List<String> course_id);
 }
