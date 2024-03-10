@@ -1,5 +1,6 @@
 package com.xhpolaris.meowpick.config;
 
+import com.xhpolaris.meowpick.common.properties.DocInfoProperties;
 import io.swagger.v3.oas.models.ExternalDocumentation;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -26,6 +27,9 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi publicApi() {
-        return GroupedOpenApi.builder().group(docInfo.getDescription()).pathsToMatch("/api/**").build();
+        return GroupedOpenApi.builder()
+                             .group(docInfo.getDescription())
+                             .pathsToMatch("/api/**")
+                             .build();
     }
 }

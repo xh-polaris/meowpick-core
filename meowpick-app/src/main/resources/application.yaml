@@ -29,8 +29,6 @@ spring:
       password: ${redis.password}
       database: 0
     mongodb:
-      username: ${mongo.username:root}
-      password: ${mongo.password:root}
       uri: ${mongo.uri:uri}
   cache:
     type: redis
@@ -45,7 +43,7 @@ spring:
 doc-info:
   enable: ${doc.enable:true}
   title: API文档
-  description: 文档描述
+  description: swagger.json
   version: v1.0.1
   website-name: API文档
   website-url:
@@ -55,3 +53,15 @@ grpc:
       address: "static://meowchat-content.xh-polaris:8080"
       enable-keep-alive: true
       negotiationType: PLAINTEXT
+
+app:
+  security:
+    enable: true
+  public-key: ${app.publicKey:public-key}
+  private-key: ${app.privateKey:private-key}
+weapp:
+  appid: appid
+  secret: appsecret
+  url: https://api.weixin.qq.com/sns/jscode2session?appid={APPID}&secret={SECRET}&js_code={JSCODE}&grant_type=authorization_code
+search-history:
+  size: 8
