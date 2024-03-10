@@ -1,0 +1,6 @@
+version: "3"
+services:
+  meowpick:
+    image: meowpick-app:1.0
+    ports:
+      - "8080:5508"

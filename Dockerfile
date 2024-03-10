@@ -1,8 +1,5 @@
 FROM openjdk:17
 
-ARG WORKDIR=/opt/freud
-
-WORKDIR ${WORKDIR}
 COPY meowpick-app/target/meowpick-app-1.0.0.jar meowpick.jar
 
 EXPOSE 5508
