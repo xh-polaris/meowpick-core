@@ -25,6 +25,7 @@ import org.springframework.util.StringUtils;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
@@ -68,9 +69,7 @@ public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices 
         String tokenAsPlainText = Sm2Utils.decrypt(Hex.decodeHex(rememberMeToken), appProperties.getPrivateKey());
 
         String[] tokens = StringUtils.delimitedListToStringArray(tokenAsPlainText, DELIMITER);
-        for (int i = 0; i < tokens.length; i++) {
-            tokens[i] = URLDecoder.decode(tokens[i], StandardCharsets.UTF_8);
-        }
+        tokens = Arrays.stream(tokens).map(token-> URLDecoder.decode(token, StandardCharsets.UTF_8)).toArray(String[]::new);
 
         return tokens;
     }
