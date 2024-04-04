@@ -21,6 +21,7 @@ public abstract class AbstractAutoLogin implements IAutoLogin, IUserLogin, Ithir
     private final Map<UserLoginEn, Function<LoginCmd.Query, UserVO>> loginMap = new EnumMap<>(UserLoginEn.class);
 
     protected AbstractAutoLogin() {
+        loginMap.put(UserLoginEn.meowchat,  this::meowchat);
         loginMap.put(UserLoginEn.phone,     this::phone);
         loginMap.put(UserLoginEn.email,     this::email);
         loginMap.put(UserLoginEn.password,  this::usernamePassword);

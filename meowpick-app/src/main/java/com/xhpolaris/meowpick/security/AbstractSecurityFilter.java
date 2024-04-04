@@ -37,7 +37,7 @@ public abstract class AbstractSecurityFilter extends AbstractAuthenticationProce
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String             type    = request.getContentType();
         if (MediaType.APPLICATION_JSON_VALUE.equals(type)) {
-            return RequestJsonUtils.getRequestJsonObject(request).getString(parameter);
+            return RequestJsonUtils.getRequestJsonObject(request).get(parameter);
         }
 
         return request.getParameter(parameter);

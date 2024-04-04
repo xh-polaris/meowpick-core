@@ -30,9 +30,13 @@ public class UserDetailServer implements MeowUserDetailService {
 
     @Override
     public MeowUser loadUserById(String id) {
-        UserVO user = userRepository.getById(id);
+        try {
+            UserVO user = userRepository.getById(id);
 
-        return MeowUser.authorized(user.getId(), user.getName(), user.isAccount_enable(), user.isAccount_expire(),
-                user.isAccount_lock());
+            return MeowUser.authorized(user.getId(), user.getName(), user.isAccount_enable(), user.isAccount_expire(),
+                    user.isAccount_lock());
+        } catch (Exception e) {
+            return loadUserByToken(UserLoginEn.meowchat, id);
+        }
     }
 }

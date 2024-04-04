@@ -18,4 +18,7 @@ public interface IUserLogin {
     default UserVO phone(LoginCmd.Query query) {
         throw new UnsupportedOperationException("");
     }
+    default UserVO meowchat(LoginCmd.Query query) {
+        throw new UnsupportedOperationException("");
+    }
 }

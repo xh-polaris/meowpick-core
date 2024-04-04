@@ -3,6 +3,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.gson.Gson;
+import com.google.protobuf.util.JsonFormat;
+import com.xhpolaris.idlgen.basic.UserMeta;
+import com.xhpolaris.meowpick.common.utils.Meowpick;
 
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
@@ -19,7 +22,7 @@ public class Test {
             "-----END PUBLIC KEY-----";
     @org.junit.jupiter.api.Test
     void test(){
-        String jwtToken = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6MCwiZGV2aWNlSWQiOiIiLCJleHAiOjE3MTQ2Njg3MzMsImlhdCI6MTcxMjA3NjczMywidXNlcklkIjoiNjNmNGZhZDI0NzNhNmI3Y2YyNzYwM2M2Iiwid2VjaGF0VXNlck1ldGEiOnt9fQ.kO6gTvqZhaz4f0ci87lW_a7qu0jQgupCe1KHzcYqBulMRD7rBN9FR-_nk2KdInN98bu-UL6Iw8J9QrChcGNG0g";
+        String jwtToken = "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6MTAwLCJkZXZpY2VJZCI6IiIsImV4cCI6MTcxNDgzOTAxNiwiaWF0IjoxNzEyMjQ3MDE2LCJ1c2VySWQiOiI2NDFhNjVjNGIyNTc1OTYwNzU5YTFjODciLCJ3ZWNoYXRVc2VyTWV0YSI6eyJhcHBJZCI6Ind4ZGZmYzQ0NWJkZTMzMTNhYSIsIm9wZW5JZCI6Im80aGVZNG9tWlFzQ1Rub3Vrb2ZWQkhfajN3eEkiLCJ1bmlvbklkIjoib1Y2a1U1OVRVUjVhTUxpdDdQWWFUWGZEYTFPSSJ9fQ.nk-ouhYtRwEXyz_jWUbyr5Yl6kbtPTx646jYjtskiLHHNQihGe9t1yP7XabIX7h2N9L8SOtzAnQaqLnPdrGG5Q";
         // 解码公钥字符串
         byte[] publicKeyBytes = parsePublicKeyString(PUBLIC_KEY_STRING);
 
@@ -35,7 +38,14 @@ public class Test {
                         .build()
                         .verify(jwtToken);
                 System.out.println("JWT verification successful!");
-            } catch (JWTDecodeException e) {
+                String string = new String(Base64.getDecoder().decode(decodedJWT.getPayload()));
+                Meowpick.fromJson(string, UserMeta.class);
+
+                UserMeta.Builder builder = UserMeta.newBuilder();
+                JsonFormat.parser().ignoringUnknownFields().merge(string, builder);
+                UserMeta mate = builder.build();
+                System.out.println(mate);
+            } catch (Exception e) {
                 System.out.println("JWT decoding failed: " + e.getMessage());
             }
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {

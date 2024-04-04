@@ -17,7 +17,4 @@ public interface ActionApi {
     @PostMapping("/like/{id}")
     @Operation(summary = "点赞")
     boolean like(@PathVariable String id, @RequestBody ActionCmd.CreateCmd cmd);
-
-    @GetMapping("/weapp/{id}")
-    WeappVO weapp_openid(@PathVariable String id);
 }

@@ -8,7 +8,8 @@ public class LoginCmd {
 
     @Data
     public static class CreateCmd {
-        private String name;
+        private String id;
+        private String name = "meowpick.user";
         private String avatar;
         private String phone;
         private String email;

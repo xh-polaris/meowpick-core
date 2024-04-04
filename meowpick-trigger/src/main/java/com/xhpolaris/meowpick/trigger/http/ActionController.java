@@ -25,21 +25,4 @@ public class ActionController implements ActionApi {
     public boolean like(String id, ActionCmd.CreateCmd cmd) {
         return service.like(id, cmd);
     }
-
-    @Override
-    public WeappVO weapp_openid(String id) {
-        log.info("props {}", props);
-        String code2SessionRespStr = restTemplate.getForObject(props.getUrl(), String.class,
-                props.getAppid(), props.getSecret(), id);
-
-        log.info(code2SessionRespStr);
-        WeappVO.WxResponse response = Meowpick.fromJson(code2SessionRespStr, WeappVO.WxResponse.class);
-
-        WeappVO vo = new WeappVO();
-
-        vo.setKey(UUID.randomUUID().toString());
-        vo.setOpenid(response.getUnionid());
-
-        return vo;
-    }
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum UserLoginEn implements BaseEnum {
+    meowchat("中台", Name.meowchat,-5),
     password("账号密码", Name.email, -4),
     email("邮件", Name.email, -3),
     phone("电话", Name.phone, -2),
@@ -24,6 +25,7 @@ public enum UserLoginEn implements BaseEnum {
     private final Integer code;
 
     public interface Name {
+        String meowchat = "UserLoginEn.meowchat";
         String password = "UserLoginEn.usernamePassword";
         String email    = "UserLoginEn.email";
         String phone    = "UserLoginEn.phone";

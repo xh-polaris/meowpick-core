@@ -1,6 +1,5 @@
 package com.xhpolaris.meowpick.common.utils;
 
-import com.alibaba.fastjson.JSONObject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
@@ -11,16 +10,17 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.Objects;
 
 public class RequestJsonUtils {
-    private static final ThreadLocal<JSONObject> data = new ThreadLocal<>();
+    private static final ThreadLocal<Map<String, String>> data = new ThreadLocal<>();
 
-    public static JSONObject getRequestJsonObject(HttpServletRequest request)
+    public static Map<String, String> getRequestJsonObject(HttpServletRequest request)
     throws IOException {
         String json = getRequestJsonString(request);
         if (data.get() == null) {
-            data.set(JSONObject.parseObject(json));
+            data.set(Meowpick.fromJson(json, Map.class));
         }
         return data.get();
     }
