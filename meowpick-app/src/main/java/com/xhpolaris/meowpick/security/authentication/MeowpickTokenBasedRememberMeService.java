@@ -46,9 +46,6 @@ import java.util.Base64;
 @Component
 @RequiredArgsConstructor
 public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices {
-    public static final  int    Token_WEEKS_S = Consts.TOKEN_WEEKS;
-    private static final String DELIMITER     = Consts.SPLIT;
-
     private final AppProperties         appProperties;
     private final MeowUserDetailService userDetailsService;
     private final UserDetailsChecker    userDetailsChecker = new AccountStatusUserDetailsChecker();
@@ -107,31 +104,6 @@ public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices 
         }
     }
 
-    @SneakyThrows
-    private String encodeToken(String[] tokens) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < tokens.length; i++) {
-            sb.append(URLEncoder.encode(tokens[i], StandardCharsets.UTF_8));
-            if (i < tokens.length - 1) {
-                sb.append(DELIMITER);
-            }
-        }
-
-        return Hex.encodeHexString(Sm2Utils.encrypt(sb.toString(), appProperties.getPublicKey()));
-    }
-
-    protected String getToken(MeowUser user) {
-        long expiryTime = System.currentTimeMillis();
-        expiryTime += 1000L * Token_WEEKS_S;
-
-//        String signatureValue = makeTokenSignature(user, expiryTime);
-
-        return encodeToken(new String[]{
-                user.getUserId(),
-                Long.toString(expiryTime)
-        });
-    }
-
     private String extractRememberMeToken(HttpServletRequest request) {
         String berryToken = request.getHeader("token");
         if (StringUtils.hasText(berryToken) && berryToken.startsWith("Berry ")) {
@@ -139,19 +111,6 @@ public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices 
         }
 
         return null;
-    }
-
-    @Override
-    public void loginSuccess(HttpServletRequest request,
-                             HttpServletResponse response,
-                             Authentication successfulAuthentication) {
-        MeowUser user = MeowUser.getUser(successfulAuthentication);
-
-        Response resp = new Response();
-
-        resp.setToken(getToken(user));
-
-        RequestJsonUtils.write(JsonRet.then(resp));
     }
 
     @Data
