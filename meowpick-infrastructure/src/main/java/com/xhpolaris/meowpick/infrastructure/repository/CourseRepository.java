@@ -17,8 +17,12 @@ import com.xhpolaris.meowpick.infrastructure.pojo.CourseCollection;
 import com.xhpolaris.meowpick.infrastructure.pojo.CourseLearnHistoryCollection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,7 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CourseRepository extends BasicRepository<CourseCollection, CourseVO> implements ICourseRepository {
+public class CourseRepository implements ICourseRepository {
     private final CourseDao             courseDao;
     private final CourseLearnHistoryDao historyDao;
 
@@ -63,11 +67,9 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
 
     @Override
     public PageEntity<CourseVO> page(CourseCmd.Query query) {
-        return pageOf(courseDao,
-                CourseCollection.toExample(query),
-                query,
-                CourseMap.instance::db2vo
-                     );
+        Page<CourseCollection> page = courseDao.findAll(CourseCollection.toExample(query),
+                PageRequest.of(query.getPage(), query.getSize()));
+        return BasicRepository.page(page, CourseMap.instance::db2vo);
     }
 
     @Override
@@ -82,15 +84,14 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
         Course vo = new Course();
 
         List<CourseLearnHistoryCollection> list = historyDao.findAllByCourse(id);
-        CourseLearnHistoryCollection history =
-                Optional.ofNullable(historyDao.findByUidAndCourse(uid, id)).orElse(new CourseLearnHistoryCollection());
 
-        List<CourseLearnHistoryCollection.History> historyList = list.stream()
-                                                                     .map(CourseLearnHistoryCollection::getHistories)
-                                                                     .map(e -> e.stream()
-                                                                                .findFirst()
-                                                                                .orElse(new CourseLearnHistoryCollection.History()))
-                                                                     .toList();
+        List<CourseLearnHistoryCollection.History> historyList =
+                list.stream()
+                    .map(CourseLearnHistoryCollection::getHistories)
+                    .map(e -> e.stream()
+                               .findFirst()
+                               .orElse(new CourseLearnHistoryCollection.History()))
+                    .toList();
 
 
         vo.setData(course);
@@ -156,6 +157,15 @@ public class CourseRepository extends BasicRepository<CourseCollection, CourseVO
                                                                             .collect(Collectors.groupingBy(CourseLearnHistoryCollection::getCourse));
         return groupByCourse.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey,
                 e -> e.getValue().stream().map(CourseLearnHistoryCollection::getScore).toList()));
+    }
+
+    @Override
+    public List<Course> list(List<String> courses) {
+        if (CollectionUtils.isEmpty(courses)) {
+            return new ArrayList<>();
+        }
+
+        return courses.stream().map(id -> getById(id, null)).toList();
     }
 
     @Override

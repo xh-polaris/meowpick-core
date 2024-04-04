@@ -1,5 +1,6 @@
 package com.xhpolaris.meowpick.domain.comment.model.entity;
 
+import co.elastic.clients.elasticsearch.ml.Page;
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.common.enums.CommentStatsEn;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,5 +32,12 @@ public class CommentCmd {
     @Schema(name = "CommentCmd$Query")
     public static class Query extends PageEntity.Query {
         private String id;
+    }
+
+    @Data
+    @Schema(name = "CommentCmd$History")
+    public static class History extends PageEntity.Query {
+        private String uid;
+        private String model;
     }
 }

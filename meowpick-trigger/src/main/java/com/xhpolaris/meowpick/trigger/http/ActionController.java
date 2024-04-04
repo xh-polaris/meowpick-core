@@ -18,8 +18,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ActionController implements ActionApi {
     private final ActionServer    service;
-    private final RestTemplate    restTemplate;
-    private final WeappProperties props;
+    protected final RestTemplate    restTemplate;
+    final WeappProperties props;
 
     @Override
     public boolean like(String id, ActionCmd.CreateCmd cmd) {

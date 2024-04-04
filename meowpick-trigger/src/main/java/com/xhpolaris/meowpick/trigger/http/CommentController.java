@@ -53,4 +53,9 @@ public class CommentController implements CommentApi {
     public List<ReplyVO> replies(String id) {
         return replyServer.replies(id);
     }
+
+    @Override
+    public PageEntity<CommentVO> history(CommentCmd.History query) {
+        return service.queryUserCommentHistory(query);
+    }
 }

@@ -48,4 +48,8 @@ public interface CommentApi {
     @GetMapping("/reply/{id}")
     @Operation(summary = "获取回复列表")
     List<ReplyVO> replies(@PathVariable String id);
+
+    @PostMapping("/history")
+    PageEntity<CommentVO> history(@Validated @RequestBody CommentCmd.History query);
+
 }

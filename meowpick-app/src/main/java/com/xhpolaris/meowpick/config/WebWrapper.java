@@ -2,6 +2,7 @@ package com.xhpolaris.meowpick.config;
 
 import com.xhpolaris.meowpick.common.JsonRet;
 import com.xhpolaris.meowpick.common.enums.HttpStateEn;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
 import com.xhpolaris.meowpick.common.utils.Meowpick;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -12,6 +13,8 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+
+import java.lang.reflect.InvocationTargetException;
 
 @SuppressWarnings("all")
 @RequiredArgsConstructor
@@ -43,8 +46,8 @@ public class WebWrapper implements ResponseBodyAdvice<Object> {
         return JsonRet.then(body);
     }
 
-    @ExceptionHandler(Exception.class)
-    public JsonRet fail(Exception ex) {
-        return JsonRet.fail(HttpStateEn.biz, ex.getMessage());
+    @ExceptionHandler(BizException.class)
+    public JsonRet fail(BizException ex) {
+        return JsonRet.fail(ex);
     }
 }

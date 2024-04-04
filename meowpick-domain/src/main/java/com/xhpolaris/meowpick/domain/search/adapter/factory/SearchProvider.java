@@ -1,7 +1,6 @@
 package com.xhpolaris.meowpick.domain.search.adapter.factory;
 
-import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.common.exceptions.NotFindException;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
 import com.xhpolaris.meowpick.domain.search.adapter.ISearcher;
 import com.xhpolaris.meowpick.domain.search.model.entity.SearchCmd;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,7 @@ public class SearchProvider {
 
     public ISearcher query(SearchCmd.Query query) {
         return Optional.ofNullable(searcherMap.get(query.getType().getValue()))
-                       .orElseThrow(() -> new NotFindException(""));
+                       .orElseThrow(BizException::NotFind);
     }
 
 }

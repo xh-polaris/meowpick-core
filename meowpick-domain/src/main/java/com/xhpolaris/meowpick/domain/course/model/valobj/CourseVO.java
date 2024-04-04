@@ -3,6 +3,7 @@ package com.xhpolaris.meowpick.domain.course.model.valobj;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -11,17 +12,13 @@ public class CourseVO {
     private String id;
     private String name;
     private String category;
-    private String department;
-
-    private String describe;
-
-
-    private List<String> teachers;
-    private List<String> campuses;
-    private List<String> tags;
-
     //    院系
-    private String depart;
-    //    学分
-    private String point;
+    private String department;
+    private List<List<String>> link;
+    //    绩点
+    private Integer point;
+    //    描述
+    private String describe;
+    private List<String> teachers = new ArrayList<>();
+    private List<String> campuses = new ArrayList<>();
 }
