@@ -1,45 +1,32 @@
-package com.xhpolaris.meowpick.security.authentication;
+package com.xhpolaris.meowpick.trigger.http.security.authentication;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.protobuf.util.JsonFormat;
 import com.xhpolaris.idlgen.basic.UserMeta;
-import com.xhpolaris.meowpick.common.JsonRet;
-import com.xhpolaris.meowpick.common.authorize.MeowRememberMeAuthenticationToken;
-import com.xhpolaris.meowpick.common.authorize.MeowUser;
-import com.xhpolaris.meowpick.common.authorize.MeowUserDetailService;
-import com.xhpolaris.meowpick.common.consts.Consts;
+import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowRememberMeAuthenticationToken;
+import com.xhpolaris.meowpick.domain.user.MeowUser;
+import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowUserDetailService;
 import com.xhpolaris.meowpick.common.properties.AppProperties;
 import com.xhpolaris.meowpick.common.utils.Meowpick;
-import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
-import com.xhpolaris.meowpick.common.utils.Sm2Utils;
-import com.xhpolaris.meowpick.infrastructure.mapstruct.UserMap;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Hex;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.web.authentication.NullRememberMeServices;
-import org.springframework.security.web.authentication.rememberme.InvalidCookieException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.interfaces.ECPublicKey;
-import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Arrays;
 import java.util.Base64;
 
 @Slf4j
@@ -67,7 +54,7 @@ public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices 
 
         UserMeta tokens = decodeToken(rememberMeToken);
         MeowUser user   = retrieveUser(tokens);
-        this.userDetailsChecker.check(user);
+        this.userDetailsChecker.check(userDetailsService.of(user));
 
         return createSuccessFulAuthentication(user);
     }

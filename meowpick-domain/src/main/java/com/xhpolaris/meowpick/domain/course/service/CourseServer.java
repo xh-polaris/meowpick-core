@@ -1,6 +1,6 @@
 package com.xhpolaris.meowpick.domain.course.service;
 
-import com.xhpolaris.meowpick.common.Context;
+import com.xhpolaris.meowpick.domain.Context;
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.common.utils.ScoreTransfor;
 import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
@@ -10,7 +10,6 @@ import com.xhpolaris.meowpick.domain.course.repository.ICourseRepository;
 import com.xhpolaris.meowpick.domain.search.model.entity.SearchCmd;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;

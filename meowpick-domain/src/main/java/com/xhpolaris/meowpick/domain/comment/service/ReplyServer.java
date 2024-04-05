@@ -1,6 +1,6 @@
 package com.xhpolaris.meowpick.domain.comment.service;
 
-import com.xhpolaris.meowpick.common.Context;
+import com.xhpolaris.meowpick.domain.Context;
 import com.xhpolaris.meowpick.domain.comment.model.entity.ReplyCmd;
 import com.xhpolaris.meowpick.domain.comment.model.valobj.ReplyVO;
 import com.xhpolaris.meowpick.domain.comment.repository.IReplyRepository;
@@ -16,10 +16,6 @@ import java.util.List;
 public class ReplyServer {
     private final IReplyRepository replyRepository;
     private final Context context;
-
-    public List<ReplyVO> replies(String id) {
-        return replyRepository.list(id);
-    }
 
     public ReplyVO reply(String id, ReplyCmd.CreateCmd cmd) {
         return replyRepository.reply(context.uid(), id, cmd);

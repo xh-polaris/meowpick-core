@@ -1,6 +1,6 @@
 package com.xhpolaris.meowpick.domain.user.service;
 
-import com.xhpolaris.meowpick.common.Context;
+import com.xhpolaris.meowpick.domain.Context;
 import com.xhpolaris.meowpick.domain.user.model.entity.ActionCmd;
 import com.xhpolaris.meowpick.domain.user.model.valobj.ActionVO;
 import com.xhpolaris.meowpick.domain.user.repository.IActionRepository;

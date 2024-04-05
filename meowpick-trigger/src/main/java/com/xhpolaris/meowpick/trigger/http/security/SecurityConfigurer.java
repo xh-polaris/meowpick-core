@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.security;
+package com.xhpolaris.meowpick.trigger.http.security;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;

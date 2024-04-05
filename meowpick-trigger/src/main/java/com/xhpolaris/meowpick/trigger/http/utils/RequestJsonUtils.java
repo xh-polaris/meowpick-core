@@ -1,5 +1,6 @@
-package com.xhpolaris.meowpick.common.utils;
+package com.xhpolaris.meowpick.trigger.http.utils;
 
+import com.xhpolaris.meowpick.common.utils.Meowpick;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;

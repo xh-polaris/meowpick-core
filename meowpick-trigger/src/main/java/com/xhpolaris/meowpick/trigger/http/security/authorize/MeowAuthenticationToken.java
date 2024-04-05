@@ -1,5 +1,6 @@
-package com.xhpolaris.meowpick.common.authorize;
+package com.xhpolaris.meowpick.trigger.http.security.authorize;
 
+import com.xhpolaris.meowpick.domain.user.MeowUser;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

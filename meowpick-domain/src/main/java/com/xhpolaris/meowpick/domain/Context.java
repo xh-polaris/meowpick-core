@@ -1,7 +1,7 @@
-package com.xhpolaris.meowpick.common;
+package com.xhpolaris.meowpick.domain;
 
-import com.xhpolaris.meowpick.common.authorize.MeowUser;
 import com.xhpolaris.meowpick.common.properties.AppProperties;
+import com.xhpolaris.meowpick.domain.user.MeowUser;
 import org.springframework.context.ApplicationEvent;
 
 public interface Context {

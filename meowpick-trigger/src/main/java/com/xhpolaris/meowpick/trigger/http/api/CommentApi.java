@@ -45,9 +45,6 @@ public interface CommentApi {
     @Operation(summary = "新增回复")
     ReplyVO replyTo(@PathVariable String id, @RequestBody ReplyCmd.CreateCmd cmd);
 
-    @GetMapping("/reply/{id}")
-    @Operation(summary = "获取回复列表")
-    List<ReplyVO> replies(@PathVariable String id);
 
     @PostMapping("/history")
     PageEntity<CommentVO> history(@Validated @RequestBody CommentCmd.History query);

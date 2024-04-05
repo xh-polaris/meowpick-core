@@ -1,6 +1,5 @@
 package com.xhpolaris.meowpick.domain.comment.model.entity;
 
-import co.elastic.clients.elasticsearch.ml.Page;
 import com.xhpolaris.meowpick.common.PageEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

@@ -1,6 +1,6 @@
 package com.xhpolaris.meowpick.domain.search.service;
 
-import com.xhpolaris.meowpick.common.Context;
+import com.xhpolaris.meowpick.domain.Context;
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.common.event.SearchEvent;
 import com.xhpolaris.meowpick.domain.search.adapter.ISearcher;

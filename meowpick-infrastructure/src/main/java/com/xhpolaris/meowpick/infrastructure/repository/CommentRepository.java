@@ -1,6 +1,6 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
-import com.xhpolaris.meowpick.common.Context;
+import com.xhpolaris.meowpick.domain.Context;
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.comment.model.entity.CommentCmd;
 import com.xhpolaris.meowpick.domain.comment.model.valobj.CommentVO;

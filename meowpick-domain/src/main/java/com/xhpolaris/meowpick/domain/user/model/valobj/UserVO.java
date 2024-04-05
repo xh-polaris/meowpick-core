@@ -1,6 +1,6 @@
 package com.xhpolaris.meowpick.domain.user.model.valobj;
 
-import com.xhpolaris.meowpick.common.authorize.MeowUser;
+import com.xhpolaris.meowpick.domain.user.MeowUser;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

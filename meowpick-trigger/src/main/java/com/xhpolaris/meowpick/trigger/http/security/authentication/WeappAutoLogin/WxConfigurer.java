@@ -1,8 +1,8 @@
-package com.xhpolaris.meowpick.security.authentication.WeappAutoLogin;
+package com.xhpolaris.meowpick.trigger.http.security.authentication.WeappAutoLogin;
 
-import com.xhpolaris.meowpick.common.authorize.MeowUserDetailService;
-import com.xhpolaris.meowpick.security.AbstractSecurityFilter;
-import com.xhpolaris.meowpick.security.SecurityConfigurer;
+import com.xhpolaris.meowpick.trigger.http.security.AbstractSecurityFilter;
+import com.xhpolaris.meowpick.trigger.http.security.SecurityConfigurer;
+import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowUserDetailService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;

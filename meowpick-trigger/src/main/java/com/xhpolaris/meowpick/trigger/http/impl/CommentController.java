@@ -49,10 +49,7 @@ public class CommentController implements CommentApi {
         return replyServer.reply(id, cmd);
     }
 
-    @Override
-    public List<ReplyVO> replies(String id) {
-        return replyServer.replies(id);
-    }
+
 
     @Override
     public PageEntity<CommentVO> history(CommentCmd.History query) {

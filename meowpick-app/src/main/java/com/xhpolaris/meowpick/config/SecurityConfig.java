@@ -1,11 +1,11 @@
 package com.xhpolaris.meowpick.config;
 
 import com.xhpolaris.meowpick.common.JsonRet;
-import com.xhpolaris.meowpick.common.authorize.MeowUserDetailService;
+import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowUserDetailService;
 import com.xhpolaris.meowpick.common.consts.Consts;
 import com.xhpolaris.meowpick.common.enums.HttpStateEn;
-import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
-import com.xhpolaris.meowpick.security.SecurityConfigurer;
+import com.xhpolaris.meowpick.trigger.http.utils.RequestJsonUtils;
+import com.xhpolaris.meowpick.trigger.http.security.SecurityConfigurer;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

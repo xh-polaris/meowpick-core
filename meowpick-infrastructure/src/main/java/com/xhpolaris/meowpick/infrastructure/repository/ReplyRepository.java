@@ -19,12 +19,6 @@ public class ReplyRepository implements IReplyRepository {
     private final CommentDao commentDao;
 
     @Override
-    @Deprecated
-    public List<ReplyVO> list(String id) {
-        return null;
-    }
-
-    @Override
     public ReplyVO reply(String uid, String target, ReplyCmd.CreateCmd cmd) {
         CommentCollection db = commentDao.findByTarget(target);
         if (db == null) {

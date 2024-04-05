@@ -1,6 +1,6 @@
-package com.xhpolaris.meowpick.security;
+package com.xhpolaris.meowpick.trigger.http.security;
 
-import com.xhpolaris.meowpick.common.utils.RequestJsonUtils;
+import com.xhpolaris.meowpick.trigger.http.utils.RequestJsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
