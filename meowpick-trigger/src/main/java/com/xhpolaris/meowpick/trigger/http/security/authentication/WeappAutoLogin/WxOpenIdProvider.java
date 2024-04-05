@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.trigger.http.security.authentication.WeappAutoLogin;
 
 import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowAuthenticationToken;
-import com.xhpolaris.meowpick.domain.service.user.MeowUser;
+import com.xhpolaris.meowpick.domain.model.entity.MeowUser;
 import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowUserDetailService;
 import lombok.Setter;
 import org.springframework.security.authentication.BadCredentialsException;

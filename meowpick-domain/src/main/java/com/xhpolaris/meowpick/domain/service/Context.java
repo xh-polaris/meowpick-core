@@ -1,7 +1,7 @@
-package com.xhpolaris.meowpick.domain;
+package com.xhpolaris.meowpick.domain.service;
 
 import com.xhpolaris.meowpick.common.properties.AppProperties;
-import com.xhpolaris.meowpick.domain.service.user.MeowUser;
+import com.xhpolaris.meowpick.domain.model.entity.MeowUser;
 import org.springframework.context.ApplicationEvent;
 
 public interface Context {

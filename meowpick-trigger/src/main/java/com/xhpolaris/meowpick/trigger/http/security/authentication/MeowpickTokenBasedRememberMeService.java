@@ -6,7 +6,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.protobuf.util.JsonFormat;
 import com.xhpolaris.idlgen.basic.UserMeta;
 import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowRememberMeAuthenticationToken;
-import com.xhpolaris.meowpick.domain.service.user.MeowUser;
+import com.xhpolaris.meowpick.domain.model.entity.MeowUser;
 import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowUserDetailService;
 import com.xhpolaris.meowpick.common.properties.AppProperties;
 import com.xhpolaris.meowpick.common.utils.Meowpick;

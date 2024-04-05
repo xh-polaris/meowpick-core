@@ -5,7 +5,7 @@ import com.xhpolaris.meowpick.domain.service.user.auto_login.factory.LoginProvid
 import com.xhpolaris.meowpick.domain.model.valobj.LoginCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.UserVO;
 import com.xhpolaris.meowpick.domain.repository.IUserRepository;
-import com.xhpolaris.meowpick.domain.service.user.MeowUser;
+import com.xhpolaris.meowpick.domain.model.entity.MeowUser;
 import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowUserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;

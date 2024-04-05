@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.trigger.http.impl;
 
 import com.xhpolaris.meowpick.trigger.http.api.CourseLearnApi;
-import com.xhpolaris.meowpick.domain.Context;
+import com.xhpolaris.meowpick.domain.service.Context;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseNoteCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseNote;
 import com.xhpolaris.meowpick.domain.service.CourseNoteServer;

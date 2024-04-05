@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.domain.service.user;
+package com.xhpolaris.meowpick.domain.model.entity;
 
 
 import lombok.Getter;

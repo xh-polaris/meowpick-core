@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.config;
 
-import com.xhpolaris.meowpick.domain.Context;
-import com.xhpolaris.meowpick.domain.service.user.MeowUser;
+import com.xhpolaris.meowpick.domain.service.Context;
+import com.xhpolaris.meowpick.domain.model.entity.MeowUser;
 import com.xhpolaris.meowpick.common.properties.AppProperties;
 import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowAuthenticationToken;
 import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowRememberMeAuthenticationToken;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 
-import static com.xhpolaris.meowpick.domain.service.user.MeowUser.anonymous;
+import static com.xhpolaris.meowpick.domain.model.entity.MeowUser.anonymous;
 
 @Component
 @RequiredArgsConstructor
@@ -56,9 +56,6 @@ public class ContextSupport implements Context, ApplicationContextAware {
         } else if (auth instanceof MeowRememberMeAuthenticationToken token) {
             return token.getUser();
         }
-//        else if (auth instanceof NsocAkSkAuthenticationToken token) {
-//            return token.getUser();
-//        }
         return anonymous();
     }
 

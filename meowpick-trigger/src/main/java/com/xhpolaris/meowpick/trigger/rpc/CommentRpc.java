@@ -1,6 +1,6 @@
 //package com.xhpolaris.meowpick.trigger.rpc;
 //
-//import com.xhpolaris.meowpick.domain.Context;
+//import com.xhpolaris.meowpick.domain.service.Context;
 //import com.xhpolaris.meowpick.common.PageEntity;
 //import com.xhpolaris.meowpick.domain.comment.model.entity.CommentCmd;
 //import com.xhpolaris.meowpick.domain.comment.model.valobj.CommentVO;
