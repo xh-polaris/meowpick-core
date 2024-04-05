@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.config;
+package com.xhpolaris.meowpick.trigger.http.config;
 
 import com.xhpolaris.meowpick.common.mvc.String2EnumConverterFactory;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.config;
+package com.xhpolaris.meowpick.trigger.http.config;
 
 import com.xhpolaris.meowpick.common.properties.DocInfoProperties;
 import io.swagger.v3.oas.models.ExternalDocumentation;
