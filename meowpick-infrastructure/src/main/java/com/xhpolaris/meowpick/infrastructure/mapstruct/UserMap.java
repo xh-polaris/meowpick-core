@@ -1,8 +1,8 @@
 package com.xhpolaris.meowpick.infrastructure.mapstruct;
 
-import com.xhpolaris.meowpick.domain.user.model.entity.LoginCmd;
-import com.xhpolaris.meowpick.domain.user.model.entity.UserCmd;
-import com.xhpolaris.meowpick.domain.user.model.valobj.UserVO;
+import com.xhpolaris.meowpick.domain.model.valobj.LoginCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.UserCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.UserVO;
 import com.xhpolaris.meowpick.infrastructure.pojo.UserCollection;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

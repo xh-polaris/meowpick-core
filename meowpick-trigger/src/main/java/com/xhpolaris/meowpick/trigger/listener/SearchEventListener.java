@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.trigger.listener;
 
 import com.xhpolaris.meowpick.common.event.SearchEvent;
-import com.xhpolaris.meowpick.domain.search.service.SearchServer;
+import com.xhpolaris.meowpick.domain.service.SearchServer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

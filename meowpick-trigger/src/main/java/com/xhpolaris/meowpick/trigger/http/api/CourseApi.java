@@ -1,9 +1,9 @@
 package com.xhpolaris.meowpick.trigger.http.api;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
-import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
-import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
+import com.xhpolaris.meowpick.domain.model.aggregate.Course;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;

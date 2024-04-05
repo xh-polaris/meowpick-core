@@ -1,6 +1,6 @@
 package com.xhpolaris.meowpick.infrastructure.pojo;
 
-import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseCmd;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.CourseMap;
 import lombok.AllArgsConstructor;
 import lombok.Data;

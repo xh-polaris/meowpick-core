@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.trigger.http.security.authorize;
 
 import com.xhpolaris.meowpick.common.consts.Consts;
-import com.xhpolaris.meowpick.domain.user.MeowUser;
+import com.xhpolaris.meowpick.domain.service.user.MeowUser;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;

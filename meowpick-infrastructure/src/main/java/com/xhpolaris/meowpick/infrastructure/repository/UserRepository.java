@@ -1,16 +1,15 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
 import com.xhpolaris.meowpick.common.exceptions.BizException;
-import com.xhpolaris.meowpick.domain.user.model.entity.LoginCmd;
-import com.xhpolaris.meowpick.domain.user.model.entity.UserCmd;
-import com.xhpolaris.meowpick.domain.user.model.valobj.UserVO;
-import com.xhpolaris.meowpick.domain.user.repository.IUserRepository;
+import com.xhpolaris.meowpick.domain.model.valobj.LoginCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.UserCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.UserVO;
+import com.xhpolaris.meowpick.domain.repository.IUserRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.UserDao;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.UserMap;
 import com.xhpolaris.meowpick.infrastructure.pojo.UserCollection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

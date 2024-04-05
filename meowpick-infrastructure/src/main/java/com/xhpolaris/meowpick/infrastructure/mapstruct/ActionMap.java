@@ -1,6 +1,6 @@
 package com.xhpolaris.meowpick.infrastructure.mapstruct;
 
-import com.xhpolaris.meowpick.domain.user.model.valobj.ActionVO;
+import com.xhpolaris.meowpick.domain.model.valobj.ActionVO;
 import com.xhpolaris.meowpick.infrastructure.pojo.ActionCollection;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

@@ -1,17 +1,15 @@
 package com.xhpolaris.meowpick.trigger.http.impl;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.domain.comment.model.entity.CommentCmd;
-import com.xhpolaris.meowpick.domain.comment.model.entity.ReplyCmd;
-import com.xhpolaris.meowpick.domain.comment.model.valobj.CommentVO;
-import com.xhpolaris.meowpick.domain.comment.model.valobj.ReplyVO;
-import com.xhpolaris.meowpick.domain.comment.service.CommentServer;
+import com.xhpolaris.meowpick.domain.model.valobj.CommentCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.ReplyCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CommentVO;
+import com.xhpolaris.meowpick.domain.model.valobj.ReplyVO;
+import com.xhpolaris.meowpick.domain.service.CommentServer;
 import com.xhpolaris.meowpick.trigger.http.api.CommentApi;
-import com.xhpolaris.meowpick.domain.comment.service.ReplyServer;
+import com.xhpolaris.meowpick.domain.service.ReplyServer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

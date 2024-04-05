@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.trigger.http.api;
 
-import com.xhpolaris.meowpick.domain.course.model.entity.CourseNoteCmd;
-import com.xhpolaris.meowpick.domain.course.model.valobj.CourseNote;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseNoteCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseNote;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

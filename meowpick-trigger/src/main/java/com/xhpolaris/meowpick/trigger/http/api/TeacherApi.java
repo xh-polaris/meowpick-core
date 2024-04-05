@@ -1,8 +1,8 @@
 package com.xhpolaris.meowpick.trigger.http.api;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.domain.teacher.model.entity.TeacherCmd;
-import com.xhpolaris.meowpick.domain.teacher.model.valobj.TeacherVO;
+import com.xhpolaris.meowpick.domain.model.valobj.TeacherCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.TeacherVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.core.annotations.ParameterObject;

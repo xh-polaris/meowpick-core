@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.trigger.http.security.authorize;
 
 import com.xhpolaris.meowpick.common.enums.UserLoginEn;
-import com.xhpolaris.meowpick.domain.user.MeowUser;
+import com.xhpolaris.meowpick.domain.service.user.MeowUser;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

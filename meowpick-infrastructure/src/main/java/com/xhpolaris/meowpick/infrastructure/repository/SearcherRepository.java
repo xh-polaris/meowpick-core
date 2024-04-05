@@ -2,8 +2,8 @@ package com.xhpolaris.meowpick.infrastructure.repository;
 
 import com.xhpolaris.meowpick.common.event.SearchEvent;
 import com.xhpolaris.meowpick.common.properties.SearchHistoryProperties;
-import com.xhpolaris.meowpick.domain.search.model.valobj.SearchHistoryVO;
-import com.xhpolaris.meowpick.domain.search.repository.ISearcherRepository;
+import com.xhpolaris.meowpick.domain.model.valobj.SearchHistoryVO;
+import com.xhpolaris.meowpick.domain.repository.ISearcherRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.SearchHistoryDao;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.SearchHistoryMap;
 import com.xhpolaris.meowpick.infrastructure.pojo.SearchHistoryCollection;

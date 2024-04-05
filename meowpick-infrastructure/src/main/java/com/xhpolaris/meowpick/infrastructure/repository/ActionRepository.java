@@ -1,8 +1,8 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
-import com.xhpolaris.meowpick.domain.user.model.entity.ActionCmd;
-import com.xhpolaris.meowpick.domain.user.model.valobj.ActionVO;
-import com.xhpolaris.meowpick.domain.user.repository.IActionRepository;
+import com.xhpolaris.meowpick.domain.model.valobj.ActionCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.ActionVO;
+import com.xhpolaris.meowpick.domain.repository.IActionRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.ActionDao;
 import com.xhpolaris.meowpick.infrastructure.dao.UserActionDao;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.ActionMap;

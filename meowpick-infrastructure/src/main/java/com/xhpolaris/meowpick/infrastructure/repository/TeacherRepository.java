@@ -2,9 +2,9 @@ package com.xhpolaris.meowpick.infrastructure.repository;
 
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.common.exceptions.BizException;
-import com.xhpolaris.meowpick.domain.teacher.model.entity.TeacherCmd;
-import com.xhpolaris.meowpick.domain.teacher.model.valobj.TeacherVO;
-import com.xhpolaris.meowpick.domain.teacher.repository.ITeacherRepository;
+import com.xhpolaris.meowpick.domain.model.valobj.TeacherCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.TeacherVO;
+import com.xhpolaris.meowpick.domain.repository.ITeacherRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.TeacherDao;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.TeacherMap;
 import com.xhpolaris.meowpick.infrastructure.pojo.TeacherCollection;

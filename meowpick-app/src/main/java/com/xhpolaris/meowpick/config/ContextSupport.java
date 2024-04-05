@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.config;
 
 import com.xhpolaris.meowpick.domain.Context;
-import com.xhpolaris.meowpick.domain.user.MeowUser;
+import com.xhpolaris.meowpick.domain.service.user.MeowUser;
 import com.xhpolaris.meowpick.common.properties.AppProperties;
 import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowAuthenticationToken;
 import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowRememberMeAuthenticationToken;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 
-import static com.xhpolaris.meowpick.domain.user.MeowUser.anonymous;
+import static com.xhpolaris.meowpick.domain.service.user.MeowUser.anonymous;
 
 @Component
 @RequiredArgsConstructor

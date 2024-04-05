@@ -1,8 +1,8 @@
 package com.xhpolaris.meowpick.trigger.http.impl;
 
-import com.xhpolaris.meowpick.domain.user.model.entity.UserCmd;
-import com.xhpolaris.meowpick.domain.user.model.valobj.UserVO;
-import com.xhpolaris.meowpick.domain.user.service.UserServer;
+import com.xhpolaris.meowpick.domain.model.valobj.UserCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.UserVO;
+import com.xhpolaris.meowpick.domain.service.UserServer;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

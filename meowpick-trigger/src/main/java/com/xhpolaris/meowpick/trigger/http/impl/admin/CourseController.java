@@ -1,10 +1,10 @@
 package com.xhpolaris.meowpick.trigger.http.impl.admin;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
-import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
-import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
-import com.xhpolaris.meowpick.domain.course.service.CourseServer;
+import com.xhpolaris.meowpick.domain.model.aggregate.Course;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseVO;
+import com.xhpolaris.meowpick.domain.service.CourseServer;
 import com.xhpolaris.meowpick.trigger.http.api.CourseApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;

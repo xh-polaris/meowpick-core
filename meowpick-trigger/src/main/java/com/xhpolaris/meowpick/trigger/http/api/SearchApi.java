@@ -1,8 +1,8 @@
 package com.xhpolaris.meowpick.trigger.http.api;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.domain.search.model.entity.SearchCmd;
-import com.xhpolaris.meowpick.domain.search.model.valobj.SearchHistoryVO;
+import com.xhpolaris.meowpick.domain.model.valobj.SearchCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.SearchHistoryVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.validation.annotation.Validated;
