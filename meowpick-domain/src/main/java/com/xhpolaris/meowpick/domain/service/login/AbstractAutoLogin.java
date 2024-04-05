@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.domain.service.user.auto_login;
+package com.xhpolaris.meowpick.domain.service.login;
 
 import com.xhpolaris.meowpick.common.enums.UserLoginEn;
 import com.xhpolaris.meowpick.common.exceptions.BizException;

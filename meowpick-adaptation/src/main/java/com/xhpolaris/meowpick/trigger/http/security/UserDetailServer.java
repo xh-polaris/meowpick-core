@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.trigger.http.security;
 
 import com.xhpolaris.meowpick.common.enums.UserLoginEn;
-import com.xhpolaris.meowpick.domain.service.user.auto_login.factory.LoginProvider;
+import com.xhpolaris.meowpick.domain.service.login.factory.LoginProvider;
 import com.xhpolaris.meowpick.domain.model.valobj.LoginCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.UserVO;
 import com.xhpolaris.meowpick.domain.repository.IUserRepository;

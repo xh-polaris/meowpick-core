@@ -17,7 +17,7 @@
 	<name>meowpick-core</name>
 	<description>选课猫</description>
 	<modules>
-		<module>meowpick-adaptor</module>
+		<module>meowpick-adaptation</module>
 		<module>meowpick-app</module>
 		<module>meowpick-domain</module>
 		<module>meowpick-infrastructure</module>

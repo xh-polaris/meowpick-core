@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.adapt;
+package com.xhpolaris.meowpick.adapter;
 
 import com.xhpolaris.meowpick.domain.service.Context;
 import com.xhpolaris.meowpick.domain.model.entity.MeowUser;
@@ -20,7 +20,7 @@ import static com.xhpolaris.meowpick.domain.model.entity.MeowUser.anonymous;
 
 @Component
 @RequiredArgsConstructor
-public class ContextSupport implements Context, ApplicationContextAware {
+public class ContextAdapter implements Context, ApplicationContextAware {
     private       ApplicationContext applicationContext;
     private final AppProperties      properties;
 

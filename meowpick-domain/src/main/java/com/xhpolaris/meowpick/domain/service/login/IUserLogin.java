@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.domain.service.user.auto_login;
+package com.xhpolaris.meowpick.domain.service.login;
 
 import com.xhpolaris.meowpick.domain.model.valobj.LoginCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.UserVO;

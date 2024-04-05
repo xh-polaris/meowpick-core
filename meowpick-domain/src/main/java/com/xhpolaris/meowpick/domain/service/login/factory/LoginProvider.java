@@ -1,6 +1,6 @@
-package com.xhpolaris.meowpick.domain.service.user.auto_login.factory;
+package com.xhpolaris.meowpick.domain.service.login.factory;
 
-import com.xhpolaris.meowpick.domain.service.user.auto_login.IAutoLogin;
+import com.xhpolaris.meowpick.domain.service.login.IAutoLogin;
 import com.xhpolaris.meowpick.domain.model.valobj.LoginCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.UserVO;
 import lombok.RequiredArgsConstructor;

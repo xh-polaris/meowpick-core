@@ -33,7 +33,7 @@
 
         <dependency>
             <groupId>com.xhpolaris.meowpick</groupId>
-            <artifactId>meowpick-adaptor</artifactId>
+            <artifactId>meowpick-adaptation</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
