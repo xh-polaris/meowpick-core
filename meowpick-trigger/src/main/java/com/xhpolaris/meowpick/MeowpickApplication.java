@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.trigger;
+package com.xhpolaris.meowpick;
 
 import com.xhpolaris.idlgen.meowchat.content.ContentServiceGrpc;
 import com.xhpolaris.idlgen.meowchat.content.ListPostReq;
