@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.domain.model.aggregate;
+package com.xhpolaris.meowpick.domain.model.entity;
 
 import com.xhpolaris.meowpick.common.utils.ScoreTransfor;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseNote;

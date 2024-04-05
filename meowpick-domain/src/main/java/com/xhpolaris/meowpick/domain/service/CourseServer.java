@@ -2,7 +2,7 @@ package com.xhpolaris.meowpick.domain.service;
 
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.common.utils.ScoreTransfor;
-import com.xhpolaris.meowpick.domain.model.aggregate.Course;
+import com.xhpolaris.meowpick.domain.model.entity.Course;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseVO;
 import com.xhpolaris.meowpick.domain.repository.ICourseRepository;

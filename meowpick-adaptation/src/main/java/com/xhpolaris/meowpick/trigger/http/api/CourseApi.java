@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.trigger.http.api;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.domain.model.aggregate.Course;
+import com.xhpolaris.meowpick.domain.model.entity.Course;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseVO;
 import io.swagger.v3.oas.annotations.Operation;
