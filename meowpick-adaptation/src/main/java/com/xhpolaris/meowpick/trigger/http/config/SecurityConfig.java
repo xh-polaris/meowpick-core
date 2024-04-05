@@ -89,6 +89,7 @@ public class SecurityConfig {
                 "/napi/public/**",
                 "/account/**",
                 "/error",
-                "/health"));
+                "/health",
+                "/actuator/**"));
     }
 }

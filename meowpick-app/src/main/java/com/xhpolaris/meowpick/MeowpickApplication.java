@@ -30,8 +30,6 @@ import java.io.IOException;
 public class MeowpickApplication {
     @Value("${server.servlet.context-path}")
     String path;
-    @GrpcClient("meowchat-content")
-    private ContentServiceGrpc.ContentServiceBlockingStub meowchatContentService;
 
     public static void main(String[] args) {
         SpringApplication.run(MeowpickApplication.class, args);
@@ -40,12 +38,5 @@ public class MeowpickApplication {
     @GetMapping
     public void doc(HttpServletResponse response) throws IOException {
         response.sendRedirect(String.format("%s/doc.html", path));
-    }
-
-    @RequestMapping("/health")
-    public String hello() {
-        var res = this.meowchatContentService.listPost(ListPostReq.newBuilder().build());
-        log.info("{}", res);
-        return "";
     }
 }
