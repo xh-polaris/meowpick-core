@@ -6,9 +6,10 @@ import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
 import com.xhpolaris.meowpick.domain.course.service.CourseServer;
 import com.xhpolaris.meowpick.api.CourseApi;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +34,11 @@ public class CourseController implements CourseApi {
     @Override
     public PageEntity<CourseVO> query(CourseCmd.Query query) {
         return service.query(query);
+    }
+
+    @Override
+    public List<Course> list(List<String> courses) {
+        return service.list(courses);
     }
 
     @Override

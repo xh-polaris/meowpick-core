@@ -1,6 +1,6 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
-import com.xhpolaris.meowpick.common.exceptions.NotFindException;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
 import com.xhpolaris.meowpick.domain.user.model.entity.LoginCmd;
 import com.xhpolaris.meowpick.domain.user.repository.IUserThirdLoginRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.UserThirdLoginDao;
@@ -32,6 +32,6 @@ public class UserThirdLoginRepository implements IUserThirdLoginRepository {
     public String getUid(LoginCmd.Query query) {
         return Optional.ofNullable(dao.findByTypeAndTokenAndBindIsTrue(query.getType().getValue(), query.getToken()))
                        .map(UserThirdCollection::getUserId)
-                       .orElseThrow(() -> new NotFindException(""));
+                       .orElseThrow(BizException::NotFind);
     }
 }

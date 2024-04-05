@@ -1,6 +1,6 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
-import com.xhpolaris.meowpick.common.exceptions.NotFindException;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
 import com.xhpolaris.meowpick.domain.user.model.entity.LoginCmd;
 import com.xhpolaris.meowpick.domain.user.model.entity.UserCmd;
 import com.xhpolaris.meowpick.domain.user.model.valobj.UserVO;
@@ -18,10 +18,8 @@ import java.util.Optional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class UserRepository extends BasicRepository<UserCollection, UserVO> implements IUserRepository {
+public class UserRepository implements IUserRepository {
     private final UserDao userDao;
-
-    private final MongoTemplate template;
 
     @Override
     public UserVO createUser(UserCmd.CreateCmd cmd) {
@@ -33,14 +31,14 @@ public class UserRepository extends BasicRepository<UserCollection, UserVO> impl
 
     @Override
     public UserVO getById(String id) {
-        return userDao.findById(id).map(UserMap.instance::db2vo).orElseThrow(() -> new NotFindException(""));
+        return userDao.findById(id).map(UserMap.instance::db2vo).orElseThrow(BizException::NotFind);
     }
 
     @Override
     public UserVO getByPhone(String phone) {
         return Optional.ofNullable(userDao.findByPhone(phone))
                        .map(UserMap.instance::db2vo)
-                       .orElseThrow(() -> new NotFindException(""));
+                       .orElseThrow(BizException::NotFind);
     }
 
     @Override

@@ -31,4 +31,6 @@ public interface ICourseRepository {
     CourseNoteEn currentState(String uid, String course);
 
     Map<String, List<Integer>> courseScoreListIn(List<String> ids);
+
+    List<Course> list(List<String> courses);
 }

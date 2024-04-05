@@ -1,6 +1,7 @@
 package com.xhpolaris.meowpick.common;
 
 import com.xhpolaris.meowpick.common.enums.HttpStateEn;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
 import lombok.Data;
 
 import java.util.Map;
@@ -16,23 +17,29 @@ public class JsonRet {
     private State state;
     private Object payload;
 
+    public static JsonRet fail(Integer code, String msg, Object ...args) {
+        JsonRet data = new JsonRet();
+        State type = new State();
+
+        type.setCode(code);
+        type.setErrMsg(String.format(msg, args));
+
+        data.setState(type);
+
+        data.setPayload(Map.of());
+        return data;
+    }
+
     public static JsonRet fail(HttpStateEn state) {
         return fail(state, state.getMsg());
     }
 
     public static JsonRet fail(HttpStateEn state, Object ...args) {
-        JsonRet data = new JsonRet();
+        return fail(state.getCode(), state.getMsg(), args);
+    }
 
-        State type = new State();
-
-        type.setCode(state.getCode());
-        type.setErrMsg(String.format(state.getMsg(), args));
-
-        data.setState(type);
-
-        data.setPayload(Map.of());
-
-        return data;
+    public static JsonRet fail(BizException exception, Object ...args) {
+        return fail(exception.getCode(), exception.getMsg(), args);
     }
 
     public static JsonRet then(Object payload) {

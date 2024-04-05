@@ -15,4 +15,6 @@ public interface ICommentRepository {
     PageEntity<CommentVO> query(CommentCmd.Query query);
 
     ReplyVO find(String id);
+
+    PageEntity<CommentVO> queryUserComment(CommentCmd.History query);
 }

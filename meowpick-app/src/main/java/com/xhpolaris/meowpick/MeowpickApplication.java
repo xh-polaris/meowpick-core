@@ -5,6 +5,7 @@ import com.xhpolaris.idlgen.meowchat.content.ListPostReq;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -27,6 +28,8 @@ import java.io.IOException;
 @EnableWebSecurity
 @EnableConfigurationProperties
 public class MeowpickApplication {
+    @Value("${server.servlet.context-path}")
+    String path;
     @GrpcClient("meowchat-content")
     private ContentServiceGrpc.ContentServiceBlockingStub meowchatContentService;
 
@@ -36,7 +39,7 @@ public class MeowpickApplication {
 
     @GetMapping
     public void doc(HttpServletResponse response) throws IOException {
-        response.sendRedirect("/doc.html");
+        response.sendRedirect(String.format("%s/doc.html", path));
     }
 
     @RequestMapping("/health")

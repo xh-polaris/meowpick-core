@@ -16,12 +16,10 @@ public class CourseCmd {
         private String name;
         private String category;
         private String department;
-        private String depart;
-        private String point;
+        private Integer point;
         private String describe;
         private List<String> teachers;
         private List<String> campuses;
-        private List<String> tags;
     }
 
     @Data
@@ -31,12 +29,10 @@ public class CourseCmd {
         private String name;
         private String category;
         private String department;
-        private String depart;
-        private String point;
+        private Integer point;
         private String describe;
         private List<String> teachers;
         private List<String> campuses;
-        private List<String> tags;
     }
 
     @Data
@@ -45,8 +41,7 @@ public class CourseCmd {
         private String name;
         private String category;
         private String department;
-        private String depart;
-        private String point;
+        private Integer point;
 
         private List<String> teachers;
         private List<String> campuses;
@@ -58,9 +53,8 @@ public class CourseCmd {
 
             query.setName(text);
             query.setCategory(text);
-            query.setDepart(text);
             query.setDepartment(text);
-            query.setPoint(text);
+//            query.setPoint(text);
             query.setTeachers(List.of(text));
             query.setCampuses(List.of(text));
 

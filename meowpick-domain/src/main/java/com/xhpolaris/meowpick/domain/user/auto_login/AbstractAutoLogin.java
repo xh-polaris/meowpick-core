@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.domain.user.auto_login;
 
 import com.xhpolaris.meowpick.common.enums.UserLoginEn;
-import com.xhpolaris.meowpick.common.exceptions.NotFindException;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
 import com.xhpolaris.meowpick.domain.user.model.entity.LoginCmd;
 import com.xhpolaris.meowpick.domain.user.model.valobj.UserVO;
 import com.xhpolaris.meowpick.domain.user.repository.IUserRepository;
@@ -47,7 +47,7 @@ public abstract class AbstractAutoLogin implements IAutoLogin, IUserLogin, Ithir
         UserVO user;
         try {
             user = getUser(query);
-        } catch (NotFindException ex) {
+        } catch (BizException ex) {
             LoginCmd.CreateCmd cmd = new LoginCmd.CreateCmd();
             cmd.setPhone(query.getPhone());
             cmd.setEmail(query.getEmail());

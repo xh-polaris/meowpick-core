@@ -43,4 +43,8 @@ public class CommentServer {
     public ReplyVO get(String id) {
         return commentRepository.find(id);
     }
+
+    public PageEntity<CommentVO> queryUserCommentHistory(CommentCmd.History query) {
+       return commentRepository.queryUserComment(query);
+    }
 }

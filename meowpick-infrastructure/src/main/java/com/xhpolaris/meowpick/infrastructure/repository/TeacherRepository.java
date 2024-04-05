@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.common.exceptions.NotFindException;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
 import com.xhpolaris.meowpick.domain.teacher.model.entity.TeacherCmd;
 import com.xhpolaris.meowpick.domain.teacher.model.valobj.TeacherVO;
 import com.xhpolaris.meowpick.domain.teacher.repository.ITeacherRepository;
@@ -50,9 +50,8 @@ public class TeacherRepository implements ITeacherRepository {
 
     @Override
     public TeacherVO get(String id) {
-        TeacherCollection db =
-                teacherDao.findById(id)
-                          .orElseThrow(() -> new NotFindException("teacher"));
+        TeacherCollection db = teacherDao.findById(id)
+                                         .orElseThrow(BizException::NotFind);
         return TeacherMap.instance.db2vo(db);
     }
 

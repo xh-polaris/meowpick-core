@@ -7,5 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface CommentDao extends MongoRepository<CommentCollection, String> {
     Page<CommentCollection> findAllByTargetOrderByCrateAt(String target, Pageable pageable);
+    Page<CommentCollection> findAllByUidOrderByCrateAt(String uid, Pageable pageable);
     CommentCollection findByTarget(String target);
 }

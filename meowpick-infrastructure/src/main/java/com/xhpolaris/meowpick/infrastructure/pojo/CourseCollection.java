@@ -27,14 +27,13 @@ public class CourseCollection {
     private String category;
     //    院系
     private String department;
-    private String depart;
+    private List<List<String>> link;
     //    绩点
-    private String point;
+    private Integer point;
     //    描述
     private String describe;
     private List<String> teachers = new ArrayList<>();
     private List<String> campuses = new ArrayList<>();
-    private List<String> tags = new ArrayList<>();
 
     @CreatedDate
     private Date crateAt;
@@ -52,10 +51,7 @@ public class CourseCollection {
                 .withMatcher("name", containsMatcher)
                 .withMatcher("category", containsMatcher)
                 .withMatcher("department", containsMatcher)
-                .withMatcher("depart", containsMatcher)
                 .withMatcher("point", containsMatcher)
-                .withMatcher("teachers", containsMatcher)
-                .withMatcher("campuses", containsMatcher)
                 .withIgnoreCase()
                 .withIgnoreNullValues();
 
