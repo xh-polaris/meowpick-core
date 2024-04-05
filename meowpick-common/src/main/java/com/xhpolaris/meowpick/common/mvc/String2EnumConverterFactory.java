@@ -1,8 +1,6 @@
 package com.xhpolaris.meowpick.common.mvc;
 
 import com.xhpolaris.meowpick.common.enums.BaseEnum;
-import com.xhpolaris.meowpick.common.enums.CommentStatsEn;
-import com.xhpolaris.meowpick.common.enums.HttpStateEn;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 

@@ -1,17 +1,13 @@
-package com.xhpolaris.meowpick.trigger.http;
+package com.xhpolaris.meowpick.trigger.http.impl;
 
-import com.xhpolaris.meowpick.api.ActionApi;
+import com.xhpolaris.meowpick.trigger.http.api.ActionApi;
 import com.xhpolaris.meowpick.common.properties.WeappProperties;
-import com.xhpolaris.meowpick.common.utils.Meowpick;
 import com.xhpolaris.meowpick.domain.user.model.entity.ActionCmd;
-import com.xhpolaris.meowpick.domain.user.model.valobj.WeappVO;
 import com.xhpolaris.meowpick.domain.user.service.ActionServer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.UUID;
 
 @Slf4j
 @RestController

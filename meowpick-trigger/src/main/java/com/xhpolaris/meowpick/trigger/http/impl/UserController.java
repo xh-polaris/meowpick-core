@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.trigger.http;
+package com.xhpolaris.meowpick.trigger.http.impl;
 
 import com.xhpolaris.meowpick.domain.user.model.entity.UserCmd;
 import com.xhpolaris.meowpick.domain.user.model.valobj.UserVO;

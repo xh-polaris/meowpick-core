@@ -1,6 +1,6 @@
-package com.xhpolaris.meowpick.trigger.http.admin;
+package com.xhpolaris.meowpick.trigger.http.impl.admin;
 
-import com.xhpolaris.meowpick.api.TeacherApi;
+import com.xhpolaris.meowpick.trigger.http.api.TeacherApi;
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.teacher.model.entity.TeacherCmd;
 import com.xhpolaris.meowpick.domain.teacher.model.valobj.TeacherVO;

@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.api;
+package com.xhpolaris.meowpick.trigger.http.api;
 
 import com.xhpolaris.meowpick.domain.course.model.entity.CourseNoteCmd;
 import com.xhpolaris.meowpick.domain.course.model.valobj.CourseNote;
