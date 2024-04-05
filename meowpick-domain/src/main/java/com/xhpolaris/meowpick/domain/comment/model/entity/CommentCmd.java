@@ -1,7 +1,6 @@
 package com.xhpolaris.meowpick.domain.comment.model.entity;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.common.enums.CommentStatsEn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;

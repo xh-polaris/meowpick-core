@@ -15,6 +15,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <grpc.starter.version>2.15.0.RELEASE</grpc.starter.version>
     </properties>
 
     <dependencies>
@@ -22,6 +23,11 @@
             <groupId>com.xhpolaris.meowpick</groupId>
             <artifactId>meowpick-infrastructure</artifactId>
             <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.devh</groupId>
+            <artifactId>grpc-server-spring-boot-starter</artifactId>
+            <version>${grpc.starter.version}</version>
         </dependency>
     </dependencies>
 
