@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.trigger.http.impl.admin;
+package com.xhpolaris.meowpick.trigger.http.impl;
 
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.model.aggregate.Course;

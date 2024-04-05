@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.trigger.http.impl.admin;
+package com.xhpolaris.meowpick.trigger.http.impl;
 
 import com.xhpolaris.meowpick.trigger.http.api.TeacherApi;
 import com.xhpolaris.meowpick.common.PageEntity;
