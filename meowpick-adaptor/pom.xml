@@ -9,7 +9,7 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>meowpick-trigger</artifactId>
+    <artifactId>meowpick-adaptor</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

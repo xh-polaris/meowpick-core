@@ -17,11 +17,11 @@
 	<name>meowpick-core</name>
 	<description>选课猫</description>
 	<modules>
+		<module>meowpick-adaptor</module>
 		<module>meowpick-app</module>
-		<module>meowpick-trigger</module>
 		<module>meowpick-domain</module>
-		<module>meowpick-common</module>
 		<module>meowpick-infrastructure</module>
+		<module>meowpick-common</module>
 	</modules>
 
 	<properties>

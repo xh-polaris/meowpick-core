@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.config;
+package com.xhpolaris.meowpick.adapt;
 
 import com.xhpolaris.meowpick.domain.service.Context;
 import com.xhpolaris.meowpick.domain.model.entity.MeowUser;
