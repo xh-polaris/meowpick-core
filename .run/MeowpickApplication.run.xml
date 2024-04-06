@@ -1,0 +1,25 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="MeowpickApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+    <envs>
+      <env name="JAVA_TOOL_OPTIONS" value="&quot;-javaagent:run/lib/opentelemetry-javaagent.jar&quot;" />
+      <env name="OTEL_EXPORTER_ZIPKIN_ENDPOINT" value="http://zipkin.istio-system:9411/api/v2/spans" />
+      <env name="OTEL_LOGS_EXPORTER" value="none" />
+      <env name="OTEL_METRICS_EXPORTER" value="prometheus" />
+      <env name="OTEL_PROPAGATORS" value="tracecontext,baggage,b3" />
+      <env name="OTEL_TRACES_EXPORTER" value="zipkin" />
+    </envs>
+    <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+    <module name="meowpick-app" />
+    <selectedOptions>
+      <option name="spring.boot.profiles" visible="false" />
+    </selectedOptions>
+    <option name="SPRING_BOOT_MAIN_CLASS" value="com.xhpolaris.meowpick.MeowpickApplication" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.xhpolaris.meowpick.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2" />
+  </configuration>
+</component>
