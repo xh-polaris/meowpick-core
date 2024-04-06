@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty scope="context" name="service_env" source="spring.profiles.active"/>
+    <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <appender name="prod" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+    </appender>
+    <appender name="dev" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    <!-- 设置根Logger -->
+    <root level="info">
+        <appender-ref ref="${service_env}"/>
+    </root>
+</configuration>
