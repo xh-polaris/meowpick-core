@@ -1,6 +1,7 @@
 package com.xhpolaris.meowpick.trigger.http.security;
 
 import com.xhpolaris.meowpick.common.enums.UserLoginEn;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
 import com.xhpolaris.meowpick.domain.service.login.factory.LoginProvider;
 import com.xhpolaris.meowpick.domain.model.valobj.LoginCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.UserVO;
@@ -22,10 +23,10 @@ public class UserDetailServer implements MeowUserDetailService {
     public User of(MeowUser user) {
         return new User(
                 user.getDisplayName(), "",
-                user.isAccount_enable(),
-                user.isAccount_expire(),
-                user.isAccount_credential(),
-                user.isAccount_lock(),
+                user.isEnable(),
+                user.isExpire(),
+                user.isCredential(),
+                user.isLock(),
                 Collections.emptyList());
     }
 
@@ -37,8 +38,8 @@ public class UserDetailServer implements MeowUserDetailService {
 
         UserVO user = loginProvider.autoLogin(query);
 
-        return MeowUser.authorized(user.getId(), user.getName(), user.isAccount_enable(), user.isAccount_expire(),
-                user.isAccount_lock());
+        return MeowUser.authorized(user.getId(), user.getName(), user.isEnable(), user.isExpire(),
+                user.isLock());
     }
 
     @Override
@@ -46,9 +47,9 @@ public class UserDetailServer implements MeowUserDetailService {
         try {
             UserVO user = userRepository.getById(id);
 
-            return MeowUser.authorized(user.getId(), user.getName(), user.isAccount_enable(), user.isAccount_expire(),
-                    user.isAccount_lock());
-        } catch (Exception e) {
+            return MeowUser.authorized(user.getId(), user.getName(), user.isEnable(), user.isExpire(),
+                    user.isLock());
+        } catch (BizException e) {
             return loadUserByToken(UserLoginEn.meowchat, id);
         }
     }

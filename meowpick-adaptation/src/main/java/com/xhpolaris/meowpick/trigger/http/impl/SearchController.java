@@ -6,10 +6,12 @@ import com.xhpolaris.meowpick.domain.model.valobj.SearchHistoryVO;
 import com.xhpolaris.meowpick.domain.service.SearchServer;
 import com.xhpolaris.meowpick.trigger.http.api.SearchApi;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class SearchController implements SearchApi {

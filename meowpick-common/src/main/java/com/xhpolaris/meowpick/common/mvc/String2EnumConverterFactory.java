@@ -1,6 +1,7 @@
 package com.xhpolaris.meowpick.common.mvc;
 
 import com.xhpolaris.meowpick.common.enums.BaseEnum;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 
@@ -23,7 +24,7 @@ public class String2EnumConverterFactory implements ConverterFactory<String, Bas
                     }
                 }
 
-                throw new IllegalArgumentException(String.format("Enums: %s not match",source));
+                throw BizException.IllegalArgument(String.format("Enums %s not match",source));
             }
         });
     }

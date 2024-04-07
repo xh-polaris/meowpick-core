@@ -1,5 +1,6 @@
 package com.xhpolaris.meowpick.common.enums;
 
+import com.xhpolaris.meowpick.common.exceptions.BizException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -26,7 +27,7 @@ public enum CourseNoteEn implements BaseEnum {
                 return note;
             }
         }
-        throw new IllegalArgumentException("Invalid code: " + code);
+        throw BizException.IllegalArgument;
     }
 
 }

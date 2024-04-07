@@ -1,21 +1,23 @@
 package com.xhpolaris.meowpick.domain.model.entity;
 
 
+import com.xhpolaris.idlgen.basic.UserMeta;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
-@Getter
+@Data
 public class MeowUser {
+    private UserMeta userMeta;
     private String  displayName;
     private String  userId;
     private String  avatar;
     private boolean auth;
 
-    private boolean account_enable;
-    private boolean account_lock;
-    private boolean account_expire;
-    private boolean account_credential;
+    private boolean enable;
+    private boolean lock;
+    private boolean expire;
+    private boolean credential;
 
     public MeowUser(String id,
                     String name,
@@ -24,6 +26,10 @@ public class MeowUser {
                     boolean lock) {
         this.userId = id;
         this.displayName = name;
+        this.enable = enable;
+        this.lock = lock;
+        this.expire = expired;
+        this.credential = enable;
     }
 
     public MeowUser(String displayName,

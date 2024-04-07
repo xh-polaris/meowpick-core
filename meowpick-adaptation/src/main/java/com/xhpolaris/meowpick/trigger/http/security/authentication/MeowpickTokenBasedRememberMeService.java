@@ -42,7 +42,9 @@ public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices 
             return MeowUser.anonymous();
         }
 
-        return userDetailsService.loadUserById(userMeta.getUserId());
+        MeowUser user = userDetailsService.loadUserById(userMeta.getUserId());
+        user.setUserMeta(userMeta);
+        return user;
     }
 
     @Override

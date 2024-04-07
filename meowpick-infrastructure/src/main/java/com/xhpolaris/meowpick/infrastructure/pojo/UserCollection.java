@@ -25,10 +25,10 @@ public class UserCollection {
     private boolean auth;
     private String  teacher;
 
-    private boolean account_enable     = true;
-    private boolean account_lock       = true;
-    private boolean account_expire     = true;
-    private boolean account_credential = true;
+    private boolean enable     = true;
+    private boolean lock       = true;
+    private boolean expire     = true;
+    private boolean credential = true;
 
     @CreatedDate
     private Date crateAt;

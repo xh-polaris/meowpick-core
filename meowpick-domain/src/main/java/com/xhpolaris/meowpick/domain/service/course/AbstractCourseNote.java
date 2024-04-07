@@ -1,13 +1,14 @@
 package com.xhpolaris.meowpick.domain.service.course;
 
 import com.xhpolaris.meowpick.common.enums.CourseNoteEn;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseNoteCmd;
 import com.xhpolaris.meowpick.domain.repository.ICourseRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public abstract class AbstractCourseNote implements ICourseNote{
-//    @Resource
+public abstract class AbstractCourseNote implements ICourseNote {
+    //    @Resource
     protected final ICourseRepository repository;
 
     @Override
@@ -15,7 +16,7 @@ public abstract class AbstractCourseNote implements ICourseNote{
                          String course,
                          CourseNoteCmd.CreateCmd cmd,
                          CourseNoteEn currentState) {
-        throw new UnsupportedOperationException("当前状态无法操作");
+        throw BizException.UnsupportedOperation("当前状态无法操作");
     }
 
     @Override
@@ -23,7 +24,7 @@ public abstract class AbstractCourseNote implements ICourseNote{
                         String course,
                         CourseNoteCmd.CreateCmd cmd,
                         CourseNoteEn currentState) {
-        throw new UnsupportedOperationException("当前状态无法操作");
+        throw BizException.UnsupportedOperation("当前状态无法操作");
     }
 
     @Override
@@ -31,6 +32,6 @@ public abstract class AbstractCourseNote implements ICourseNote{
                        String course,
                        CourseNoteCmd.CreateCmd cmd,
                        CourseNoteEn currentState) {
-        throw new UnsupportedOperationException("当前状态无法操作");
+        throw BizException.UnsupportedOperation("当前状态无法操作");
     }
 }
