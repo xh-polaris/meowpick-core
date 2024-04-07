@@ -6,9 +6,11 @@ import com.xhpolaris.meowpick.domain.model.valobj.ReplyCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.CommentVO;
 import com.xhpolaris.meowpick.domain.model.valobj.ReplyVO;
 import com.xhpolaris.meowpick.domain.service.CommentServer;
+import com.xhpolaris.meowpick.domain.service.Context;
 import com.xhpolaris.meowpick.trigger.http.api.CommentApi;
 import com.xhpolaris.meowpick.domain.service.ReplyServer;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController implements CommentApi {
     private final CommentServer service;
     private final ReplyServer replyServer;
+    private final Context context;
 
     @Override
     public CommentVO add(CommentCmd.CreateCmd cmd) {
@@ -51,6 +54,9 @@ public class CommentController implements CommentApi {
 
     @Override
     public PageEntity<CommentVO> history(CommentCmd.History query) {
+        if (StringUtils.isEmpty(query.getUid())) {
+            query.setUid(context.uid());
+        }
         return service.queryUserCommentHistory(query);
     }
 }

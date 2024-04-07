@@ -44,6 +44,11 @@ public class CommentServer {
     }
 
     public PageEntity<CommentVO> queryUserCommentHistory(CommentCmd.History query) {
-       return commentRepository.queryUserComment(query);
+        PageEntity<CommentVO> page = commentRepository.queryUserComment(query);
+        page.getRows().forEach(vo -> {
+            vo.setRelation(actionServer.relation(vo.getId()));
+            vo.setUser(userRepository.getById(vo.getUid()));
+        });
+        return page;
     }
 }
