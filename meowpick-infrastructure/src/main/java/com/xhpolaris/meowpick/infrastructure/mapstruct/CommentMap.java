@@ -1,9 +1,9 @@
 package com.xhpolaris.meowpick.infrastructure.mapstruct;
 
-import com.xhpolaris.meowpick.domain.comment.model.entity.CommentCmd;
-import com.xhpolaris.meowpick.domain.comment.model.entity.ReplyCmd;
-import com.xhpolaris.meowpick.domain.comment.model.valobj.CommentVO;
-import com.xhpolaris.meowpick.domain.comment.model.valobj.ReplyVO;
+import com.xhpolaris.meowpick.domain.model.valobj.CommentCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.ReplyCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CommentVO;
+import com.xhpolaris.meowpick.domain.model.valobj.ReplyVO;
 import com.xhpolaris.meowpick.infrastructure.pojo.CommentCollection;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

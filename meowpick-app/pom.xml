@@ -31,10 +31,9 @@
             <version>1.0.0</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.xhpolaris.meowpick</groupId>
-            <artifactId>meowpick-trigger</artifactId>
+            <artifactId>meowpick-adaptation</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>
@@ -45,13 +44,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>3.1.8</version>
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>repackage</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
             </plugin>
         </plugins>
         <extensions>

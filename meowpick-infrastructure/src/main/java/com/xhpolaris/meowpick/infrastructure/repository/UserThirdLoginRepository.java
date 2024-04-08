@@ -1,8 +1,8 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
 import com.xhpolaris.meowpick.common.exceptions.BizException;
-import com.xhpolaris.meowpick.domain.user.model.entity.LoginCmd;
-import com.xhpolaris.meowpick.domain.user.repository.IUserThirdLoginRepository;
+import com.xhpolaris.meowpick.domain.model.valobj.LoginCmd;
+import com.xhpolaris.meowpick.domain.repository.IUserThirdLoginRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.UserThirdLoginDao;
 import com.xhpolaris.meowpick.infrastructure.pojo.UserThirdCollection;
 import lombok.RequiredArgsConstructor;

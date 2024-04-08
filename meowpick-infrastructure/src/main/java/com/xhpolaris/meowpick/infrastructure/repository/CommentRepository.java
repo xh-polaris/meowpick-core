@@ -1,11 +1,11 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
-import com.xhpolaris.meowpick.common.Context;
+import com.xhpolaris.meowpick.domain.service.Context;
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.domain.comment.model.entity.CommentCmd;
-import com.xhpolaris.meowpick.domain.comment.model.valobj.CommentVO;
-import com.xhpolaris.meowpick.domain.comment.model.valobj.ReplyVO;
-import com.xhpolaris.meowpick.domain.comment.repository.ICommentRepository;
+import com.xhpolaris.meowpick.domain.model.valobj.CommentCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CommentVO;
+import com.xhpolaris.meowpick.domain.model.valobj.ReplyVO;
+import com.xhpolaris.meowpick.domain.repository.ICommentRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.CommentDao;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.CommentMap;
 import com.xhpolaris.meowpick.infrastructure.pojo.CommentCollection;

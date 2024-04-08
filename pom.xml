@@ -17,11 +17,11 @@
 	<name>meowpick-core</name>
 	<description>选课猫</description>
 	<modules>
+		<module>meowpick-adaptation</module>
 		<module>meowpick-app</module>
-		<module>meowpick-trigger</module>
 		<module>meowpick-domain</module>
-		<module>meowpick-common</module>
 		<module>meowpick-infrastructure</module>
+		<module>meowpick-common</module>
 	</modules>
 
 	<properties>
@@ -29,82 +29,10 @@
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<grpc.version>1.58.0</grpc.version>
-		<protobuf.version>3.24.0</protobuf.version>
-		<grpc.starter.version>2.15.0.RELEASE</grpc.starter.version>
+		<mapstruct.version>1.5.3.Final</mapstruct.version>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.xhpolaris</groupId>
-			<artifactId>service-idl-gen-java</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>net.devh</groupId>
-			<artifactId>grpc-client-spring-boot-starter</artifactId>
-			<version>${grpc.starter.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.devh</groupId>
-			<artifactId>grpc-server-spring-boot-starter</artifactId>
-			<version>${grpc.starter.version}</version>
-		</dependency>
-		<dependency> <!-- necessary for Java 9+ -->
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>annotations-api</artifactId>
-			<version>6.0.53</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>1.18.26</version>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>2.0.32</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct</artifactId>
-			<version>1.5.3.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-jdk8</artifactId>
-			<version>1.5.3.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mapstruct</groupId>
-			<artifactId>mapstruct-processor</artifactId>
-			<version>1.5.3.Final</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok-mapstruct-binding</artifactId>
-			<version>0.2.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-cache</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.github.ben-manes.caffeine</groupId>
-			<artifactId>caffeine</artifactId>
-		</dependency>
-
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -112,6 +40,28 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombok.version}</version>
+						</path>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${mapstruct.version}</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 	<repositories>
 		<repository>
 			<id>public</id>
@@ -123,12 +73,8 @@
 		</repository>
 		<repository>
 			<id>github</id>
-			<!-- 格式是 https://raw.githubusercontent.com/[github 用户名]/[github 仓库名]/[分支名]/repo -->
-			<url>https://raw.githubusercontent.com/xh-polaris/service-idl-gen-java/main/repo</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
+			<!-- 格式是 https://raw.githubusercontent.com/[github 用户名]/[github 仓库名]/[分支名] -->
+			<url>https://raw.githubusercontent.com/xh-polaris/service-idl-gen-java/main</url>
 		</repository>
 	</repositories>
 </project>

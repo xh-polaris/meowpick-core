@@ -2,13 +2,14 @@ package com.xhpolaris.meowpick.infrastructure.repository;
 
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.common.enums.CourseNoteEn;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
 import com.xhpolaris.meowpick.common.utils.TimeUtils;
-import com.xhpolaris.meowpick.domain.course.model.aggregate.Course;
-import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
-import com.xhpolaris.meowpick.domain.course.model.entity.CourseNoteCmd;
-import com.xhpolaris.meowpick.domain.course.model.valobj.CourseNote;
-import com.xhpolaris.meowpick.domain.course.model.valobj.CourseVO;
-import com.xhpolaris.meowpick.domain.course.repository.ICourseRepository;
+import com.xhpolaris.meowpick.domain.model.entity.Course;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseNoteCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseNote;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseVO;
+import com.xhpolaris.meowpick.domain.repository.ICourseRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.CourseDao;
 import com.xhpolaris.meowpick.infrastructure.dao.CourseLearnHistoryDao;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.CourseLearnHistoryMap;
@@ -145,7 +146,7 @@ public class CourseRepository implements ICourseRepository {
 
         try {
             return CourseNoteEn.of(code + 1);
-        } catch (IllegalArgumentException ex) {
+        } catch (BizException ex) {
             return CourseNoteEn.end;
         }
     }

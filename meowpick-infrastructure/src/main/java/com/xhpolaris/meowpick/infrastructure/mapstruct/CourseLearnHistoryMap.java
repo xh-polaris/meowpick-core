@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.infrastructure.mapstruct;
 
-import com.xhpolaris.meowpick.domain.course.model.entity.CourseNoteCmd;
-import com.xhpolaris.meowpick.domain.course.model.valobj.CourseNote;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseNoteCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseNote;
 import com.xhpolaris.meowpick.infrastructure.pojo.CourseLearnHistoryCollection;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

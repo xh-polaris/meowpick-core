@@ -49,8 +49,8 @@ doc-info:
   website-url:
 grpc:
   client:
-    meowchat-content:
-      address: "static://meowchat-content.xh-polaris:8080"
+    platform-sts:
+      address: "static://platform-sts.xh-polaris:8080"
       enable-keep-alive: true
       negotiationType: PLAINTEXT
 
@@ -65,3 +65,18 @@ weapp:
   url: https://api.weixin.qq.com/sns/jscode2session?appid={APPID}&secret={SECRET}&js_code={JSCODE}&grant_type=authorization_code
 search-history:
   size: 8
+management:
+  server:
+    port: 8182
+    address: 127.0.0.1
+  endpoint:
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  prometheus:
+    metrics:
+      export:
+        enabled: true

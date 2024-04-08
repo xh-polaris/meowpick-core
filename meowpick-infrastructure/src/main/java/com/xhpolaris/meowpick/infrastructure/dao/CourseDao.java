@@ -1,6 +1,6 @@
 package com.xhpolaris.meowpick.infrastructure.dao;
 
-import com.xhpolaris.meowpick.domain.course.model.entity.CourseCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CourseCmd;
 import com.xhpolaris.meowpick.infrastructure.pojo.CourseCollection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
