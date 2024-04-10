@@ -1,5 +1,6 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
+import com.xhpolaris.meowpick.common.utils.ScoreTransfor;
 import com.xhpolaris.meowpick.domain.service.Context;
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.model.valobj.CommentCmd;
@@ -14,9 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -97,5 +103,28 @@ public class CommentRepository implements ICommentRepository {
                 commentDao.findAllByUidOrderByCrateAt(query.getUid(),
                         PageRequest.of(query.getPage(), query.getSize())),
                 CommentMap.instance::db2vo);
+    }
+
+    @Override
+    public ScoreTransfor.Score score(String id) {
+        List<CommentCollection> commentList = commentDao.findAllByTargetOrderByCrateAt(id);
+        if (CollectionUtils.isEmpty(commentList)) {
+            return new ScoreTransfor.Score();
+        }
+
+        return ScoreTransfor.transfor(commentList.stream().map(CommentCollection::getScore).toList());
+    }
+
+    @Override
+    public Map<String, List<Integer>> scoreIn(List<String> list) {
+        List<CommentCollection> commentList = commentDao.findAllByTargetInOrderByCrateAt(list);
+        if (CollectionUtils.isEmpty(commentList)) {
+            return new HashMap<>();
+        }
+        Map<String, List<CommentCollection>> groupByTarget = commentList.stream()
+                                                                        .collect(Collectors.groupingBy(CommentCollection::getTarget));
+        return groupByTarget.entrySet().stream()
+                            .collect(Collectors.toMap(Map.Entry::getKey,
+                                    item -> item.getValue().stream().map(CommentCollection::getScore).toList()));
     }
 }

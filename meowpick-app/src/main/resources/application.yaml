@@ -55,8 +55,7 @@ grpc:
       negotiationType: PLAINTEXT
 
 app:
-  security:
-    enable: true
+  security: true
   public-key: ${app.publicKey:public-key}
   private-key: ${app.privateKey:private-key}
 weapp:

@@ -1,6 +1,7 @@
 package com.xhpolaris.meowpick.trigger.http.config;
 
 import com.xhpolaris.meowpick.common.JsonRet;
+import com.xhpolaris.meowpick.common.properties.AppProperties;
 import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowUserDetailService;
 import com.xhpolaris.meowpick.common.consts.Consts;
 import com.xhpolaris.meowpick.common.enums.HttpStateEn;
@@ -26,16 +27,13 @@ import java.util.List;
 @Configuration
 @SuppressWarnings("all")
 @RequiredArgsConstructor
-@ConditionalOnProperty(
-        name = "app.security.enable",
-        havingValue = "true"
-)
 public class SecurityConfig {
 
     protected final List<SecurityConfigurer> configurers;
     protected       List<String>             canPermitAntPatterns = new ArrayList<>();
     private final   MeowUserDetailService    userDetailsService;
     private final   RememberMeServices       rememberMeServices;
+    private final   AppProperties            properties;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)
@@ -48,11 +46,12 @@ public class SecurityConfig {
         http.cors(AbstractHttpConfigurer::disable);
 
         http.rememberMe(r -> r.rememberMeServices(rememberMeServices).key(Consts.Authorize.KEY));
-        http.authorizeHttpRequests(r -> r.requestMatchers(canPermitAntPatterns.toArray(new String[0]))
-                                         .permitAll()
-                                         .anyRequest()
-                                         .authenticated()
-                                  );
+        http.authorizeHttpRequests(r -> r.requestMatchers(canPermitAntPatterns.toArray(new String[0])).permitAll());
+        if (properties.isSecurity()) {
+            http.authorizeHttpRequests(r -> r.anyRequest().authenticated());
+        } else {
+            http.authorizeHttpRequests(r -> r.anyRequest().permitAll());
+        }
 
         http.exceptionHandling(d -> d.accessDeniedHandler((req, res, ex) -> {
             fail(res, HttpStateEn.unauthorized);

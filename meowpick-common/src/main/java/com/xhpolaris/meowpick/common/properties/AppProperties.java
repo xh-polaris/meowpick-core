@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "app")
 public class AppProperties {
+    private boolean security;
     private String publicKey;
     private String privateKey;
 }

@@ -1,9 +1,12 @@
 package com.xhpolaris.meowpick.domain.service;
 
 import com.xhpolaris.meowpick.common.PageEntity;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
+import com.xhpolaris.meowpick.domain.model.entity.MeowUser;
 import com.xhpolaris.meowpick.domain.model.valobj.CommentCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.CommentVO;
 import com.xhpolaris.meowpick.domain.model.valobj.ReplyVO;
+import com.xhpolaris.meowpick.domain.model.valobj.UserVO;
 import com.xhpolaris.meowpick.domain.repository.ICommentRepository;
 import com.xhpolaris.meowpick.domain.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +36,11 @@ public class CommentServer {
         PageEntity<CommentVO> page = commentRepository.query(query);
         page.getRows().forEach(vo -> {
             vo.setRelation(actionServer.relation(vo.getId()));
-            vo.setUser(userRepository.getById(vo.getUid()));
+            try {
+                vo.setUser(userRepository.getById(vo.getUid()));
+            } catch (BizException bizException) {
+                vo.setUser(UserVO.of(MeowUser.anonymous()));
+            }
         });
 
         return page;

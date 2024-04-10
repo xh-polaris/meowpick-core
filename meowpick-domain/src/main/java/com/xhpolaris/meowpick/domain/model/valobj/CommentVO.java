@@ -3,16 +3,19 @@ package com.xhpolaris.meowpick.domain.model.valobj;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Schema(name = "CommentVO")
 public class CommentVO {
     private String id;
-    private String uid;
-    private String text;
-    private Date crateAt;
-    private Date updateAt;
+
+    private String        text;
+    private String        uid;
+    private List<ReplyVO> replies;
+    private List<String>  tags;
 
     private Integer reply;
 

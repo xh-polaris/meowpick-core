@@ -5,8 +5,9 @@ import com.xhpolaris.meowpick.common.utils.ScoreTransfor;
 import com.xhpolaris.meowpick.domain.model.entity.Course;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseVO;
-import com.xhpolaris.meowpick.domain.repository.ICourseRepository;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchCmd;
+import com.xhpolaris.meowpick.domain.repository.ICommentRepository;
+import com.xhpolaris.meowpick.domain.repository.ICourseRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,9 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class CourseServer {
-    private final ICourseRepository courseRepository;
-    private final Context           context;
-    private final CourseNoteServer  noteServer;
+    private final ICourseRepository  courseRepository;
+    private final ICommentRepository commentRepository;
+    private final Context            context;
 
     public CourseVO exec(CourseCmd.CreateCmd cmd) {
         return courseRepository.createCourse(cmd);
@@ -42,9 +43,7 @@ public class CourseServer {
     public Course findById(String id) {
         Course vo = courseRepository.getById(id, context.uid());
 
-        vo.setScore(ScoreTransfor.transfor(noteServer.list(id)));
-        vo.setNotes(noteServer.list(context.uid(), id));
-
+        vo.setScore(commentRepository.score(id));
         return vo;
     }
 
@@ -53,10 +52,10 @@ public class CourseServer {
 
         PageEntity<Course> vo = new PageEntity<>();
 
-        Map<String, List<Integer>> scoreMap = noteServer.listIn(page.getRows()
-                                                                    .stream()
-                                                                    .map(CourseVO::getId)
-                                                                    .toList());
+        Map<String, List<Integer>> scoreMap = commentRepository.scoreIn(page.getRows()
+                                                                            .stream()
+                                                                            .map(CourseVO::getId)
+                                                                            .toList());
 
         vo.setTotal(page.getTotal());
         vo.setRows(page.getRows().stream().map(e -> {
@@ -71,6 +70,10 @@ public class CourseServer {
     }
 
     public List<Course> list(List<String> courses) {
-        return courseRepository.list(courses);
+        Map<String, List<Integer>> scoreMap = commentRepository.scoreIn(courses);
+        List<Course>               list     = courseRepository.list(courses);
+        list.forEach(course -> course.setScore(ScoreTransfor.transfor(scoreMap.getOrDefault(course.getData().getId(),
+                Collections.emptyList()))));
+        return list;
     }
 }

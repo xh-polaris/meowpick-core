@@ -20,8 +20,6 @@ import org.springframework.web.client.RestTemplate;
 public class UserController {
     private final UserServer service;
 
-    private final RestTemplate restTemplate;
-
     @PostMapping("/add")
     public UserVO add(@RequestBody UserCmd.CreateCmd cmd){
         return service.createUser(cmd);

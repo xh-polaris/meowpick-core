@@ -27,16 +27,16 @@ public class CommentCollection {
         private Date crateAt;
         @LastModifiedDate
         private Date updateAt;
-//        private List<Reply> replies;
     }
 
-    @MongoId
     private String id;
 
+    private Integer score;
     private String target;
     private String text;
     private String uid;
     private List<Reply> replies = new ArrayList<>();
+    private List<String> tags = new ArrayList<>();
 
     @CreatedDate
     private Date crateAt;

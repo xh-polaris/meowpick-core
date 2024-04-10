@@ -11,6 +11,7 @@ public class BizException extends RuntimeException{
     private String msg;
 
     public BizException(Integer code, String msg) {
+        super(msg);
         this.code = code;
         this.msg = msg;
     }
@@ -38,15 +39,11 @@ public class BizException extends RuntimeException{
         return exception;
     }
 
-    public void Throw() {
-        throw this;
-    }
-
     @Getter
     @AllArgsConstructor
     public enum State {
         ILLEGAL_ARGUMENT(4.401f, "IllegalArgument"),
-        NOT_FIND(4.404f, ""),
+        NOT_FIND(4.404f, "NotFind"),
         UNSUPPORTED_OPERATION(5.501f, "UnsupportedOperation"),
 
         ;

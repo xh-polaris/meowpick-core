@@ -45,9 +45,4 @@ public class WebWrapper implements ResponseBodyAdvice<Object> {
         }
         return JsonRet.then(body);
     }
-
-    @ExceptionHandler(BizException.class)
-    public JsonRet fail(BizException ex) {
-        return JsonRet.fail(ex);
-    }
 }

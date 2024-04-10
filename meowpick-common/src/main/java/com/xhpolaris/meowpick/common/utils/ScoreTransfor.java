@@ -2,18 +2,21 @@ package com.xhpolaris.meowpick.common.utils;
 
 import lombok.Data;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ScoreTransfor {
+    private ScoreTransfor() {
+    }
 
     @Data
     public static class Score {
-        private Float               avg;
-        private Integer             total = 0;
-        private Float               score;
-        private Map<Integer, Float> percent;
+        private Float               avg     = 0.0f;
+        private Integer             total   = 0;
+        private Float               number  = 0f;
+        private Map<Integer, Float> percent = new HashMap<>();
     }
 
     public static Score transfor(List<Integer> data) {
@@ -28,7 +31,7 @@ public class ScoreTransfor {
         float   avg = 1.0f * sum / nums.size();
         Score   vo  = new Score();
 
-        vo.setScore((float) (2.25 * avg - 1.25));
+        vo.setNumber((float) (2.25 * avg - 1.25));
         Map<Integer, Float> percent = scoreMap.entrySet()
                                               .stream()
                                               .collect(Collectors.toMap(Map.Entry::getKey,

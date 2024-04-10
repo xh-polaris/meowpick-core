@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.util.List;
+
 public class CommentCmd {
     private CommentCmd() {}
 
@@ -15,6 +17,7 @@ public class CommentCmd {
         private String target;
         @NotNull
         private String text;
+        private List<String>  tags;
     }
 
     @Data
@@ -24,6 +27,10 @@ public class CommentCmd {
         private String id;
         @NotNull
         private String text;
+
+        @NotNull
+        private String target;
+        private List<String>  tags;
     }
 
     @Data

@@ -10,9 +10,11 @@ import com.xhpolaris.meowpick.domain.service.Context;
 import com.xhpolaris.meowpick.trigger.http.api.CommentApi;
 import com.xhpolaris.meowpick.domain.service.ReplyServer;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class CommentController implements CommentApi {
@@ -37,6 +39,7 @@ public class CommentController implements CommentApi {
 
     @Override
     public PageEntity<CommentVO> query(CommentCmd.Query query) {
+        log.info("hello");
         return service.query(query);
     }
 
