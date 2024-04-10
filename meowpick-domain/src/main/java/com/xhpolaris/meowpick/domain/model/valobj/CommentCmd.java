@@ -17,6 +17,7 @@ public class CommentCmd {
         private String target;
         @NotNull
         private String text;
+        private Integer score;
         private List<String>  tags;
     }
 

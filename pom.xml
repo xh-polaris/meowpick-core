@@ -73,12 +73,8 @@
 		</repository>
 		<repository>
 			<id>github</id>
-			<!-- 格式是 https://raw.githubusercontent.com/[github 用户名]/[github 仓库名]/[分支名]/repo -->
-			<url>https://raw.githubusercontent.com/xh-polaris/service-idl-gen-java/main/repo</url>
-			<snapshots>
-				<enabled>true</enabled>
-				<updatePolicy>always</updatePolicy>
-			</snapshots>
+			<!-- 格式是 https://raw.githubusercontent.com/[github 用户名]/[github 仓库名]/[分支名] -->
+			<url>https://raw.githubusercontent.com/xh-polaris/service-idl-gen-java/main</url>
 		</repository>
 	</repositories>
 </project>

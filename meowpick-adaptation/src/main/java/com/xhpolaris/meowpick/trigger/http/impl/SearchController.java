@@ -1,4 +1,4 @@
-package com.xhpolaris.meowpick.trigger.http.impl;
+package com.xhpolaris.meowpick.trigger.http;
 
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.common.exceptions.BizException;

@@ -15,15 +15,26 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           cache: 'maven'
           java-version: '17'
-          distribution: 'temurin'
-      - name: mvn package
-        run: mvn -B package
+          distribution: 'oracle'
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: maven-dependencies
+
+      - name: Build Jar
+        run: |
+          mvn -B -DskipTests=true package
+          wget -P ./run/lib https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
 
       - name: Bump Version
         id: version
@@ -62,3 +73,21 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push'
+    steps:
+      - name: Setup Kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: ${{ vars.KUBE_VERSION }}
+
+      - name: Deploy
+        run: |
+          mkdir $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          kubectl get deployment ${{ env.IMAGE_NAME }} -n ${{ vars.BASE_TEST_NAMESPACE }} -o yaml |\
+          sed 's/^\(      - image: xhpolaris\/${{ env.IMAGE_NAME }}:\).*$/\1${{ needs.build.outputs.version }}/' |\
+          kubectl apply -f -

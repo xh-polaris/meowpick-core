@@ -1,7 +1,6 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.common.utils.ScoreTransfor;
 import com.xhpolaris.meowpick.domain.model.entity.Course;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseVO;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Component

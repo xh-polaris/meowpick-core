@@ -3,6 +3,7 @@ FROM openjdk:17
 ARG WORKDIR=/opt/run
 
 WORKDIR ${WORKDIR}
+COPY run/lib run/lib
 COPY meowpick-app/target/meowpick-app-1.0.0.jar meowpick.jar
 
 EXPOSE 5508
