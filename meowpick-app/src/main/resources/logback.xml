@@ -4,7 +4,22 @@
     <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <appender name="prod" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+        <file>log.json</file>
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder" >
+            <providers>
+                <pattern>
+                    <pattern>
+                        {
+                        "@timestamp":"%date{ISO8601}",
+                        "content":"%message",
+                        "thread": "%thread",
+                        "level":"%level",
+                        "trace": ""
+                        }
+                    </pattern>
+                </pattern>
+            </providers>
+        </encoder>
     </appender>
     <appender name="dev" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -13,6 +28,6 @@
     </appender>
     <!-- 设置根Logger -->
     <root level="info">
-        <appender-ref ref="${service_env}"/>
+        <appender-ref ref="prod"/>
     </root>
 </configuration>
