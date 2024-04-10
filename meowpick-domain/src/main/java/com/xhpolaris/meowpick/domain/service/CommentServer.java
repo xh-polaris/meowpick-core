@@ -54,7 +54,11 @@ public class CommentServer {
         PageEntity<CommentVO> page = commentRepository.queryUserComment(query);
         page.getRows().forEach(vo -> {
             vo.setRelation(actionServer.relation(vo.getId()));
-            vo.setUser(userRepository.getById(vo.getUid()));
+            try {
+                vo.setUser(userRepository.getById(vo.getUid()));
+            } catch (BizException b) {
+                vo.setUser(UserVO.of(MeowUser.anonymous()));
+            }
         });
         return page;
     }
