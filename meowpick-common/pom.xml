@@ -64,7 +64,7 @@
         <dependency>
             <groupId>com.xhpolaris</groupId>
             <artifactId>service-idl-gen-java</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.2</version>
         </dependency>
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
