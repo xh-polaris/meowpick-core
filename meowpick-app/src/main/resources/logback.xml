@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <conversionRule conversionWord="stack" converterClass="net.logstash.logback.stacktrace.ShortenedThrowableConverter"/>
     <springProperty scope="context" name="service_env" source="spring.profiles.active"/>
     <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
@@ -10,8 +11,8 @@
                     <pattern>
                         {
                         "@timestamp":"%date",
-                        "content":"%message",
-                        "caller": "%logger:%line",
+                        "content":"%message%n%stack{100,16,2048,rootFirst}",
+                        "caller": "%caller{1}",
                         "level":"%level{toLowerCase}",
                         "trace": "%mdc{trace_id}",
                         "span": "%mdc{span_id}"
@@ -28,6 +29,6 @@
     </appender>
     <!-- 设置根Logger -->
     <root level="info">
-        <appender-ref ref="prod"/>
+        <appender-ref ref="${service_env}"/>
     </root>
 </configuration>
