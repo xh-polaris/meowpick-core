@@ -9,6 +9,7 @@ public enum HttpStateEn implements BaseEnum {
     unauthorized("未授权", "un_authorized", 4031),
     un_login("未登录", "un_login", 4032),
     tar_not_exists("目标不存在", "not_exists", 4041),
+    account_error("账号异常 %s", "account_error", 6001),
     biz("%s", "",5001)
     ;
 

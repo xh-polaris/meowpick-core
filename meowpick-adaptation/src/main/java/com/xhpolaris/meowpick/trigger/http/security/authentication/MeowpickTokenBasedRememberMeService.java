@@ -5,17 +5,23 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.google.protobuf.util.JsonFormat;
 import com.xhpolaris.idlgen.basic.UserMeta;
+import com.xhpolaris.meowpick.common.JsonRet;
+import com.xhpolaris.meowpick.common.enums.HttpStateEn;
+import com.xhpolaris.meowpick.common.exceptions.BizException;
+import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowAuthenticationToken;
 import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowRememberMeAuthenticationToken;
 import com.xhpolaris.meowpick.domain.model.entity.MeowUser;
 import com.xhpolaris.meowpick.trigger.http.security.authorize.MeowUserDetailService;
 import com.xhpolaris.meowpick.common.properties.AppProperties;
 import com.xhpolaris.meowpick.common.utils.Meowpick;
+import com.xhpolaris.meowpick.trigger.http.utils.RequestJsonUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AccountStatusException;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsChecker;
@@ -56,7 +62,11 @@ public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices 
 
         UserMeta tokens = decodeToken(rememberMeToken);
         MeowUser user   = retrieveUser(tokens);
-        this.userDetailsChecker.check(userDetailsService.of(user));
+        try{
+            this.userDetailsChecker.check(userDetailsService.of(user));
+        } catch (AccountStatusException ase) {
+            RequestJsonUtils.write(JsonRet.fail(HttpStateEn.account_error, ase.getMessage()));
+        }
 
         return createSuccessFulAuthentication(user);
     }
@@ -100,10 +110,5 @@ public class MeowpickTokenBasedRememberMeService extends NullRememberMeServices 
         }
 
         return null;
-    }
-
-    @Data
-    static class Response {
-        private String token;
     }
 }
