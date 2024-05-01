@@ -5,6 +5,7 @@ import lombok.Data;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ScoreTransfor {
@@ -20,7 +21,7 @@ public class ScoreTransfor {
     }
 
     public static Score transfor(List<Integer> data) {
-        final List<Integer> nums = data.stream().filter(i -> i > 0).toList();
+        final List<Integer> nums = data.stream().filter(Objects::nonNull).filter(i -> i > 0).toList();
         if (nums.isEmpty()) {
             return new Score();
         }
