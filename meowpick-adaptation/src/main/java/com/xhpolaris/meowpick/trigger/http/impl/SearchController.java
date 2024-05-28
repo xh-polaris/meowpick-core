@@ -1,7 +1,6 @@
-package com.xhpolaris.meowpick.trigger.http;
+package com.xhpolaris.meowpick.trigger.http.impl;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.common.exceptions.BizException;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchHistoryVO;
 import com.xhpolaris.meowpick.domain.service.SearchServer;
@@ -11,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @RestController
@@ -30,6 +28,11 @@ public class SearchController implements SearchApi {
     }
 
     @Override
+    public boolean removeRecent(String id) {
+        return searchServer.recentRemove(id);
+    }
+
+    @Override
     public List<?> suggest() {
         return List.of();
     }
@@ -37,5 +40,10 @@ public class SearchController implements SearchApi {
     @Override
     public PageEntity<?> search(SearchCmd.Query query) {
         return searchServer.query(query);
+    }
+
+    @Override
+    public Integer total() {
+        return searchServer.total();
     }
 }

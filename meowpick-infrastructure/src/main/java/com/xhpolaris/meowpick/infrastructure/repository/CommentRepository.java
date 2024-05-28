@@ -66,7 +66,7 @@ public class CommentRepository implements ICommentRepository {
 
     @Override
     public PageEntity<CommentVO> query(CommentCmd.Query query) {
-        Page<CommentCollection> page = commentDao.findAllByTargetOrderByCrateAt(query.getId(),
+        Page<CommentCollection> page = commentDao.findAllByTargetOrderByCrateAtDesc(query.getId(),
                 PageRequest.of(query.getPage(),
                         query.getSize()
                               ));
@@ -118,6 +118,10 @@ public class CommentRepository implements ICommentRepository {
 
     @Override
     public Map<String, List<Integer>> scoreIn(List<String> list) {
+        list = list.stream().filter(Objects::nonNull).toList();
+        if (CollectionUtils.isEmpty(list)) {
+            return Map.of();
+        }
         List<CommentCollection> commentList = commentDao.findAllByTargetInOrderByCrateAt(list);
         if (CollectionUtils.isEmpty(commentList)) {
             return new HashMap<>();

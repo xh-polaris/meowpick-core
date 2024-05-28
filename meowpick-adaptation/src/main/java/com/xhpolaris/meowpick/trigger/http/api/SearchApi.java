@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,10 +26,18 @@ public interface SearchApi {
     @GetMapping("/recent")
     List<SearchHistoryVO> recent();
 
+    @Operation(summary = "删除搜索历史")
+    @PostMapping("/recent/remove/{id}")
+    boolean removeRecent(@PathVariable String id);
+
     @Operation(summary = "搜索建议")
     @GetMapping("/suggest")
     List<?> suggest();
 
     @PostMapping
     PageEntity<?> search(@Validated @RequestBody SearchCmd.Query query);
+
+    @Operation(summary = "获取吐槽总数")
+    @GetMapping("/total")
+    Integer total();
 }

@@ -9,4 +9,8 @@ public interface ISearcherRepository {
     List<SearchHistoryVO> recent(String uid);
 
     void note(SearchEvent event);
+
+    Integer total();
+
+    boolean recentRemove(String id);
 }

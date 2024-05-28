@@ -36,4 +36,12 @@ public class SearchServer {
     public void note(SearchEvent event) {
         repository.note(event);
     }
+
+    public Integer total() {
+        return repository.total();
+    }
+
+    public boolean recentRemove(String id) {
+        return repository.recentRemove(id);
+    }
 }

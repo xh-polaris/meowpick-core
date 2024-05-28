@@ -10,7 +10,7 @@ import java.util.List;
 public interface CommentDao extends MongoRepository<CommentCollection, String> {
     List<CommentCollection> findAllByTargetInOrderByCrateAt(List<String> targets);
     List<CommentCollection> findAllByTargetOrderByCrateAt(String target);
-    Page<CommentCollection> findAllByTargetOrderByCrateAt(String target, Pageable pageable);
+    Page<CommentCollection> findAllByTargetOrderByCrateAtDesc(String target, Pageable pageable);
     Page<CommentCollection> findAllByUidOrderByCrateAt(String uid, Pageable pageable);
     CommentCollection findByTarget(String target);
 }
