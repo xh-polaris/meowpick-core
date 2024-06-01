@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -18,26 +19,29 @@ import java.util.List;
 @RequestMapping("/api/search")
 public interface SearchApi {
 
-    @Operation(summary = "猜你想搜")
-    @GetMapping("/guess")
-    String guess();
+  @Operation(summary = "猜你想搜")
+  @GetMapping("/guess")
+  String guess();
 
-    @Operation(summary = "最近搜过")
-    @GetMapping("/recent")
-    List<SearchHistoryVO> recent();
+  @Operation(summary = "最近搜过")
+  @GetMapping("/recent")
+  List<SearchHistoryVO> recent();
 
-    @Operation(summary = "删除搜索历史")
-    @PostMapping("/recent/remove/{id}")
-    boolean removeRecent(@PathVariable String id);
+  @Operation(summary = "删除搜索历史")
+  @PostMapping("/recent/remove/{id}")
+  boolean removeRecent(@PathVariable String id);
 
-    @Operation(summary = "搜索建议")
-    @GetMapping("/suggest")
-    List<?> suggest();
+  @Operation(summary = "搜索建议")
+  @GetMapping("/suggest")
+  List<?> suggest(
+      @RequestParam(required = true) String search,
+      @RequestParam(defaultValue = "1", required = false) Integer pageNum,
+      @RequestParam(defaultValue = "10", required = false) Integer pageSize);
 
-    @PostMapping
-    PageEntity<?> search(@Validated @RequestBody SearchCmd.Query query);
+  @PostMapping
+  PageEntity<?> search(@Validated @RequestBody SearchCmd.Query query);
 
-    @Operation(summary = "获取吐槽总数")
-    @GetMapping("/total")
-    Integer total();
+  @Operation(summary = "获取吐槽总数")
+  @GetMapping("/total")
+  Integer total();
 }

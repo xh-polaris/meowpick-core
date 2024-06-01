@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Schema(name = "CourseVO")
@@ -21,4 +22,6 @@ public class CourseVO {
     private String describe;
     private List<String> teachers = new ArrayList<>();
     private List<String> campuses = new ArrayList<>();
+
+    private Map<String, Integer> tagCount;
 }

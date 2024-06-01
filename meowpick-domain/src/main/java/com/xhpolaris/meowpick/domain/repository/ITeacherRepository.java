@@ -18,4 +18,8 @@ public interface ITeacherRepository {
     TeacherVO get(String id);
 
     List<TeacherVO> in(List<String> id);
+
+    List<TeacherVO> suggect(String search, Integer pageNum, Integer pageSize);
+
+    PageEntity<TeacherVO> search(String keyword, Integer page, Integer size);
 }

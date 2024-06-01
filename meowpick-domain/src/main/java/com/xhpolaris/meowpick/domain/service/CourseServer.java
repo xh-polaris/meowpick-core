@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -76,4 +77,24 @@ public class CourseServer {
                 Collections.emptyList()))));
         return list;
     }
+
+    public List<CourseVO> suggestName(String search, Integer pageNum, Integer pageSize) {
+        return courseRepository.suggest(search, pageNum, pageSize);
+    }
+
+    public Collection<String> suggestDepart(String search, Integer pageNum, Integer pageSize) {
+        return courseRepository.suggestDepart(search, pageNum, pageSize);
+    }
+
+    public Collection<String> suggestCategory(String search, Integer pageNum, Integer pageSize) {
+        return courseRepository.suggestCategory(search, pageNum, pageSize);
+    }
+
+    public PageEntity<?> searchDepart(SearchCmd.Query query) {
+        return courseRepository.depart(query);
+    }
+    public PageEntity<?> searchCategory(SearchCmd.Query query) {
+        return courseRepository.cagegory(query);
+    }
+
 }

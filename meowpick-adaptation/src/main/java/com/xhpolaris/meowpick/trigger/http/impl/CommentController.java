@@ -52,16 +52,6 @@ public class CommentController implements CommentApi {
     if (CollectionUtils.isEmpty(queryData.getRows())) {
       return new PageEntity<>();
     }
-    List<String> targets = queryData.getRows().stream().map(CommentVO::getTarget).distinct().toList();
-
-    Map<String, CourseVO> courseMap =
-        courseServer.list(targets).stream()
-            .collect(Collectors.toMap(x -> x.getData().getId(), Course::getData));
-
-    for (CommentVO vo : queryData.getRows()) {
-      vo.setCourse(courseMap.get(vo.getTarget()));
-
-    }
 
     return queryData;
   }
@@ -81,6 +71,19 @@ public class CommentController implements CommentApi {
     if (StringUtils.isEmpty(query.getUid())) {
       query.setUid(context.uid());
     }
-    return service.queryUserCommentHistory(query);
+
+    PageEntity<CommentVO> queryData = service.queryUserCommentHistory(query);
+    List<String> targets =
+        queryData.getRows().stream().map(CommentVO::getTarget).distinct().toList();
+
+    Map<String, CourseVO> courseMap =
+        courseServer.list(targets).stream()
+            .collect(Collectors.toMap(x -> x.getData().getId(), Course::getData));
+
+    for (CommentVO vo : queryData.getRows()) {
+      vo.setCourse(courseMap.get(vo.getTarget()));
+    }
+
+    return queryData;
   }
 }

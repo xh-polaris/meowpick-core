@@ -13,4 +13,6 @@ public interface CommentDao extends MongoRepository<CommentCollection, String> {
     Page<CommentCollection> findAllByTargetOrderByCrateAtDesc(String target, Pageable pageable);
     Page<CommentCollection> findAllByUidOrderByCrateAt(String uid, Pageable pageable);
     CommentCollection findByTarget(String target);
+
+    List<CommentCollection> findAllByTargetIn(List<String> ids);
 }
