@@ -21,6 +21,7 @@ public class CourseVO {
     //    描述
     private String describe;
     private List<String> teachers = new ArrayList<>();
+    private List<TeacherVO> teacherList;
     private List<String> campuses = new ArrayList<>();
 
     private Map<String, Integer> tagCount;

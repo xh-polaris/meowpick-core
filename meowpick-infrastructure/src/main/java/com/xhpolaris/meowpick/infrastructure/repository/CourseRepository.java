@@ -5,17 +5,19 @@ import com.xhpolaris.meowpick.domain.model.entity.Course;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseVO;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.TeacherVO;
 import com.xhpolaris.meowpick.domain.repository.ICourseRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.CommentDao;
 import com.xhpolaris.meowpick.infrastructure.dao.CourseDao;
+import com.xhpolaris.meowpick.infrastructure.dao.TeacherDao;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.CourseMap;
+import com.xhpolaris.meowpick.infrastructure.mapstruct.TeacherMap;
 import com.xhpolaris.meowpick.infrastructure.pojo.CommentCollection;
 import com.xhpolaris.meowpick.infrastructure.pojo.CourseCollection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -32,6 +34,7 @@ import java.util.stream.Collectors;
 public class CourseRepository implements ICourseRepository {
   private final CourseDao courseDao;
   private final CommentDao commentDao;
+  private final TeacherDao teacherDao;
 
   @Override
   public CourseVO createCourse(CourseCmd.CreateCmd cmd) {
@@ -68,7 +71,26 @@ public class CourseRepository implements ICourseRepository {
     Page<CourseCollection> page =
         courseDao.findAll(
             CourseCollection.toExample(query), PageRequest.of(query.getPage(), query.getSize()));
-    return BasicRepository.page(page, CourseMap.instance::db2vo);
+    PageEntity<CourseVO> data = BasicRepository.page(page, CourseMap.instance::db2vo);
+    Map<String, TeacherVO> teacherMap =
+        getTeacher(
+            data.getRows().stream()
+                .map(CourseVO::getTeachers)
+                .flatMap(Collection::stream)
+                .distinct()
+                .toList());
+    for (CourseVO vo : data.getRows()) {
+      vo.setTeacherList(vo.getTeachers().stream().map(teacherMap::get).toList());
+    }
+
+    return data;
+  }
+
+  private Map<String, TeacherVO> getTeacher(List<String> data) {
+    Map<String, TeacherVO> teacherMap =
+        teacherDao.findAllByIdIn(data).stream()
+            .collect(Collectors.toMap(i -> i.getId(), TeacherMap.instance::db2vo));
+    return teacherMap;
   }
 
   @Override
@@ -86,6 +108,15 @@ public class CourseRepository implements ICourseRepository {
 
     Course vo = new Course();
 
+    Map<String, TeacherVO> teacherMap =
+        getTeacher(
+            List.of(course).stream()
+                .map(CourseVO::getTeachers)
+                .flatMap(Collection::stream)
+                .distinct()
+                .toList());
+
+    course.setTeacherList(course.getTeachers().stream().map(teacherMap::get).toList());
     vo.setData(course);
 
     return vo;
@@ -111,20 +142,28 @@ public class CourseRepository implements ICourseRepository {
       PageEntity<CourseVO> data = BasicRepository.page(page, CourseMap.instance::db2vo);
 
       Map<String, List<CommentCollection>> commentGroup =
-              commentDao
-                      .findAllByTargetIn(data.getRows().stream().map(CourseVO::getId).toList())
-                      .stream()
-                      .collect(Collectors.groupingBy(CommentCollection::getTarget));
+          commentDao
+              .findAllByTargetIn(data.getRows().stream().map(CourseVO::getId).toList())
+              .stream()
+              .collect(Collectors.groupingBy(CommentCollection::getTarget));
+      Map<String, TeacherVO> teacherMap =
+          getTeacher(
+              data.getRows().stream()
+                  .map(CourseVO::getTeachers)
+                  .flatMap(Collection::stream)
+                  .distinct()
+                  .toList());
       for (CourseVO vo : data.getRows()) {
         Map<String, List<String>> targetTag =
-                commentGroup.getOrDefault(vo.getId(), new ArrayList<>()).stream()
-                            .map(CommentCollection::getTags)
-                            .flatMap(Collection::stream)
-                            .collect(Collectors.groupingBy(x -> x));
+            commentGroup.getOrDefault(vo.getId(), new ArrayList<>()).stream()
+                .map(CommentCollection::getTags)
+                .flatMap(Collection::stream)
+                .collect(Collectors.groupingBy(x -> x));
 
         vo.setTagCount(
-                targetTag.keySet().stream()
-                         .collect(Collectors.toMap(x -> x, x -> targetTag.get(x).size())));
+            targetTag.keySet().stream()
+                .collect(Collectors.toMap(x -> x, x -> targetTag.get(x).size())));
+        vo.setTeacherList(vo.getTeachers().stream().map(teacherMap::get).toList());
       }
 
       return data;
@@ -146,6 +185,13 @@ public class CourseRepository implements ICourseRepository {
               .findAllByTargetIn(data.getRows().stream().map(CourseVO::getId).toList())
               .stream()
               .collect(Collectors.groupingBy(CommentCollection::getTarget));
+      Map<String, TeacherVO> teacherMap =
+          getTeacher(
+              data.getRows().stream()
+                  .map(CourseVO::getTeachers)
+                  .flatMap(Collection::stream)
+                  .distinct()
+                  .toList());
       for (CourseVO vo : data.getRows()) {
         Map<String, List<String>> targetTag =
             commentGroup.getOrDefault(vo.getId(), new ArrayList<>()).stream()
@@ -156,6 +202,7 @@ public class CourseRepository implements ICourseRepository {
         vo.setTagCount(
             targetTag.keySet().stream()
                 .collect(Collectors.toMap(x -> x, x -> targetTag.get(x).size())));
+        vo.setTeacherList(vo.getTeachers().stream().map(teacherMap::get).toList());
       }
 
       return data;
@@ -173,7 +220,13 @@ public class CourseRepository implements ICourseRepository {
             .findAllByTargetIn(courses.stream().map(CourseCollection::getId).toList())
             .stream()
             .collect(Collectors.groupingBy(CommentCollection::getTarget));
-
+    Map<String, TeacherVO> teacherMap =
+        getTeacher(
+            courses.stream()
+                .map(CourseCollection::getTeachers)
+                .flatMap(Collection::stream)
+                .distinct()
+                .toList());
     for (CourseCollection db : courses) {
       for (String teacher : db.getTeachers()) {
         List<CourseVO> cache = data.getOrDefault(teacher, new ArrayList<>());
@@ -187,6 +240,8 @@ public class CourseRepository implements ICourseRepository {
         course.setTagCount(
             targetTag.keySet().stream()
                 .collect(Collectors.toMap(x -> x, x -> targetTag.get(x).size())));
+        course.setTeacherList(course.getTeachers().stream().map(teacherMap::get).toList());
+
         cache.add(course);
         data.put(teacher, cache);
       }
@@ -216,6 +271,13 @@ public class CourseRepository implements ICourseRepository {
       Map<String, List<CommentCollection>> commentGroup =
           commentDao.findAllByTargetIn(data.stream().map(CourseVO::getId).toList()).stream()
               .collect(Collectors.groupingBy(CommentCollection::getTarget));
+      Map<String, TeacherVO> teacherMap =
+          getTeacher(
+              data.stream()
+                  .map(CourseVO::getTeachers)
+                  .flatMap(Collection::stream)
+                  .distinct()
+                  .toList());
       for (CourseVO vo : data) {
         Map<String, List<String>> targetTag =
             commentGroup.getOrDefault(vo.getId(), new ArrayList<>()).stream()
@@ -226,6 +288,7 @@ public class CourseRepository implements ICourseRepository {
         vo.setTagCount(
             targetTag.keySet().stream()
                 .collect(Collectors.toMap(x -> x, x -> targetTag.get(x).size())));
+        vo.setTeacherList(vo.getTeachers().stream().map(teacherMap::get).toList());
       }
 
       return data;
