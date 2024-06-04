@@ -82,6 +82,7 @@ public class CourseRepository implements ICourseRepository {
     for (CourseVO vo : data.getRows()) {
       vo.setTeacherList(vo.getTeachers().stream().map(teacherMap::get).toList());
     }
+    setTagCount(data.getRows());
 
     return data;
   }
@@ -119,7 +120,25 @@ public class CourseRepository implements ICourseRepository {
     course.setTeacherList(course.getTeachers().stream().map(teacherMap::get).toList());
     vo.setData(course);
 
+    setTagCount(List.of(course));
+
     return vo;
+  }
+
+  private void setTagCount(List<CourseVO> course) {
+    Map<String, List<CommentCollection>> commentGroup =
+        commentDao.findAllByTargetIn(course.stream().map(CourseVO::getId).toList()).stream()
+            .collect(Collectors.groupingBy(CommentCollection::getTarget));
+    for (CourseVO vo : course) {
+      Map<String, List<String>> targetTag =
+          commentGroup.getOrDefault(vo.getId(), new ArrayList<>()).stream()
+              .map(CommentCollection::getTags)
+              .flatMap(Collection::stream)
+              .collect(Collectors.groupingBy(x -> x));
+      vo.setTagCount(
+          targetTag.keySet().stream()
+              .collect(Collectors.toMap(x -> x, x -> targetTag.get(x).size())));
+    }
   }
 
   @Override
