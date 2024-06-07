@@ -30,6 +30,9 @@ public class UserRepository implements IUserRepository {
 
     @Override
     public UserVO getById(String id) {
+        if (id == null) {
+            throw BizException.NotFind();
+        }
         return userDao.findById(id).map(UserMap.instance::db2vo).orElseThrow(BizException::NotFind);
     }
 
