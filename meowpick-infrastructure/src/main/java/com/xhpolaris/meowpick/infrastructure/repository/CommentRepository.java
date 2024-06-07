@@ -73,7 +73,7 @@ public class CommentRepository implements ICommentRepository {
 
         return BasicRepository.page(page, c -> {
             CommentVO vo = CommentMap.instance.db2vo(c);
-
+            vo.setCrateAt(c.getCrateAt());
             vo.setReply(Optional.ofNullable(c.getReplies())
                                 .orElse(Collections.emptyList())
                                 .size());
