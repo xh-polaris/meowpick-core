@@ -10,6 +10,7 @@ import com.xhpolaris.meowpick.domain.model.valobj.ReplyVO;
 import com.xhpolaris.meowpick.domain.service.CommentServer;
 import com.xhpolaris.meowpick.domain.service.Context;
 import com.xhpolaris.meowpick.domain.service.CourseServer;
+import com.xhpolaris.meowpick.infrastructure.rpc.PlatformSts;
 import com.xhpolaris.meowpick.trigger.http.api.CommentApi;
 import com.xhpolaris.meowpick.domain.service.ReplyServer;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 public class CommentController implements CommentApi {
+  private final PlatformSts platformSts;
+
   private final CommentServer service;
   private final ReplyServer replyServer;
   private final Context context;
@@ -33,6 +36,13 @@ public class CommentController implements CommentApi {
 
   @Override
   public CommentVO add(CommentCmd.CreateCmd cmd) {
+    try{
+      if (!platformSts.textCheck(cmd.getText()).getPass()) {
+        return null;
+      }
+    } catch (Exception ex) {
+
+    }
     return service.commit(cmd);
   }
 
@@ -43,6 +53,13 @@ public class CommentController implements CommentApi {
 
   @Override
   public CommentVO update(CommentCmd.UpdateCmd cmd) {
+    try{
+      if (!platformSts.textCheck(cmd.getText()).getPass()) {
+        return null;
+      }
+    } catch (Exception ex) {
+
+    }
     return service.update(cmd);
   }
 
@@ -63,6 +80,13 @@ public class CommentController implements CommentApi {
 
   @Override
   public ReplyVO replyTo(String id, ReplyCmd.CreateCmd cmd) {
+    try{
+      if (!platformSts.textCheck(cmd.getText()).getPass()) {
+        return null;
+      }
+    } catch (Exception ex) {
+
+    }
     return replyServer.reply(id, cmd);
   }
 
