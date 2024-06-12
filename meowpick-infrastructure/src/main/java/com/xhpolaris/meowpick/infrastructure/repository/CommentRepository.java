@@ -100,10 +100,19 @@ public class CommentRepository implements ICommentRepository {
 
     @Override
     public PageEntity<CommentVO> queryUserComment(CommentCmd.History query) {
+        var uids = query.getUid().split(",");
+        if (uids.length > 1) {
+            return BasicRepository.page(
+                    commentDao.findAllByUidOrderByCrateAt(uids[0], uids[1],
+                            PageRequest.of(query.getPage(), query.getSize())),
+                    CommentMap.instance::db2vo
+            );
+        }
         return BasicRepository.page(
                 commentDao.findAllByUidOrderByCrateAt(query.getUid(),
                         PageRequest.of(query.getPage(), query.getSize())),
-                CommentMap.instance::db2vo);
+                CommentMap.instance::db2vo
+        );
     }
 
     @Override

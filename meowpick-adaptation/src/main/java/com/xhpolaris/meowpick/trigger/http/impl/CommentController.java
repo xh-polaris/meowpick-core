@@ -84,16 +84,21 @@ public class CommentController implements CommentApi {
       if (!platformSts.textCheck(cmd.getText()).getPass()) {
         return null;
       }
-    } catch (Exception ex) {
-
-    }
+    } catch (Exception ignored) {}
     return replyServer.reply(id, cmd);
   }
 
   @Override
   public PageEntity<CommentVO> history(CommentCmd.History query) {
     if (StringUtils.isEmpty(query.getUid())) {
-      query.setUid(context.uid());
+      var uid = context.uid();
+      query.setUid(uid);
+      try {
+        var openId = context.getUser().getUserMeta().getWechatUserMeta().getOpenId();
+        if(!openId.isEmpty()){
+          query.setUid(uid+","+openId);
+        }
+      } catch (Exception ignored) {}
     }
 
     PageEntity<CommentVO> queryData = service.queryUserCommentHistory(query);
