@@ -1,6 +1,7 @@
 package com.xhpolaris.meowpick.trigger.http.impl;
 
 import com.xhpolaris.meowpick.common.PageEntity;
+import com.xhpolaris.meowpick.domain.model.valobj.PopularityCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchHistoryVO;
 import com.xhpolaris.meowpick.domain.service.SearchServer;
@@ -18,8 +19,8 @@ public class SearchController implements SearchApi {
   private final SearchServer searchServer;
 
   @Override
-  public String guess() {
-    return "搜索";
+  public PageEntity<String> guess(PopularityCmd.Query query) {
+    return searchServer.guess(query);
   }
 
   @Override

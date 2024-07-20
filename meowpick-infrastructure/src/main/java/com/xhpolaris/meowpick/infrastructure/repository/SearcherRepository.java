@@ -1,13 +1,19 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
+import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.common.event.SearchEvent;
 import com.xhpolaris.meowpick.common.properties.SearchHistoryProperties;
+import com.xhpolaris.meowpick.domain.model.valobj.CommentVO;
+import com.xhpolaris.meowpick.domain.model.valobj.PopularityCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.PopularityVO;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchHistoryVO;
 import com.xhpolaris.meowpick.domain.repository.ISearcherRepository;
 import com.xhpolaris.meowpick.domain.service.Context;
 import com.xhpolaris.meowpick.infrastructure.dao.CommentDao;
 import com.xhpolaris.meowpick.infrastructure.dao.SearchHistoryDao;
+import com.xhpolaris.meowpick.infrastructure.mapstruct.CommentMap;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.SearchHistoryMap;
+import com.xhpolaris.meowpick.infrastructure.pojo.CommentCollection;
 import com.xhpolaris.meowpick.infrastructure.pojo.SearchHistoryCollection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +21,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -25,6 +33,16 @@ public class SearcherRepository implements ISearcherRepository {
   private final SearchHistoryProperties properties;
   private final CommentDao commentDao;
   private final Context context;
+
+  private final PopularityRepository popularityRepository;
+
+  @Override
+  public PageEntity<String> guess(PopularityCmd.Query query) {
+    PageEntity<PopularityVO> popularity = popularityRepository.getPopularity(query);
+    PageEntity<String> page = new PageEntity<>();
+    page.setRows(popularity.getRows().stream().map(PopularityVO::getText).toList());
+    return page;
+  }
 
   @Override
   public List<SearchHistoryVO> recent(String uid) {

@@ -2,6 +2,7 @@ package com.xhpolaris.meowpick.domain.service;
 
 import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.common.event.SearchEvent;
+import com.xhpolaris.meowpick.domain.model.valobj.PopularityCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchHistoryVO;
 import com.xhpolaris.meowpick.domain.repository.ISearcherRepository;
@@ -25,6 +26,10 @@ public class SearchServer {
 
   private final TeacherServer teacherServer;
   private final CourseServer courseServer;
+
+  public PageEntity<String> guess(PopularityCmd.Query query) {
+    return repository.guess(query);
+  }
 
   public PageEntity<?> query(SearchCmd.Query query) {
     context.publish(new SearchEvent(context.uid(), query.getType().getValue(), query.getKeyword()));
