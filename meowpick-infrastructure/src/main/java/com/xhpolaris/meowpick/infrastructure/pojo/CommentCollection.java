@@ -38,6 +38,15 @@ public class CommentCollection {
     private List<Reply> replies = new ArrayList<>();
     private List<String> tags = new ArrayList<>();
 
+    // 一级评论id，为空则表示为一级评论
+    private String firstLevelId;
+
+    // 回复的用户的id，一级评论应为空
+    private String replyTo;
+
+    // 回答的评论id,一级评论应为空
+    private String parentId;
+
     @CreatedDate
     private Date crateAt;
     @LastModifiedDate

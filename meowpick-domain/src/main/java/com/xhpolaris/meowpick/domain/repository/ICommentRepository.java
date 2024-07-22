@@ -25,4 +25,6 @@ public interface ICommentRepository {
     ScoreTransfor.Score score(String id);
 
     Map<String, List<Integer>> scoreIn(List<String> list);
+
+    Integer replyCount(String firstLevelId,String id);
 }
