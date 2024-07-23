@@ -84,7 +84,7 @@ public class CourseCoursePopularityRepository implements ICoursePopularityReposi
     }
 
     // 每天午夜12点定时更新课程热度排行榜
-    @Scheduled(cron = "0 10 17 * * ? ")
+    @Scheduled(cron = "0 0 0 * * ? ")
     @Override
     public void updatePopularitySetAtMidnight() {
 
