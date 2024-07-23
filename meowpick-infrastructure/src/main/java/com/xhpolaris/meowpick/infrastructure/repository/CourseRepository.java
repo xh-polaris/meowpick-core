@@ -22,11 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -274,6 +270,20 @@ public class CourseRepository implements ICourseRepository {
   @Override
   public List<String> categoryList() {
     return courseDao.findAll().stream().map(CourseCollection::getCategory).distinct().toList();
+  }
+
+  @Override
+  public List<String> departList() {
+    return courseDao.findAll().stream().map(CourseCollection::getDepartment).distinct().toList();
+  }
+
+  @Override
+  public List<String> campusList() {
+    return courseDao.findAll()
+            .stream().flatMap(course -> course.getCampuses().stream())
+            .collect(Collectors.toSet())
+            .stream()
+            .toList();
   }
 
   @Override
