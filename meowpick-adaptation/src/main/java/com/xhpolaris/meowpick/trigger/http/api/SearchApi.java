@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.trigger.http.api;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.domain.model.valobj.PopularityCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CoursePopularityCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchHistoryVO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,9 +20,9 @@ import java.util.List;
 @RequestMapping("/api/search")
 public interface SearchApi {
 
-  @Operation(summary = "猜你想搜")
-  @GetMapping("/guess")
-  PageEntity<String> guess(PopularityCmd.Query query);
+//  @Operation(summary = "猜你想搜")
+//  @GetMapping("/guess")
+//  PageEntity<String> guess(CoursePopularityCmd.Query query);
 
   @Operation(summary = "最近搜过")
   @GetMapping("/recent")

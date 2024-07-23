@@ -6,8 +6,10 @@ import com.xhpolaris.meowpick.domain.model.entity.Course;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseVO;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchCmd;
+import com.xhpolaris.meowpick.domain.repository.IClickActionRepository;
 import com.xhpolaris.meowpick.domain.repository.ICommentRepository;
 import com.xhpolaris.meowpick.domain.repository.ICourseRepository;
+import com.xhpolaris.meowpick.domain.repository.IUserClickActionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ import java.util.Map;
 public class CourseServer {
     private final ICourseRepository  courseRepository;
     private final ICommentRepository commentRepository;
+    private final IClickActionRepository clickActionRepository;
+    private final IUserClickActionRepository userClickActionRepository;
     private final Context            context;
 
     public CourseVO exec(CourseCmd.CreateCmd cmd) {
@@ -45,6 +49,11 @@ public class CourseServer {
         Course vo = courseRepository.getById(id, context.uid());
 
         vo.setScore(commentRepository.score(id));
+
+        // 记录点击事件
+        clickActionRepository.saveClickAction(context.uid(), id);
+        userClickActionRepository.saveUserClickAction(context.uid(), id);
+
         return vo;
     }
 

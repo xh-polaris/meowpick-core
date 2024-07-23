@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CommentDao extends MongoRepository<CommentCollection, String> {
@@ -19,4 +20,16 @@ public interface CommentDao extends MongoRepository<CommentCollection, String> {
     CommentCollection findByTarget(String target);
 
     List<CommentCollection> findAllByTargetIn(List<String> ids);
+
+    List<CommentCollection> findAllByUpdateAtAfter(Date date);
+
+    // 计算指定target的评论数
+    Long countAllByTarget(String target);
+
+    // 计算近1天指定target的评论数
+    Long countAllByTargetAndUpdateAtAfter(String target, Date date);
+
+    // 查找指定target的评论
+    List<CommentCollection> findAllIdByTarget(String target);
+
 }

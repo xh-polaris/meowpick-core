@@ -1,5 +1,6 @@
 package com.xhpolaris.meowpick.infrastructure.dao;
 
+import ch.qos.logback.classic.spi.LoggingEventVO;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseCmd;
 import com.xhpolaris.meowpick.infrastructure.pojo.CourseCollection;
 import org.springframework.data.domain.Page;
@@ -7,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CourseDao extends MongoRepository<CourseCollection, String> {
@@ -36,4 +38,5 @@ public interface CourseDao extends MongoRepository<CourseCollection, String> {
 
   Page<CourseCollection> queryAllByCategoryLike(String name, Pageable pageable);
   Page<CourseCollection> queryAllByCategory(String name, Pageable pageable);
+
 }

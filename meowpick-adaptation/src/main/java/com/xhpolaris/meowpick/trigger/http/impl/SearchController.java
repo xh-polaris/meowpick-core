@@ -1,7 +1,7 @@
 package com.xhpolaris.meowpick.trigger.http.impl;
 
 import com.xhpolaris.meowpick.common.PageEntity;
-import com.xhpolaris.meowpick.domain.model.valobj.PopularityCmd;
+import com.xhpolaris.meowpick.domain.model.valobj.CoursePopularityCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.SearchHistoryVO;
 import com.xhpolaris.meowpick.domain.service.SearchServer;
@@ -18,10 +18,10 @@ import java.util.List;
 public class SearchController implements SearchApi {
   private final SearchServer searchServer;
 
-  @Override
-  public PageEntity<String> guess(PopularityCmd.Query query) {
-    return searchServer.guess(query);
-  }
+//  @Override
+//  public PageEntity<String> guess(CoursePopularityCmd.Query query) {
+//    return searchServer.guess(query);
+//  }
 
   @Override
   public List<SearchHistoryVO> recent() {
