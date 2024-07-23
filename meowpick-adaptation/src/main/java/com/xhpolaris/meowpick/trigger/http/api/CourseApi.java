@@ -43,8 +43,16 @@ public interface CourseApi {
     @PostMapping("/list")
     List<Course> list(@RequestBody List<String> courses);
 
-    @GetMapping("/category/list")
+    @GetMapping("/categories")
     @Operation(summary = "获取课程分类列表")
     List<String> categoryList();
+
+    @GetMapping("/departs")
+    @Operation(summary = "获取课程开设院系列表")
+    List<String> departList();
+
+    @GetMapping("/campuses")
+    @Operation(summary = "获取课程开设校区列表")
+    List<String> campusList();
 
 }

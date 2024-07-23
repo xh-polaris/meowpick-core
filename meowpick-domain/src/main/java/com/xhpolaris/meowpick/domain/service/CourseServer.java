@@ -110,4 +110,11 @@ public class CourseServer {
         return courseRepository.categoryList();
     }
 
+    public List<String> departList() {
+        return courseRepository.departList();
+    }
+
+    public List<String> campusList() {
+        return courseRepository.campusList();
+    }
 }

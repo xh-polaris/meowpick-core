@@ -37,4 +37,7 @@ public interface ICourseRepository {
 
     List<String> categoryList();
 
+    List<String> departList();
+
+    List<String> campusList();
 }
