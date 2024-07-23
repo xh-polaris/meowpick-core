@@ -106,4 +106,8 @@ public class CourseServer {
         return courseRepository.cagegory(query);
     }
 
+    public List<String> categoryList() {
+        return courseRepository.categoryList();
+    }
+
 }

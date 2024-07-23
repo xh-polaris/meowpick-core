@@ -42,6 +42,11 @@ public class CourseController implements CourseApi {
     }
 
     @Override
+    public List<String> categoryList() {
+        return service.categoryList();
+    }
+
+    @Override
     public Course get(String id) {
         return service.findById(id);
     }
