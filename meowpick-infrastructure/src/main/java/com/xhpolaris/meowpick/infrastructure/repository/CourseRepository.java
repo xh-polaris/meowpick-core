@@ -14,6 +14,7 @@ import com.xhpolaris.meowpick.infrastructure.mapstruct.CourseMap;
 import com.xhpolaris.meowpick.infrastructure.mapstruct.TeacherMap;
 import com.xhpolaris.meowpick.infrastructure.pojo.CommentCollection;
 import com.xhpolaris.meowpick.infrastructure.pojo.CourseCollection;
+import com.xhpolaris.meowpick.infrastructure.pojo.TeacherCollection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Component
@@ -90,7 +92,7 @@ public class CourseRepository implements ICourseRepository {
   private Map<String, TeacherVO> getTeacher(List<String> data) {
     Map<String, TeacherVO> teacherMap =
         teacherDao.findAllByIdIn(data).stream()
-            .collect(Collectors.toMap(i -> i.getId(), TeacherMap.instance::db2vo));
+            .collect(Collectors.toMap(TeacherCollection::getId, TeacherMap.instance::db2vo));
     return teacherMap;
   }
 
@@ -111,7 +113,7 @@ public class CourseRepository implements ICourseRepository {
 
     Map<String, TeacherVO> teacherMap =
         getTeacher(
-            List.of(course).stream()
+            Stream.of(course)
                 .map(CourseVO::getTeachers)
                 .flatMap(Collection::stream)
                 .distinct()
@@ -270,6 +272,11 @@ public class CourseRepository implements ICourseRepository {
   }
 
   @Override
+  public List<String> categoryList() {
+    return courseDao.findAll().stream().map(CourseCollection::getCategory).distinct().toList();
+  }
+
+  @Override
   public Collection<String> suggestCategory(String search, Integer pageNum, Integer pageSize) {
     Page<CourseCollection> page =
         courseDao.queryAllByCategoryLike(search, PageRequest.of(pageNum, pageSize));
@@ -323,4 +330,7 @@ public class CourseRepository implements ICourseRepository {
     }
     return dbList.stream().map(this::map).toList();
   }
+
+
+
 }
