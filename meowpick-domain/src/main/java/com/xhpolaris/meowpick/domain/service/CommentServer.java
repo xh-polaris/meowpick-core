@@ -10,8 +10,10 @@ import com.xhpolaris.meowpick.domain.model.valobj.UserVO;
 import com.xhpolaris.meowpick.domain.repository.ICommentRepository;
 import com.xhpolaris.meowpick.domain.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CommentServer {
@@ -36,6 +38,8 @@ public class CommentServer {
         PageEntity<CommentVO> page = commentRepository.query(query);
         page.getRows().forEach(vo -> {
             vo.setRelation(actionServer.relation(vo.getId()));
+            Integer replyCount = commentRepository.replyCount(vo.getFirstLevelId(),vo.getId());
+            vo.setReply(replyCount);
             try {
                 vo.setUser(userRepository.getById(vo.getUid()));
             } catch (BizException bizException) {
