@@ -66,7 +66,7 @@ public class CommentRepository implements ICommentRepository {
 
     @Override
     public PageEntity<CommentVO> query(CommentCmd.Query query) {
-        Page<CommentCollection> page = commentDao.findAllByTargetOrderByCrateAtDesc(query.getId(),
+        Page<CommentCollection> page = commentDao.findAllByTargetAndFirstLevelIdOrderByCrateAt(query.getId(),query.getFirstLevelId(),
                 PageRequest.of(query.getPage(),
                         query.getSize()
                               ));
@@ -140,5 +140,18 @@ public class CommentRepository implements ICommentRepository {
         return groupByTarget.entrySet().stream()
                             .collect(Collectors.toMap(Map.Entry::getKey,
                                     item -> item.getValue().stream().map(CommentCollection::getScore).toList()));
+    }
+
+    @Override
+    public Integer replyCount(String firstLevelId,String id) {
+        // 当firstLevelId不为空时，次级评论，回复数不统计设为0
+        if (firstLevelId!=null && !firstLevelId.isEmpty()) {
+            return 0;
+        }
+        // 当firstLevelId为空时，统计firstLevelId等于id的
+        Integer replyCount = commentDao.countByFirstLevelId(id);
+        if (replyCount==null)
+            return 0;
+        return replyCount;
     }
 }

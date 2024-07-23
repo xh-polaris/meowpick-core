@@ -10,6 +10,10 @@ import java.util.Date;
 import java.util.List;
 
 public interface CommentDao extends MongoRepository<CommentCollection, String> {
+
+    @Query("{ 'target': { $eq: ?0 }, 'firstLevelId': { $eq: ?1 } }")
+    Page<CommentCollection> findAllByTargetAndFirstLevelIdOrderByCrateAt(String targets, String firstLevelId,Pageable pageable);
+
     List<CommentCollection> findAllByTargetInOrderByCrateAt(List<String> targets);
     List<CommentCollection> findAllByTargetOrderByCrateAt(String target);
     Page<CommentCollection> findAllByTargetOrderByCrateAtDesc(String target, Pageable pageable);
@@ -32,4 +36,5 @@ public interface CommentDao extends MongoRepository<CommentCollection, String> {
     // 查找指定target的评论
     List<CommentCollection> findAllIdByTarget(String target);
 
+    Integer countByFirstLevelId(String firstLevelId);
 }
