@@ -19,6 +19,8 @@ public class TeacherCollection {
     private String avatar;
     private String name;
     private String uid;
+    private String position;
+    private String depart;
 
     @CreatedDate
     private Date crateAt;
