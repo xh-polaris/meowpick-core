@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -38,11 +40,19 @@ public class CommentServer {
         PageEntity<CommentVO> page = commentRepository.query(query);
         page.getRows().forEach(vo -> {
             vo.setRelation(actionServer.relation(vo.getId()));
+
+            // XXX: 二级评论列表
+            List<ReplyVO> replies = commentRepository.replies(vo.getFirstLevelId(),vo.getId());
+            vo.setReplies(replies);
+
+            // 二级评论数
             Integer replyCount = commentRepository.replyCount(vo.getFirstLevelId(),vo.getId());
             vo.setReply(replyCount);
             try {
+                // 有用户名
                 vo.setUser(userRepository.getById(vo.getUid()));
             } catch (BizException bizException) {
+                // 匿名
                 vo.setUser(UserVO.of(MeowUser.anonymous()));
             }
         });

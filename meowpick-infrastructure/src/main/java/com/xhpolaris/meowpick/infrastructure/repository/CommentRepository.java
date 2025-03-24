@@ -84,18 +84,18 @@ public class CommentRepository implements ICommentRepository {
 
     @Override
     public ReplyVO find(String id) {
+        // 寻找对应的评论
         CommentCollection db = commentDao.findById(id).orElse(null);
         if (db == null) {
             return null;
         }
 
-        ReplyVO vo = CommentMap.instance.db2reply(db);
-        vo.setReplies(db.getReplies()
-                        .stream()
-                        .map(CommentMap.instance::db2reply)
-                        .toList());
-
-        return vo;
+        return CommentMap.instance.db2reply(db);
+        // XXX: 二级评论，不需要给ReplyVO存值
+//        vo.setReplies(db.getReplies()
+//                        .stream()
+//                        .map(CommentMap.instance::db2reply)
+//                        .toList());
     }
 
     @Override
@@ -153,5 +153,23 @@ public class CommentRepository implements ICommentRepository {
         if (replyCount==null)
             return 0;
         return replyCount;
+    }
+
+    // XXX: 获取评论，根据为一、二级评论决定replies字段是否有值
+    @Override
+    public List<ReplyVO> replies(String firstLevelId, String id) {
+        // 当firstLevelId不为空时，为次级评论，返回null
+        if (firstLevelId != null && !firstLevelId.isEmpty()) {
+            return null;
+        }
+
+        // 当firstLevelId为空时，找出所有firstLevelId = id的二级评论
+        List<CommentCollection> collections = commentDao.findAllByFirstLevelId(id);
+        if (collections == null) {
+            return null;
+        }
+
+        // 转换为List<ReplyVO>
+        return collections.stream().map(CommentMap.instance::db2reply).toList();
     }
 }

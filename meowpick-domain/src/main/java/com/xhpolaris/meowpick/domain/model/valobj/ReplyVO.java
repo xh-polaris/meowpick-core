@@ -15,5 +15,5 @@ public class ReplyVO {
     private Date crateAt;
     private Date  updateAt;
 
-    List<ReplyVO> replies;
+    // List<ReplyVO> replies;
 }
