@@ -48,6 +48,7 @@ public class CommentRepository implements ICommentRepository {
         }
 
         commentDao.deleteById(id);
+        // todo 删除二级评论，sql的递归还是java的递归
 
         return CommentMap.instance.db2vo(db);
     }
@@ -74,10 +75,6 @@ public class CommentRepository implements ICommentRepository {
         return BasicRepository.page(page, c -> {
             CommentVO vo = CommentMap.instance.db2vo(c);
             vo.setCrateAt(c.getCrateAt());
-            vo.setReply(Optional.ofNullable(c.getReplies())
-                                .orElse(Collections.emptyList())
-                                .size());
-
             return vo;
         });
     }
@@ -90,12 +87,8 @@ public class CommentRepository implements ICommentRepository {
             return null;
         }
 
+        // XXX: 二级评论
         return CommentMap.instance.db2reply(db);
-        // XXX: 二级评论，不需要给ReplyVO存值
-//        vo.setReplies(db.getReplies()
-//                        .stream()
-//                        .map(CommentMap.instance::db2reply)
-//                        .toList());
     }
 
     @Override

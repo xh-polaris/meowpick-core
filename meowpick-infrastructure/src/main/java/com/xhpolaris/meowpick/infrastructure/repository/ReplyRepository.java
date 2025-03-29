@@ -29,11 +29,6 @@ public class ReplyRepository implements IReplyRepository {
         CommentCollection.Reply r = CommentMap.instance.cmd2db(cmd);
         r.setUid(uid);
 
-        // 将二级评论添加到这条一级评论的replies数组中
-        db.getReplies().add(r);
-        // 保存到数据库
-        commentDao.save(db);
-
         // XXX: 二级评论 replyTO()
         // 二级评论转换为CommentCollection类型
         CommentCollection collection = CommentMap.instance.reply2db(r);
@@ -43,7 +38,7 @@ public class ReplyRepository implements IReplyRepository {
         collection.setParentId(db.getId());
 
         // 存入二级评论到数据库
-        commentDao.save(db);
+        commentDao.save(collection);
 
         return CommentMap.instance.db2reply(r);
     }

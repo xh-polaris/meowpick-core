@@ -14,6 +14,4 @@ public class ReplyVO {
     private String text;
     private Date crateAt;
     private Date  updateAt;
-
-    // List<ReplyVO> replies;
 }
