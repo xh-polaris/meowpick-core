@@ -26,13 +26,12 @@ public interface ICommentRepository {
 
     Map<String, List<Integer>> scoreIn(List<String> list);
 
-    Integer replyCount(String firstLevelId,String id);
+    Integer replyCount(String id, String firstLevelId);
 
-    /** XXX: 返回一级评论的同时，返回其二级评论
+    /**
      * 获取二级评论数组
      * @param firstLevelId 二级评论所指向的一级评论，一级评论为空
-     * @param id 一级评论的id
      * @return 二级评论集合
      */
-    List<ReplyVO> replies(String firstLevelId, String id);
+    List<ReplyVO> replies(String id, String firstLevelId);
 }

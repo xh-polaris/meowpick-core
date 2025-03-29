@@ -36,8 +36,6 @@ public class CommentCollection {
     private String text;
     private String uid;
 
-    // todo: 考虑是否要删去，只需要在VO中有就可以了
-    private List<Reply> replies = new ArrayList<>();
     private List<String> tags = new ArrayList<>();
 
     // 一级评论id，为空则表示为一级评论

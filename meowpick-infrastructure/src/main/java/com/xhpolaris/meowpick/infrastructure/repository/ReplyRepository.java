@@ -1,6 +1,5 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
-import com.xhpolaris.meowpick.domain.model.valobj.CommentCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.ReplyCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.ReplyVO;
 import com.xhpolaris.meowpick.domain.repository.IReplyRepository;
@@ -18,9 +17,9 @@ public class ReplyRepository implements IReplyRepository {
     private final CommentDao commentDao;
 
     @Override
-    public ReplyVO reply(String uid, String target, ReplyCmd.CreateCmd cmd) {
+    public ReplyVO reply(String uid, String firstLevelId, ReplyCmd.CreateCmd cmd) {
         // 寻找被回复的评论
-        CommentCollection db = commentDao.findByTarget(target);
+        CommentCollection db = commentDao.findById(firstLevelId).orElse(null);
         if (db == null) {
             return null;
         }
@@ -29,7 +28,7 @@ public class ReplyRepository implements IReplyRepository {
         CommentCollection.Reply r = CommentMap.instance.cmd2db(cmd);
         r.setUid(uid);
 
-        // XXX: 二级评论 replyTO()
+        // 二级评论 replyTO()
         // 二级评论转换为CommentCollection类型
         CommentCollection collection = CommentMap.instance.reply2db(r);
         collection.setTarget(db.getTarget());

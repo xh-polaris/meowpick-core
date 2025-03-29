@@ -20,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentServer {
     private final ICommentRepository commentRepository;
-    private final ActionServer       actionServer;
+    private final ActionServer actionServer;
 
     private final IUserRepository userRepository;
 
@@ -41,12 +41,12 @@ public class CommentServer {
         page.getRows().forEach(vo -> {
             vo.setRelation(actionServer.relation(vo.getId()));
 
-            // XXX: 二级评论列表
-            List<ReplyVO> replies = commentRepository.replies(vo.getFirstLevelId(),vo.getId());
+            // 二级评论列表
+            List<ReplyVO> replies = commentRepository.replies(vo.getId(), vo.getFirstLevelId());
             vo.setReplies(replies);
 
             // 二级评论数
-            Integer replyCount = commentRepository.replyCount(vo.getFirstLevelId(),vo.getId());
+            Integer replyCount = commentRepository.replyCount(vo.getId(), vo.getFirstLevelId());
             vo.setReply(replyCount);
             try {
                 // 有用户名
