@@ -16,4 +16,6 @@ public interface CourseMap {
     CourseCollection cmd2db(CourseCmd.UpdateCmd cmd);
 
     CourseVO db2vo(CourseCollection db);
+
+    CourseCollection vo2db(CourseVO courseVO);
 }
