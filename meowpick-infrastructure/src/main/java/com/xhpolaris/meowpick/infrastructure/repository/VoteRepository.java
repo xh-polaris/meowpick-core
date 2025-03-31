@@ -1,6 +1,8 @@
 package com.xhpolaris.meowpick.infrastructure.repository;
 
+import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.model.valobj.CourseVO;
+import com.xhpolaris.meowpick.domain.model.valobj.VoteStatsCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.VoteStatsVO;
 import com.xhpolaris.meowpick.domain.repository.IVoteRepository;
 import com.xhpolaris.meowpick.infrastructure.dao.CourseDao;
@@ -11,6 +13,8 @@ import com.xhpolaris.meowpick.infrastructure.mapstruct.VoteMap;
 import com.xhpolaris.meowpick.infrastructure.pojo.VoteStatsCollection;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -24,8 +28,8 @@ public class VoteRepository implements IVoteRepository {
     private final Integer PASS_COUNT = 5;
 
     @Override
-    public VoteStatsVO addCourse(VoteStatsVO voteStatsVO) {
-        VoteStatsCollection db = VoteMap.instance.vo2db(voteStatsVO);
+    public VoteStatsVO addCourse(VoteStatsCmd.CreateCmd createCmd) {
+        VoteStatsCollection db = VoteMap.instance.cmd2db(createCmd);
         voteDao.save(db);
         return VoteMap.instance.db2vo(db);
     }
@@ -53,5 +57,32 @@ public class VoteRepository implements IVoteRepository {
         // 保存
         voteDao.save(voteStats);
         return VoteMap.instance.db2vo(voteStats);
+    }
+
+    @Override
+    public VoteStatsVO removeVote(String id) {
+        VoteStatsCollection db = voteDao.findById(id).orElse(null);
+        if (db == null) {
+            return null;
+        }
+        voteDao.deleteById(id);
+        return VoteMap.instance.db2vo(db);
+    }
+
+
+    @Override
+    public VoteStatsVO updateVote(VoteStatsCmd.UpdateCmd cmd) {
+        VoteStatsCollection db = VoteMap.instance.cmd2db(cmd);
+        voteDao.save(db);
+        return VoteMap.instance.db2vo(db);
+    }
+
+    @Override
+    public PageEntity<VoteStatsVO> page(VoteStatsCmd.Query query) {
+        Page<VoteStatsCollection> page = voteDao.findAll(
+                PageRequest.of(query.getPage(), query.getSize())
+        );
+
+        return BasicRepository.page(page, VoteMap.instance::db2vo);
     }
 }

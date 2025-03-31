@@ -1,5 +1,7 @@
 package com.xhpolaris.meowpick.domain.service;
 
+import com.xhpolaris.meowpick.common.PageEntity;
+import com.xhpolaris.meowpick.domain.model.valobj.VoteStatsCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.VoteStatsVO;
 import com.xhpolaris.meowpick.domain.model.valobj.VoteVO;
 import com.xhpolaris.meowpick.domain.repository.ICourseRepository;
@@ -17,11 +19,23 @@ public class VoteServer {
     private final ICourseRepository courseRepository;
     private final ITeacherRepository teacherRepository;
 
-    public VoteStatsVO addCourse(VoteStatsVO voteStatsVO) {
-        return voteRepository.addCourse(voteStatsVO);
+    public VoteStatsVO addCourse(VoteStatsCmd.CreateCmd createCmd) {
+        return voteRepository.addCourse(createCmd);
     }
 
     public VoteStatsVO voteForCourse(VoteVO voteVO) {
         return voteRepository.voteForCourse(voteVO.getCourseId(), voteVO.getVoteType());
+    }
+
+    public VoteStatsVO removeVote(String id) {
+        return voteRepository.removeVote(id);
+    }
+
+    public VoteStatsVO updateVote(VoteStatsCmd.UpdateCmd cmd) {
+        return voteRepository.updateVote(cmd);
+    }
+
+    public PageEntity<VoteStatsVO> query(VoteStatsCmd.Query query) {
+        return voteRepository.page(query);
     }
 }
