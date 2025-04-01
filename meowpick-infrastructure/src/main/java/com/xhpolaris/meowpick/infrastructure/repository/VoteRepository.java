@@ -45,11 +45,10 @@ public class VoteRepository implements IVoteRepository {
         } else if (voteType == -1) {
             voteStats.setRejectVotes(voteStats.getRejectVotes() + 1);
         }
-        // TODO 判断是否通过
+
         if (!voteStats.getIsApproved() && voteStats.getPassVotes() >= PASS_COUNT) {
             // 通过则加入到course数据库
-            // TODO 删除vote数据库中的数据?
-            // TODO 添加老师？
+            // TODO 顺便添加老师
             voteStats.setIsApproved(true);
             CourseVO courseDetail = voteStats.getCourseDetail();
             courseDao.save(CourseMap.instance.vo2db(courseDetail));
