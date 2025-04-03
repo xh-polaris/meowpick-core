@@ -17,12 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -30,7 +25,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CommentRepository implements ICommentRepository {
     private final CommentDao commentDao;
-    private final Context    context;
+    private final Context context;
 
     @Override
     public CommentVO add(CommentCmd.CreateCmd cmd) {
@@ -48,6 +43,8 @@ public class CommentRepository implements ICommentRepository {
         }
 
         commentDao.deleteById(id);
+        // 删除二级评论
+        commentDao.deleteAllByFirstLevelId(id);
 
         return CommentMap.instance.db2vo(db);
     }
@@ -66,36 +63,31 @@ public class CommentRepository implements ICommentRepository {
 
     @Override
     public PageEntity<CommentVO> query(CommentCmd.Query query) {
-        Page<CommentCollection> page = commentDao.findAllByTargetAndFirstLevelIdOrderByCrateAt(query.getId(),query.getFirstLevelId(),
+        String firstLevelId = query.getFirstLevelId();
+        if (firstLevelId != null && firstLevelId.isEmpty()) {
+            firstLevelId = null;
+        }
+        Page<CommentCollection> page = commentDao.findAllByTargetAndFirstLevelIdOrderByCrateAt(query.getId(), firstLevelId,
                 PageRequest.of(query.getPage(),
                         query.getSize()
-                              ));
+                ));
 
         return BasicRepository.page(page, c -> {
             CommentVO vo = CommentMap.instance.db2vo(c);
             vo.setCrateAt(c.getCrateAt());
-            vo.setReply(Optional.ofNullable(c.getReplies())
-                                .orElse(Collections.emptyList())
-                                .size());
-
             return vo;
         });
     }
 
     @Override
     public ReplyVO find(String id) {
+        // 寻找对应的评论
         CommentCollection db = commentDao.findById(id).orElse(null);
         if (db == null) {
             return null;
         }
 
-        ReplyVO vo = CommentMap.instance.db2reply(db);
-        vo.setReplies(db.getReplies()
-                        .stream()
-                        .map(CommentMap.instance::db2reply)
-                        .toList());
-
-        return vo;
+        return CommentMap.instance.db2reply(db);
     }
 
     @Override
@@ -136,22 +128,38 @@ public class CommentRepository implements ICommentRepository {
             return new HashMap<>();
         }
         Map<String, List<CommentCollection>> groupByTarget = commentList.stream()
-                                                                        .collect(Collectors.groupingBy(CommentCollection::getTarget));
+                .collect(Collectors.groupingBy(CommentCollection::getTarget));
         return groupByTarget.entrySet().stream()
-                            .collect(Collectors.toMap(Map.Entry::getKey,
-                                    item -> item.getValue().stream().map(CommentCollection::getScore).toList()));
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        item -> item.getValue().stream().map(CommentCollection::getScore).toList()));
     }
 
     @Override
-    public Integer replyCount(String firstLevelId,String id) {
+    public Integer replyCount(String id, String firstLevelId) {
         // 当firstLevelId不为空时，次级评论，回复数不统计设为0
-        if (firstLevelId!=null && !firstLevelId.isEmpty()) {
+        if (firstLevelId != null && !firstLevelId.isEmpty()) {
             return 0;
         }
         // 当firstLevelId为空时，统计firstLevelId等于id的
         Integer replyCount = commentDao.countByFirstLevelId(id);
-        if (replyCount==null)
+        if (replyCount == null)
             return 0;
         return replyCount;
+    }
+
+    @Override
+    public List<ReplyVO> replies(String id, String firstLevelId) {
+        // 当firstLevelId不为空时，为二级评论，返回null
+        if (firstLevelId != null && !firstLevelId.isEmpty()) {
+            return null;
+        }
+
+        // 当firstLevelId为空时，找出所有firstLevelId对应的二级评论
+        List<CommentCollection> collections = commentDao.findAllByFirstLevelId(id);
+        if (collections == null) {
+            return new ArrayList<>();
+        }
+        // 转换为List<ReplyVO>
+        return collections.stream().map(CommentMap.instance::db2reply).toList();
     }
 }

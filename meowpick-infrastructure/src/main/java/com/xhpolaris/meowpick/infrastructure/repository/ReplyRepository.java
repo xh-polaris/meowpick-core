@@ -17,17 +17,27 @@ public class ReplyRepository implements IReplyRepository {
     private final CommentDao commentDao;
 
     @Override
-    public ReplyVO reply(String uid, String target, ReplyCmd.CreateCmd cmd) {
-        CommentCollection db = commentDao.findByTarget(target);
+    public ReplyVO reply(String uid, String firstLevelId, ReplyCmd.CreateCmd cmd) {
+        // 寻找被回复的评论
+        CommentCollection db = commentDao.findById(firstLevelId).orElse(null);
         if (db == null) {
             return null;
         }
 
+        // 将ReplyCmd类转换为Reply
         CommentCollection.Reply r = CommentMap.instance.cmd2db(cmd);
         r.setUid(uid);
 
-        db.getReplies().add(r);
-        commentDao.save(db);
+        // 二级评论 replyTO()
+        // 二级评论转换为CommentCollection类型
+        CommentCollection collection = CommentMap.instance.reply2db(r);
+        collection.setTarget(db.getTarget());
+        collection.setFirstLevelId(db.getId());
+        collection.setReplyTo(db.getUid());
+        collection.setParentId(db.getId());
+
+        // 存入二级评论到数据库
+        commentDao.save(collection);
 
         return CommentMap.instance.db2reply(r);
     }

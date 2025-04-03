@@ -35,7 +35,7 @@ public class CommentCollection {
     private String target;
     private String text;
     private String uid;
-    private List<Reply> replies = new ArrayList<>();
+
     private List<String> tags = new ArrayList<>();
 
     // 一级评论id，为空则表示为一级评论

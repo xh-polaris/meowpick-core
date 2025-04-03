@@ -37,4 +37,10 @@ public interface CommentDao extends MongoRepository<CommentCollection, String> {
     List<CommentCollection> findAllIdByTarget(String target);
 
     Integer countByFirstLevelId(String firstLevelId);
+
+    // 根据firstLevelId查找所有二级评论
+    List<CommentCollection> findAllByFirstLevelId(String id);
+
+    // 删除一级评论以下的所有二级评论
+    void deleteAllByFirstLevelId(String firstLevelId);
 }
