@@ -24,7 +24,12 @@ public class VoteStatsCmd {
         private String id;
         private String courseId;
         private CourseVO courseDetail;
+        private Integer passVotes;
+        private Integer rejectVotes;
+        private Integer totalVotes;
+        private Long startTime;
         private Long endTime;
+        private Boolean isApproved;
     }
 
     @Data
