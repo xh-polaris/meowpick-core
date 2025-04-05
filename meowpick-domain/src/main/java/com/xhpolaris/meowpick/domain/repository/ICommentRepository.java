@@ -26,5 +26,12 @@ public interface ICommentRepository {
 
     Map<String, List<Integer>> scoreIn(List<String> list);
 
-    Integer replyCount(String firstLevelId,String id);
+    Integer replyCount(String id, String firstLevelId);
+
+    /**
+     * 获取二级评论数组
+     * @param firstLevelId 二级评论所指向的一级评论，一级评论为空
+     * @return 二级评论集合
+     */
+    List<ReplyVO> replies(String id, String firstLevelId);
 }

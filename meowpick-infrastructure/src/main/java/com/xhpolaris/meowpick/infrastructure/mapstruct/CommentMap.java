@@ -23,4 +23,6 @@ public interface CommentMap {
     CommentCollection cmd2db(CommentCmd.CreateCmd cmd);
     CommentCollection cmd2db(CommentCmd.UpdateCmd cmd);
     CommentCollection.Reply cmd2db(ReplyCmd.CreateCmd cmd);
+
+    CommentCollection reply2db(CommentCollection.Reply db);
 }
