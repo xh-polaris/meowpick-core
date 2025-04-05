@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.Date;
 
@@ -14,6 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Document("teacher")
 public class TeacherCollection {
+    @MongoId
     private String id;
 
     private String avatar;

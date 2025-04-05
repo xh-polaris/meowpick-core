@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -69,21 +70,27 @@ public class VoteRepository implements IVoteRepository {
         // 投票通过，加入course数据库并删除vote数据库中的数据
         if (!voteStats.getIsApproved() && voteStats.getPassVotes() >= PASS_COUNT) {
             // 通过则加入到course数据库
-            voteStats.setIsApproved(true);
             CourseVO courseDetail = voteStats.getCourseDetail();
-            courseDao.save(CourseMap.instance.vo2db(courseDetail));
-            // 删除vote中的数据
-            voteDao.deleteById(voteStats.getId());
-            // 顺便添加老师
-            List<TeacherVO> teacherList = courseDetail.getTeacherList();
-            for (TeacherVO teacherVO : teacherList) {
+            // 先存老师，再存课程
+            List<String> teachers = new ArrayList<>();
+            List<TeacherVO> tempTeachersList = courseDetail.getTeacherList();
+            for (TeacherVO teacherVO : tempTeachersList) {
                 // 根据老师名称、部门、职称唯一确定一位老师
                 TeacherCollection teacherCollection = teacherDao.findByNameAndDepartAndPosition(teacherVO.getName(), teacherVO.getDepart(), teacherVO.getPosition());
-                // 教师不存在，新增
                 if (teacherCollection == null) {
-                    teacherDao.save(TeacherMap.instance.vo2db(teacherVO));
+                    // 教师不存在，新增
+                    TeacherCollection save = teacherDao.save(TeacherMap.instance.vo2db(teacherVO));
+                    teachers.add(save.getName());
+                } else {
+                    teachers.add(teacherCollection.getName());
                 }
             }
+            courseDetail.setTeachers(teachers);
+            courseDao.save(CourseMap.instance.vo2db(courseDetail));
+
+            // 删除vote中的数据
+            voteStats.setIsApproved(true);
+            voteDao.deleteById(voteStats.getId());
         } else {
             // 保存
             voteDao.save(voteStats);
