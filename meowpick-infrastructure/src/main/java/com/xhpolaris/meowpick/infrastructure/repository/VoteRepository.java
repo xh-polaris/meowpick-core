@@ -116,7 +116,6 @@ public class VoteRepository implements IVoteRepository {
     @Override
     public PageEntity<VoteStatsVO> page(VoteStatsCmd.Query query) {
         // 查询时删除过期的数据
-        long currentTime = System.currentTimeMillis();
         for (VoteStatsCollection collection : voteDao.findAll()) {
             if (isExpired(collection.getEndTime())) {
                 voteDao.deleteById(collection.getId());

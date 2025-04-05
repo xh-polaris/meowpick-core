@@ -4,8 +4,6 @@ import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.model.valobj.VoteStatsCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.VoteStatsVO;
 import com.xhpolaris.meowpick.domain.model.valobj.VoteVO;
-import com.xhpolaris.meowpick.domain.repository.ICourseRepository;
-import com.xhpolaris.meowpick.domain.repository.ITeacherRepository;
 import com.xhpolaris.meowpick.domain.repository.IVoteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
