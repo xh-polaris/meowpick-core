@@ -10,4 +10,6 @@ import java.util.List;
 public interface TeacherDao extends MongoRepository<TeacherCollection, String> {
     List<TeacherCollection> findAllByIdIn(List<String> id);
     Page<TeacherCollection> queryAllByNameLike(String name, Pageable pageable);
+
+    TeacherCollection findByNameAndDepartAndPosition(String name, String depart, String position);
 }

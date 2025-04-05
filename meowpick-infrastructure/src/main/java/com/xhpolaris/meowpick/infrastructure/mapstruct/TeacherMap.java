@@ -15,4 +15,5 @@ public interface TeacherMap {
     TeacherCollection cmd2db(TeacherCmd.CreateCmd cmd);
     TeacherCollection cmd2db(TeacherCmd.UpdateCmd cmd);
 
+    TeacherCollection vo2db(TeacherVO vo);
 }

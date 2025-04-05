@@ -12,6 +12,8 @@ public class TeacherVO {
     private String avatar;
     private String name;
     private String uid;
+    private String position;
+    private String depart;
 
     private List<CourseVO> courses;
 }
