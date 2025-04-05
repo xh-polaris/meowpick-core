@@ -14,10 +14,10 @@ public interface IVoteRepository {
 
     /**
      * 为课程投票
-     * @param courseId 课程id
+     * @param id voteStats的id
      * @param voteType 投票类型：同意1；反对-1
      */
-    VoteStatsVO voteForCourse(String courseId, Integer voteType);
+    VoteStatsVO voteForCourse(String id, Integer voteType);
 
     // 删除课程投票信息
     VoteStatsVO removeVote(String id);
@@ -27,4 +27,6 @@ public interface IVoteRepository {
 
     // 分页查询
     PageEntity<VoteStatsVO> page(VoteStatsCmd.Query query);
+
+    VoteStatsVO findById(String id);
 }

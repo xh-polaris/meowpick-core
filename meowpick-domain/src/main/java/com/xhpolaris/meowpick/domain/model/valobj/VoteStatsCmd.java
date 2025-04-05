@@ -12,8 +12,6 @@ public class VoteStatsCmd {
     @Schema(name = "VoteStatsCmd$CreateCmd")
     public static class CreateCmd {
         @NotNull
-        private String courseId;
-        @NotNull
         private CourseVO courseDetail;
         private Long startTime;
         private Long endTime;
@@ -24,10 +22,8 @@ public class VoteStatsCmd {
     public static class UpdateCmd {
         @NotNull
         private String id;
-        @NotNull
         private String courseId;
         private CourseVO courseDetail;
-        private Long startTime;
         private Long endTime;
     }
 

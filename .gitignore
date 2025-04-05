@@ -35,4 +35,3 @@ build/
 
 logs
 /run
-**/*/application.yaml

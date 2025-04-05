@@ -7,6 +7,8 @@ import lombok.Data;
 @Schema(name = "VoteStatsVO")
 public class VoteStatsVO {
     private String id;
+
+    // 自行生成的关联id，和课程实际存入数据库的id并不对应
     private String courseId;
 
     // 关联课程详细信息

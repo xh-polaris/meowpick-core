@@ -43,4 +43,9 @@ public class VoteController implements VoteApi {
         }
         return data;
     }
+
+    @Override
+    public VoteStatsVO get(String id) {
+        return voteServer.findById(id);
+    }
 }

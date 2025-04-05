@@ -6,9 +6,10 @@ import lombok.Data;
 @Data
 @Schema(name = "VoteVO")
 public class VoteVO {
+    // 要投票的VoteStats的id
     private String id;
 
-    // 关联的课程ID
+    // 自行生成的关联id，和课程实际存入数据库的id并不对应
     private String courseId;
 
     // 投票用户

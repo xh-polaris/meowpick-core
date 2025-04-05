@@ -16,15 +16,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VoteServer {
     private final IVoteRepository voteRepository;
-    private final ICourseRepository courseRepository;
-    private final ITeacherRepository teacherRepository;
 
     public VoteStatsVO addCourse(VoteStatsCmd.CreateCmd createCmd) {
         return voteRepository.addCourse(createCmd);
     }
 
     public VoteStatsVO voteForCourse(VoteVO voteVO) {
-        return voteRepository.voteForCourse(voteVO.getCourseId(), voteVO.getVoteType());
+        return voteRepository.voteForCourse(voteVO.getId(), voteVO.getVoteType());
     }
 
     public VoteStatsVO removeVote(String id) {
@@ -37,5 +35,9 @@ public class VoteServer {
 
     public PageEntity<VoteStatsVO> query(VoteStatsCmd.Query query) {
         return voteRepository.page(query);
+    }
+
+    public VoteStatsVO findById(String id) {
+        return voteRepository.findById(id);
     }
 }

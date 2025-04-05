@@ -6,7 +6,6 @@ import com.xhpolaris.meowpick.domain.model.valobj.VoteStatsVO;
 import com.xhpolaris.meowpick.domain.model.valobj.VoteVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +29,11 @@ public interface VoteApi {
     @Operation(summary = "更新课程投票数据")
     VoteStatsVO update(@Validated @RequestBody VoteStatsCmd.UpdateCmd cmd);
 
-    @GetMapping("/query")
+    @PostMapping("/query")
     @Operation(summary = "分页查询")
-    PageEntity<VoteStatsVO> query(@Validated @ParameterObject VoteStatsCmd.Query query);
+    PageEntity<VoteStatsVO> query(@Validated @RequestBody VoteStatsCmd.Query query);
+
+    @GetMapping("/{id}")
+    @Operation(summary = "获取课程投票")
+    VoteStatsVO get(@PathVariable String id);
 }
