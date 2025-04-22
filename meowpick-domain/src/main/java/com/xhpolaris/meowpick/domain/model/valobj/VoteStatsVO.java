@@ -31,4 +31,6 @@ public class VoteStatsVO {
 
     // 是否已达到发布标准
     private Boolean isApproved;
+
+    private Boolean isSuccess = true;
 }

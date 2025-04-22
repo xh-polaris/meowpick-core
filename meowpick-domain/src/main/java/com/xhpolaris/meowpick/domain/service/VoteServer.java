@@ -9,17 +9,35 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class VoteServer {
     private final IVoteRepository voteRepository;
 
+    private final Context context;
+
     public VoteStatsVO addCourse(VoteStatsCmd.CreateCmd createCmd) {
         return voteRepository.addCourse(createCmd);
     }
 
     public VoteStatsVO voteForCourse(VoteVO voteVO) {
+        String uid = context.uid();
+        System.out.println("uid = " + uid);
+        VoteStatsVO vo = voteRepository.findById(voteVO.getId());
+        if (uid == null || "anonymous".equals(uid)) {
+            vo.setIsSuccess(false);
+            return vo;
+        }
+
+        // 获取已投票用户列表
+        List<String> uidList = voteRepository.getUidList(voteVO.getId());
+        if (uidList == null || !uidList.contains(uid)) {
+            vo.setIsSuccess(false);
+            return vo;
+        }
         return voteRepository.voteForCourse(voteVO.getId(), voteVO.getVoteType());
     }
 
