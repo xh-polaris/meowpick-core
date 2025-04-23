@@ -25,8 +25,11 @@ public class VoteServer {
 
     public VoteStatsVO voteForCourse(VoteVO voteVO) {
         String uid = context.uid();
-        System.out.println("uid = " + uid);
         VoteStatsVO vo = voteRepository.findById(voteVO.getId());
+        if (vo == null) {
+            return null;
+        }
+
         if (uid == null || "anonymous".equals(uid)) {
             vo.setIsSuccess(false);
             return vo;
