@@ -149,6 +149,15 @@ public class VoteRepository implements IVoteRepository {
         return VoteMap.instance.db2vo(db);
     }
 
+    @Override
+    public List<String> getUidList(String voteId) {
+        VoteStatsCollection db = voteDao.findById(voteId).orElse(null);
+        if (db == null) {
+            return null;
+        }
+        return db.getUsers();
+    }
+
     // 判断是否过期
     private boolean isExpired(long endTime) {
         return endTime < System.currentTimeMillis();

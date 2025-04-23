@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Document("vote")
@@ -42,6 +43,9 @@ public class VoteStatsCollection {
 
     // 是否已达到发布标准
     private Boolean isApproved;
+
+    // 投票过的用户ID列表
+    private List<String> users;
 
     @CreatedDate
     private Date crateAt;

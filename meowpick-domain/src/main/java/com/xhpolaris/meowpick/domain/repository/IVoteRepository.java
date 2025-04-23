@@ -4,6 +4,8 @@ import com.xhpolaris.meowpick.common.PageEntity;
 import com.xhpolaris.meowpick.domain.model.valobj.VoteStatsCmd;
 import com.xhpolaris.meowpick.domain.model.valobj.VoteStatsVO;
 
+import java.util.List;
+
 public interface IVoteRepository {
     /**
      * 新增课程投票
@@ -29,4 +31,6 @@ public interface IVoteRepository {
     PageEntity<VoteStatsVO> page(VoteStatsCmd.Query query);
 
     VoteStatsVO findById(String id);
+
+    List<String> getUidList(String voteId);
 }
